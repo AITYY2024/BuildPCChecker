@@ -1,4 +1,4 @@
 package com.buildpcchecker.buildpcchecker.preset;
 
-public class TestService {
+public interface IpresetService {
 }
