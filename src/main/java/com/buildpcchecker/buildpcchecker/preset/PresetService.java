@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class PresetService implements IpresetService {
+public class PresetService implements IPresetService {
 
     @Autowired
     private PresetDao presetDao;

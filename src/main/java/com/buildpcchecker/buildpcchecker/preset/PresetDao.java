@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PresetDao implements IpresetDao {
+public class PresetDao implements IPresetDao {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
