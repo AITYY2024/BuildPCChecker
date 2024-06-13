@@ -1,4 +1,4 @@
-package com.buildpcchecker.buildpcchecker.data;
+package com.buildpcchecker.buildpcchecker.form;
 
 import lombok.Data;
 
