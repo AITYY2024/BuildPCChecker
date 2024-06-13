@@ -1,4 +1,4 @@
 package com.buildpcchecker.buildpcchecker.parts_select;
 
-public class TestService {
+public class ProductsService {
 }
