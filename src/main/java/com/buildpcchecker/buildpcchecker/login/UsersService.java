@@ -1,4 +1,4 @@
 package com.buildpcchecker.buildpcchecker.login;
 
-public class TestController {
+public interface UsersService {
 }
