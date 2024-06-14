@@ -5,8 +5,7 @@
         const user = {
 //          Javaのフォームクラスのフィールド名:document.getElementById('HTMLのID').value
             name: document.getElementById('name').value,
-            mail: document.getElementById('mail').value,
-            age: document.getElementById('age').value,
+            mail: document.getElementById('password').value,
         }
         // POSTでリクエスト送信
         // userをJSONに変換して送る

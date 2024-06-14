@@ -2,20 +2,18 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ページアクセス成功</title>
+    <title>ログイン用テストページ</title>
 </head>
 <body>
 <form>
     ユーザー情報を入力して下さい。<br/>
     <p>
             <!--JSでinputタグの中身を取得        -->
-        名前：<input type="text" name="name" id="name" />
+            <!--formクラスに応じてinputとtest-login.jsを調整してください        -->
+        LOGIN ID：<input type="text" name="name" id="name" value="testName"/>
     </p>
     <p>
-        メールアドレス：<input type="text" name="mail" id="mail" />
-    </p>
-    <p>
-        年齢：<input type="number" name="age" id="age" />
+        PASSWORD：<input type="text" name="password" id="password" />
     </p>
     <button type="button" id="btn">送信</button>
 </form>
