@@ -16,4 +16,10 @@ public class UsersController {
 //       System.out.println(iusersService.insert("user2","user2"));//新規登録テスト
 //        return "test";
 //    }
+
+    @GetMapping("")
+    public String login(){
+        return "";
+    }
+
 }
