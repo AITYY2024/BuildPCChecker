@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--objectを受け取る処理、フィールドを設定する処理、タイムリーフで変数を渡す処理-->
+<form th:action="/test" method="get">
+    <fieldset>
+
+        <input type="hidden" th:value="${preset_id}">
+        <div>
+            <input type="text" name="preset_name" th:value="*{preset_name}">
+        </div>
+        <input type="hidden" th:value="${user_id}">
+        <input type="hidden" th:value="${cpu_id}">
+        <input type="hidden" th:value="${cpu_name}">
+        <input type="hidden" th:value="${gpu_id}">
+        <input type="hidden" th:value="${gpu_name}">
+        <input type="hidden" th:value="${ram_id}">
+        <input type="hidden" th:value="${ram_name}">
+        <input type="hidden" th:value="${ssd_id}">
+        <input type="hidden" th:value="${ssd_name}">
+        <input type="hidden" th:value="${psu_id}">
+        <input type="hidden" th:value="${psu_name}">
+        <div>
+            <input type="text" name="total_amount" th:value="*{total_amount}">
+        </div>
+
+    </fieldset>
+</form>
+
+</body>
+</html>
