@@ -1,13 +1,15 @@
 package com.buildpcchecker.buildpcchecker.form;
 
-import java.util.Date;
+import lombok.Data;
 
-public class StorageSelectForm {
+import java.util.Date;
+@Data
+public class SsdSelectForm {
     private int id;
     private String product_id;
     private String url;
     private String product_name;
-    private int price;
+    private Integer price;
     private Date release_date;
     private String capacity;
     private String spec_size;

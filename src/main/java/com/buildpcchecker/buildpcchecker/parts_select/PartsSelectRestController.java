@@ -1,7 +1,6 @@
 package com.buildpcchecker.buildpcchecker.parts_select;
 
-import com.buildpcchecker.buildpcchecker.form.CpuSelectForm;
-import com.buildpcchecker.buildpcchecker.form.GpuSelectForm;
+import com.buildpcchecker.buildpcchecker.form.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,35 +15,36 @@ public class PartsSelectRestController {
     @Autowired
     ProductsService productsService;
 
+
+    //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
-//    @GetMapping("/testPartsCategory")
-//    public ResponseEntity<List<CpuSelectForm>> cpuTable(){
+    @GetMapping("/testPartsCategory")
+    public ResponseEntity<List<CpuSelectForm>> cpuTable(){
+        try {
+            List<CpuSelectForm> testCpu = productsService.tableCpuParts();
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(testCpu, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+//    //GPUのテーブルを全て表示する
+//        @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<GpuSelectForm>> gpuTable(){
 //        try {
-//            List<CpuSelectForm> testCpu = productsService.tableCpuParts();
+//            List<GpuSelectForm> testGpu = productsService.tableGpuParts();
 //            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(testCpu, HttpStatus.OK);
+//            return new ResponseEntity<>(testGpu, HttpStatus.OK);
 //        } catch (PartsNotFoundException e) {
 //            // ステータスコード400番を返す
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
 //    }
 
-    //GPUのテーブルを全て表示する
-    @GetMapping("/testPartsCategory")
-    public ResponseEntity<List<GpuSelectForm>> gpuTable(){
-        try {
-            List<GpuSelectForm> testGpu = productsService.tableGpuParts();
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(testGpu, HttpStatus.OK);
-        } catch (PartsNotFoundException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
     //Memoryのテーブルを全て表示する
-    //    @GetMapping("/testPartsCategory")
+//        @GetMapping("/testPartsCategory")
 //    public ResponseEntity<List<MemorySelectForm>> memoryTable(){
 //        try {
 //            List<MemorySelectForm> testMemory = productsService.tableMemoryParts();
@@ -57,7 +57,7 @@ public class PartsSelectRestController {
 //    }
 
     //Mbのテーブルを全て表示する
-    //    @GetMapping("/testPartsCategory")
+//        @GetMapping("/testPartsCategory")
 //    public ResponseEntity<List<MbSelectForm>> mbTable(){
 //        try {
 //            List<MbSelectForm> testMb = productsService.tableMbParts();
@@ -69,13 +69,13 @@ public class PartsSelectRestController {
 //        }
 //    }
 
-    //Storageのテーブルを全て表示する
-    //    @GetMapping("/testPartsCategory")
-//    public ResponseEntity<List<StorageSelectForm>> StorageTable(){
+    //SSDのテーブルを全て表示する
+//        @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<SsdSelectForm>> ssdTable(){
 //        try {
-//            List<StorageSelectForm> testStorage = productsService.tableStorageParts();
+//            List<SsdSelectForm> testSsd = productsService.tableSsdParts();
 //            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(testStorage, HttpStatus.OK);
+//            return new ResponseEntity<>(testSsd, HttpStatus.OK);
 //        } catch (PartsNotFoundException e) {
 //            // ステータスコード400番を返す
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -83,7 +83,7 @@ public class PartsSelectRestController {
 //    }
 
     //PSUのテーブルを全て表示する
-    //    @GetMapping("/testPartsCategory")
+//        @GetMapping("/testPartsCategory")
 //    public ResponseEntity<List<PsuSelectForm>> psuTable(){
 //        try {
 //            List<PsuSelectForm> testPsu = productsService.tablePsuParts();
@@ -96,7 +96,7 @@ public class PartsSelectRestController {
 //    }
 
     //Osのテーブルを全て表示する
-    //    @GetMapping("/testPartsCategory")
+//        @GetMapping("/testPartsCategory")
 //    public ResponseEntity<List<OsSelectForm>> osTable(){
 //        try {
 //            List<OsSelectForm> testOs = productsService.tableOsParts();
@@ -110,12 +110,91 @@ public class PartsSelectRestController {
 
     //検索欄に打った文字が名前に入っているパーツを表示する
     //CPUのテーブルから検索したものを表示する
-    //    @GetMapping("/testPartsCategory")
+//    @GetMapping("/testPartsCategory")
 //    public ResponseEntity<List<CpuSelectForm>> cpuSearch(){
 //        try {
-//            List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts();
+//            List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts("13");
 //            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(testOs, HttpStatus.OK);
+//            return new ResponseEntity<>(testCpuSearch, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+
+//    //GPUのテーブルから検索したものを表示する
+//    @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<GpuSelectForm>> gpuSearch(){
+//        try {
+//            List<GpuSelectForm> testGpuSearch = productsService.searchGpuParts("4080");
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testGpuSearch, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //Memoryのテーブルから検索したものを表示する
+//    @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<MemorySelectForm>> memorySearch(){
+//        try {
+//            List<MemorySelectForm> testMemorySearch = productsService.searchMemoryParts("16");
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testMemorySearch, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //Mbのテーブルから検索したものを表示する
+//    @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<MbSelectForm>> mbSearch(){
+//        try {
+//            List<MbSelectForm> testMbSearch = productsService.searchMbParts("760");
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testMbSearch, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //SSDのテーブルから検索したものを表示する
+//    @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<SsdSelectForm>> ssdSearch(){
+//        try {
+//            List<SsdSelectForm> testSsdSearch = productsService.searchSsdParts("512");
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testSsdSearch, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //PSUのテーブルから検索したものを表示する
+//    @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<PsuSelectForm>> psuSearch(){
+//        try {
+//            List<PsuSelectForm> testPsuSearch = productsService.searchPsuParts("100");
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testPsuSearch, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //OSのテーブルから検索したものを表示する
+//    @GetMapping("/testPartsCategory")
+//    public ResponseEntity<List<OsSelectForm>> osSearch(){
+//        try {
+//            List<OsSelectForm> testOsSearch = productsService.searchOsParts("Windows");
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testOsSearch, HttpStatus.OK);
 //        } catch (PartsNotFoundException e) {
 //            // ステータスコード400番を返す
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
