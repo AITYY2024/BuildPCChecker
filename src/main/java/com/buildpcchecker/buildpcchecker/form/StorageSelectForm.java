@@ -11,5 +11,5 @@ public class StorageSelectForm {
     private Date release_date;
     private String capacity;
     private String spec_size;
-    private String interface;
+    private String interFace;
 }
