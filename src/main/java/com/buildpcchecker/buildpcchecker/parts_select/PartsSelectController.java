@@ -16,8 +16,8 @@ public class PartsSelectController {
 
 //    @GetMapping("/testPartsCategory")
 //    public String cpuSearchPartsTest(){
-//        List<CpuSelectForm> partsTable = productsService.selectParts();
-//        System.out.println(partsTable);
+//        List<CpuSelectForm> cpuPartsTable = productsService.tableCpuParts();
+//        System.out.println(cpuPartsTable);
 //        return "/testPartsCategory";
 //    }
 
