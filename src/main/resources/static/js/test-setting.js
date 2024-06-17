@@ -5,7 +5,7 @@
 //        const user = {}
         // POSTでリクエスト送信
         // presetをJSONに変換して送る
-        fetch('/api/user', {
+        fetch('/api/userDelete', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
