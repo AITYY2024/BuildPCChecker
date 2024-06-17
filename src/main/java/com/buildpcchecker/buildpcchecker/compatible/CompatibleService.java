@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CompatibleService {
 
-    List<CompatibleForm> compatibleList();//互換性テーブル一覧
+    List<CompatibleForm> compatibleAll();//互換性テーブル一覧
 
     CompatibleForm findById(int id);//互換性テーブル詳細
 

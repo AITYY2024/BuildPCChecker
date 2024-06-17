@@ -16,7 +16,7 @@ public class IcompatibleService implements CompatibleService{
 
     //互換性テーブル一覧
     @Override
-    public List<CompatibleForm> compatibleList(){
+    public List<CompatibleForm> compatibleAll(){
         return icompatibleDao.compatibleAll();
     }
 
