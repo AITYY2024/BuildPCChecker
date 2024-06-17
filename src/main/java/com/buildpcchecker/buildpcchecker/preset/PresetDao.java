@@ -15,17 +15,16 @@ public class PresetDao implements IPresetDao {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    //プリセットテーブル一覧
     @Override
     public List<PresetListForm> findAll() {
-
-        System.out.println("abc");
-
         return jdbcTemplate.query("SELECT * FROM preset;",
                 new DataClassRowMapper<>(PresetListForm.class));
     }
 
+    //プリセットテーブル削除
     @Override
-    public int delete(int preset_id) {
+    public Integer delete(Integer preset_id) {
         var param = new MapSqlParameterSource();
         param.addValue("preset_id", preset_id);
         return jdbcTemplate.update("DELETE FROM preset WHERE preset_id = :preset_id", param);

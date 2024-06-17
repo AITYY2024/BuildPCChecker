@@ -12,17 +12,7 @@ import java.util.List;
 public class BuildpccheckerApplication {
 
 	public static void main(String[] args) {
-////		SpringApplication.run(BuildpccheckerApplication.class, args);
-//
-//		var context = SpringApplication.run(BuildpccheckerApplication.class, args);
-//
-////		var presetService = context.getBean(PresetService.class);
-//
-//		var pDao=new PresetDao();
-//		var p=new PresetService(pDao);
-//        List<PresetListForm> list = p.findAll();
-//		System.out.println(list);
-////        list.forEach(System.out::println);
+		SpringApplication.run(BuildpccheckerApplication.class, args);
 	}
 
 }

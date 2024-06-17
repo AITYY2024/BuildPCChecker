@@ -14,16 +14,15 @@ public class PresetService implements IPresetService {
     @Autowired
     private PresetDao presetDao;
 
+    //プリセットテーブル一覧
     @Override
     public List<PresetListForm> findAll(){
-
-        System.out.println("abcd");
-
         return presetDao.findAll();
     }
 
+    //プリセットテーブル削除
     @Override
-    public int delete(int preset_id){
+    public Integer delete(Integer preset_id){
         return presetDao.delete(preset_id);
     }
 }

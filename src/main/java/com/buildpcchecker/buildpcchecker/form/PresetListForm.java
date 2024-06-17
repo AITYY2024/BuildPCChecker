@@ -9,7 +9,7 @@ public class PresetListForm {
 
     private String preset_name;
 
-    private int user_id;
+    private Integer user_id;
 
     private String cpu_id;
 
@@ -23,9 +23,9 @@ public class PresetListForm {
 
     private String ram_name;
 
-    private String storage_id;
+    private String ssd_id;
 
-    private String storage_name;
+    private String ssd_name;
 
     private String psu_id;
 

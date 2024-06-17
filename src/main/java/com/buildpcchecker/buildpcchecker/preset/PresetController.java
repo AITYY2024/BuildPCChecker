@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
-public class TestController {
+public class PresetController {
 
     @Autowired
     PresetService presetService;
 
 
-    @GetMapping("/html")
-    public String test (@ModelAttribute("test") PresetListForm presetListForm, Model model){
-        var a = presetService.findAll();
-        model.addAttribute("test", a);
-        return "html";
-    }
+//    @GetMapping("/test")//http://localhost:8080/test
+//    public String test(){
+//
+//        System.out.println(presetService.findAll());//プリセットテーブル一覧テスト
+//        System.out.println(presetService.delete(1));//プリセットテーブル削除テスト
+//
+//        return "test";
+//    }
 
 }
