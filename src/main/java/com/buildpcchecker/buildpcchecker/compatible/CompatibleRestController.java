@@ -17,15 +17,15 @@ public class CompatibleRestController {
     private IcompatibleService icompatibleService;
 
     //互換性テーブル一覧
-    @GetMapping("/test")
-    public ResponseEntity<List<CompatibleForm>> compatibleList() {
-        try {
-            var compatibleList = icompatibleService.compatibleAll();
-            return new ResponseEntity<>(compatibleList, HttpStatus.OK);
-        } catch (NoSuchException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<List<CompatibleForm>> compatibleList() {
+//        try {
+//            var compatibleList = icompatibleService.compatibleAll();
+//            return new ResponseEntity<>(compatibleList, HttpStatus.OK);
+//        } catch (NoSuchException e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 //
 //    //互換性テーブル詳細
 //    @GetMapping("/test")

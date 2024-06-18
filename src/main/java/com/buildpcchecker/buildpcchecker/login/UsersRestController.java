@@ -37,13 +37,13 @@ public class UsersRestController {
     }
 
     //新規登録
-//    @GetMapping("/test")
-//    public ResponseEntity<Integer>userInsert(String user_name, String password){
-//        try {
-//            var userInsert = iusersService.insert(user_name,password);
-//            return new ResponseEntity<>(userInsert,HttpStatus.OK);
-//        }catch (NoSuchUsersException e){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @GetMapping("/test")
+    public ResponseEntity<Integer>userInsert(String user_name, String password){
+        try {
+            var userInsert = iusersService.insert(user_name,password);
+            return new ResponseEntity<>(userInsert,HttpStatus.OK);
+        }catch (NoSuchUsersException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
