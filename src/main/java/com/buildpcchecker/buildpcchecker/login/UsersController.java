@@ -17,9 +17,9 @@ public class UsersController {
 //        return "test";
 //    }
 
-    @GetMapping("")
+    @GetMapping("/test")
     public String login(){
-        return "";
+        return "test-login";
     }
 
 }
