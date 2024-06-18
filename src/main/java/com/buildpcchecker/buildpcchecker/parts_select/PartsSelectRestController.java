@@ -18,7 +18,7 @@ public class PartsSelectRestController {
 
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
-    @GetMapping("/testPartsCategory")
+    @GetMapping("/tryDateSend")
     public ResponseEntity<List<CpuSelectForm>> cpuTable(){
         try {
             List<CpuSelectForm> testCpu = productsService.tableCpuParts();

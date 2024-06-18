@@ -1,6 +1,6 @@
 'use strict'
 // ボタンクリック時の処理を定義
-document.getElementById('btn').addEventListener('click', () => {
+document.getElementById('testbtn').addEventListener('click', () => {
     // リクエストで送信するJSON用のオブジェクト作成
     const preset = {
 //          Javaのフォームクラスのフィールド名:document.getElementById('HTMLのID').value
@@ -19,7 +19,7 @@ document.getElementById('btn').addEventListener('click', () => {
     }
     // POSTでリクエスト送信
     // presetをJSONに変換して送る
-    fetch('/api/preset', {
+    fetch('/testPartsCategory', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
