@@ -3,8 +3,8 @@
     document.getElementById('btn').addEventListener('click', () => {
         // リクエストで送信するJSON用のオブジェクト作成
 //        const user = {}
-        // POSTでリクエスト送信
-        // presetをJSONに変換して送る
+        // DELETEリクエスト送信(@DeleteMappingで受け取る)
+        // JSONに変換して送る
         fetch('/api/userDelete', {
           method: 'DELETE',
           headers: {
