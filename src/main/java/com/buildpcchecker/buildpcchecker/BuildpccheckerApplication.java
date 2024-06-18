@@ -9,4 +9,5 @@ public class BuildpccheckerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BuildpccheckerApplication.class, args);
 	}
+
 }
