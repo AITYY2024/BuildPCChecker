@@ -36,8 +36,8 @@ document.getElementById('delete-btn').addEventListener('click', () => {
 //          Javaのフォームクラスのフィールド名:document.getElementById('HTMLのID').value
         presetId: document.getElementById('preset_id').value
     }
-    // POSTでリクエスト送信
-    // userをJSONに変換して送る
+    // DELETEリクエスト送信(@DeleteMappingで受け取る)
+    // JSONに変換して送る
     fetch('/api/productDelete', {
       method: 'DELETE',
       headers: {

@@ -1,4 +1,4 @@
 package com.buildpcchecker.buildpcchecker.compatible;
 
-public class TestDao {
+public class NoSuchException extends RuntimeException{
 }
