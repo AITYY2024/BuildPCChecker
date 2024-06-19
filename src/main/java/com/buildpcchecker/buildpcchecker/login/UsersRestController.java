@@ -15,5 +15,3 @@ public class UsersRestController {
     @Autowired
     public HttpSession session;
 
-    //ログイン
-}
