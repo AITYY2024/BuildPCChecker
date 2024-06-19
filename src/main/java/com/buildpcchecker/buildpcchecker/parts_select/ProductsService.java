@@ -122,4 +122,9 @@ public class ProductsService implements IProductsService {
             return osList;
     }
 
+    public Integer catchPresetInsert(PresetListForm presetListForm){
+        Integer insertNumber = productsDao.catchPresetInsert(presetListForm);
+        return insertNumber;
+    }
+
 }

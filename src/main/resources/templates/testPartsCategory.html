@@ -7,29 +7,31 @@
 <body>
 <p>テスト</p>
 <p></p>
-<div id="db_id"></div>
+<div id="dbid"></div>
 
 
 <script>
 
 
-    fetch('/tryDateSend', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+
+        fetch('/catchPresetRegistration', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+
+        })
+        .then(res =>{
+        res.json().then( date =>{
+        console.log(date);
+         })
+         console.log(res);
 
     })
-    .then(res =>{
-    res.json().then( date =>{
-    console.log(date);
-     })
-     console.log(res);
-
-})
 
 
 </script>
+
 </body>
 
 </html>
