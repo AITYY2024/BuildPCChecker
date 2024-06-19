@@ -16,13 +16,25 @@ public class PresetService implements IPresetService {
 
     //プリセットテーブル一覧
     @Override
-    public List<PresetListForm> findAll(){
-        return presetDao.findAll();
+    public List<PresetListForm> findAll(Integer user_id){
+        return presetDao.findAll(user_id);
+    }
+
+    //プリセット詳細表示
+    @Override
+    public PresetListForm findById(Integer preset_id) {
+        return presetDao.findById(preset_id);
     }
 
     //プリセットテーブル削除
     @Override
     public Integer delete(Integer preset_id){
         return presetDao.delete(preset_id);
+    }
+
+    //プリセット編集
+    @Override
+    public Integer update(PresetListForm presetListForm) {
+        return presetDao.update(presetListForm);
     }
 }
