@@ -11,10 +11,15 @@
         }
         // POSTでリクエスト送信
         // userをJSONに変換して送る
+
 //        fetch('/api/user', {  //ログインテスト
-        fetch('/api/user_insert', {
+
+        fetch('/api/user_insert', { //新規登録テスト
+
 //          method: 'POST',  //ログインテスト
-          method: 'PUT',
+
+          method: 'PUT', //新規登録テスト
+
           headers: {
             'Content-Type': 'application/json',
           },
