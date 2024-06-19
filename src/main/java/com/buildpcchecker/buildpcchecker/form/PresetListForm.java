@@ -70,6 +70,6 @@ public class PresetListForm {
 
     private Integer description;//メモ
 
-    private Integer total_amount;//合計金額aaaaaa
+    private Integer total_amount;//合計金額
 
 }

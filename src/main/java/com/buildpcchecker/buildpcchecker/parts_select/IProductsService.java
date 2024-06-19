@@ -38,4 +38,7 @@ public interface IProductsService {
     //OSのテーブルから検索したものを表示する
     public List<OsSelectForm> searchOsParts(String os_name);
 
+    //product_idをプリセットに使うidにして送る
+    public Integer catchPresetInsert(PresetListForm presetListForm);
+
 }

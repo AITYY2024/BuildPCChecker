@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,17 +20,17 @@ public class PartsSelectRestController {
 
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
-    @GetMapping("/testPartsCategory")
-    public ResponseEntity<List<CpuSelectForm>> cpuTable(){
-        try {
-            List<CpuSelectForm> testCpu = productsService.tableCpuParts();
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(testCpu, HttpStatus.OK);
-        } catch (PartsNotFoundException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/tryDateSend")
+//    public ResponseEntity<List<CpuSelectForm>> cpuTable(){
+//        try {
+//            List<CpuSelectForm> testCpu = productsService.tableCpuParts();
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testCpu, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 //    //GPUのテーブルを全て表示する
 //        @GetMapping("/testPartsCategory")
@@ -201,5 +203,17 @@ public class PartsSelectRestController {
 //        }
 //    }
 
+    //プリセットを登録するAPI
+//    @PostMapping(value = "/catchPresetRegistration")
+//    public ResponseEntity<Integer> presetRegistration(@RequestBody PresetListForm presetListForm){
+//        try {
+//            Integer presetregistration = productsService.catchPresetInsert(presetListForm);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetregistration, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 }
