@@ -36,7 +36,7 @@ public class UsersRestController {
                     return new ResponseEntity<>(role, HttpStatus.OK);
                 }
             } else {
-                var role = 0;
+                var role = 3;
                 return new ResponseEntity<>(role, HttpStatus.OK);
             }
         } catch (NoSuchUsersException e) {
