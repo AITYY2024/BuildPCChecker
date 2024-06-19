@@ -23,7 +23,7 @@
             // リクエストで送信するJSON用のオブジェクト作成
             const compatible = {
     //          Javaのフォームクラスのフィールド名:document.getElementById('HTMLのID').value
-                compatibleId: document.getElementById('compatible_id').value
+                compatibleId: document.getElementById('compatible_id').value,
                 cpuGen: document.getElementById('cpu_gen').value,
                 chipset: document.getElementById('chipset').value,
             }
@@ -37,4 +37,20 @@
               body: JSON.stringify(compatible),
             })
             .then(res => console.log(res))
+        })
+
+
+        fetch('/api/compatible', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        //  body: JSON.stringify(product),
+        })
+        .then(res => {
+            //データをもっていく必要があるため
+            res.json().then( data => {
+                console.log(data);
+            })
+            console.log(res);
         })

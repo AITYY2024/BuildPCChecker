@@ -1,5 +1,6 @@
 package com.buildpcchecker.buildpcchecker.compatible;
 
+import com.buildpcchecker.buildpcchecker.date.CompatibleDisplayForm;
 import com.buildpcchecker.buildpcchecker.date.CompatibleForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.DataClassRowMapper;
@@ -16,18 +17,18 @@ public class IcompatibleDao implements CompatibleDao{
 
     //互換性テーブル一覧
     @Override
-    public List<CompatibleForm>compatibleAll(){
+    public List<CompatibleDisplayForm>compatibleAll(){
         return jdbcTemplate.query("SELECT * FROM compatible ORDER BY cpu_generation",
-                                    new DataClassRowMapper<>(CompatibleForm.class));
+                                    new DataClassRowMapper<>(CompatibleDisplayForm.class));
     }
 
     //互換性テーブル詳細
     @Override
-    public CompatibleForm findById(int id){
+    public CompatibleDisplayForm findById(int id){
         var param = new MapSqlParameterSource();
         param.addValue("id", id);
         var list = jdbcTemplate.query("SELECT * FROM compatible WHERE id = :id",
-                                        param, new DataClassRowMapper<>(CompatibleForm.class));
+                                        param, new DataClassRowMapper<>(CompatibleDisplayForm.class));
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -35,8 +36,8 @@ public class IcompatibleDao implements CompatibleDao{
     @Override
     public int insert(CompatibleForm compatibleForm){
         var param = new MapSqlParameterSource();
-        param.addValue("cpu_generation",compatibleForm.getCpu_generation());
-        param.addValue("chipset_name",compatibleForm.getChipset_name());
+        param.addValue("cpu_generation",compatibleForm.getCpuGen());
+        param.addValue("chipset_name",compatibleForm.getChipset());
         return jdbcTemplate.update("INSERT INTO compatible (cpu_generation,chipset_name)" +
                                     " VALUES (:cpu_generation,:chipset_name)",param);
     }
@@ -45,9 +46,9 @@ public class IcompatibleDao implements CompatibleDao{
     @Override
     public int update(CompatibleForm compatibleForm){
         var param = new MapSqlParameterSource();
-        param.addValue("id",compatibleForm.getId());
-        param.addValue("cpu_generation",compatibleForm.getCpu_generation());
-        param.addValue("chipset_name",compatibleForm.getChipset_name());
+        param.addValue("id",compatibleForm.getCompatibleId());
+        param.addValue("cpu_generation",compatibleForm.getCpuGen());
+        param.addValue("chipset_name",compatibleForm.getChipset());
         return jdbcTemplate.update("UPDATE compatible " +
                                     "SET cpu_generation = :cpu_generation" +
                                     ",chipset_name = :chipset_name " +
