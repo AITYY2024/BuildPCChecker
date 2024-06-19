@@ -16,28 +16,28 @@ public class CompatibleRestController {
     private IcompatibleService icompatibleService;
 
     //互換性テーブル一覧
-//    @GetMapping("/api/compatible")
-//    public ResponseEntity<List<CompatibleDisplayForm>> compatibleList() {
-//        try {
-//            var compatibleList = icompatibleService.compatibleAll();
-//
-//            System.out.println(compatibleList);
-//            return new ResponseEntity<>(compatibleList, HttpStatus.OK);
-//        } catch (NoSuchException e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-//    //互換性テーブル詳細
     @GetMapping("/api/compatible")
-    public ResponseEntity<CompatibleDisplayForm>compatibleDetail(int id){
+    public ResponseEntity<List<CompatibleDisplayForm>> compatibleList() {
         try {
-            var compatibleDetail = icompatibleService.findById(id);
-            return new ResponseEntity<>(compatibleDetail,HttpStatus.OK);
-        }catch (NoSuchException e){
+            var compatibleList = icompatibleService.compatibleAll();
+
+            System.out.println(compatibleList);
+            return new ResponseEntity<>(compatibleList, HttpStatus.OK);
+        } catch (NoSuchException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+//    //互換性テーブル詳細
+//    @GetMapping("/api/compatible")
+//    public ResponseEntity<CompatibleDisplayForm>compatibleDetail(int id){
+//        try {
+//            var compatibleDetail = icompatibleService.findById(id);
+//            return new ResponseEntity<>(compatibleDetail,HttpStatus.OK);
+//        }catch (NoSuchException e){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 //    //互換性テーブル追加
     @PostMapping("/api/compatible")
