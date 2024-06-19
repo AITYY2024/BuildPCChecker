@@ -4,13 +4,22 @@
         // リクエストで送信するJSON用のオブジェクト作成
         const user = {
 //          Javaのフォームクラスのフィールド名:document.getElementById('HTMLのID').value
-            name: document.getElementById('name').value,
+            id: 0,
+            user_name: document.getElementById('name').value,
             password: document.getElementById('password').value,
+            role: 0
         }
         // POSTでリクエスト送信
         // userをJSONに変換して送る
-        fetch('/api/user', {
-          method: 'POST',
+
+//        fetch('/api/user', {  //ログインテスト
+
+        fetch('/api/user_insert', { //新規登録テスト
+
+//          method: 'POST',  //ログインテスト
+
+          method: 'PUT', //新規登録テスト
+
           headers: {
             'Content-Type': 'application/json',
           },

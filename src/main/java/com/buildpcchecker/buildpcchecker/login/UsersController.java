@@ -9,17 +9,4 @@ public class UsersController {
     @Autowired
     IusersService iusersService;
 
-//    @GetMapping("/test")
-//    public String test(){
-//        System.out.println(iusersService.findByUser("user","user"));//ログインテスト
-//
-//       System.out.println(iusersService.insert("user2","user2"));//新規登録テスト
-//        return "test";
-//    }
-
-//    @GetMapping("/test")
-//    public String login(){
-//        return "test-login";
-//    }
-//
 }

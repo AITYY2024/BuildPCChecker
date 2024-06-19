@@ -9,9 +9,8 @@ public class SettingController {
     @Autowired
     IsettingService isettingService;
 
-//    @GetMapping("/test")
-//    public String test(){
-//        System.out.println(isettingService.delete(3));
-//        return "test";
-//    }
+    @GetMapping("/test-setting")
+    public String test(){
+        return "test-setting";
+    }
 }
