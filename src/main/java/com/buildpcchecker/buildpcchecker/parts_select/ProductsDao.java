@@ -151,17 +151,67 @@ public class ProductsDao implements IProductsDao{
     }
 
     //product_idをプリセットに使うidにして送る
+    @Override
     public Integer catchPresetInsert(PresetListForm presetListForm){
         var param = new MapSqlParameterSource();
+        //プリセット名,ユーザー名を取得
+        param.addValue("preset_name", presetListForm.getPreset_name());
+        param.addValue("user_id", presetListForm.getUser_id());
+
+        //CPUを取得
         param.addValue("cpu_id", presetListForm.getCpu_id());
+        param.addValue("cpu_name", presetListForm.getCpu_name());
+        param.addValue("cpu_url", presetListForm.getCpu_url());
+
+        //GPUを取得
         param.addValue("gpu_id", presetListForm.getGpu_id());
+        param.addValue("gpu_name", presetListForm.getGpu_name());
+        param.addValue("gpu_url", presetListForm.getGpu_url());
+
+        //Memoryを取得
         param.addValue("ram_id", presetListForm.getRam_id());
+        param.addValue("ram_name", presetListForm.getRam_name());
+        param.addValue("ram_url", presetListForm.getRam_url());
+        //MBを取得
+        param.addValue("mb_id", presetListForm.getMb_id());
+        param.addValue("mb_name", presetListForm.getMb_name());
+        param.addValue("mb_url", presetListForm.getMb_url());
+        //SSDを取得
         param.addValue("ssd_id", presetListForm.getSsd_id());
+        param.addValue("ssd_name", presetListForm.getSsd_name());
+        param.addValue("ssd_url", presetListForm.getSsd_url());
+        //PSUを取得
         param.addValue("psu_id", presetListForm.getPsu_id());
+        param.addValue("psu_name", presetListForm.getPsu_name());
+        param.addValue("psu_url", presetListForm.getPsu_url());
+        //OSを取得
+        param.addValue("os_id", presetListForm.getOs_id());
+        param.addValue("os_name", presetListForm.getOs_name());
+        param.addValue("os_url", presetListForm.getOs_url());
+        //メモ・合計を取得
+        param.addValue("description", presetListForm.getDescription());
         param.addValue("total_amount", presetListForm.getTotal_amount());
-        //param.addValue("description", presetListForm.get);
+
         return jdbcTemplate.update("""
-               INSERT INTO preset (cpu_id,gpu_id,ram_id,ssd_id,psu_id,total_amount)
-               VALUES (:cpu_id,:gpu_id,:ram_id,:ssd_id,:psu_id,:total_amount)""", param);
+               INSERT INTO preset (
+               preset_name,user_id,
+               cpu_id,cpu_name,cpu_url,
+               gpu_id,gpu_name,gpu_url,
+               ram_id,ram_name,ram_url,
+               mb_id,mb_name,mb_url,
+               ssd_id,ssd_name,ssd_url,
+               psu_id,psu_name,psu_url,
+               os_id,os_name,os_url,
+               description,total_amount)
+               VALUES (
+               :preset_name,:user_id,
+               :cpu_id,:cpu_name,:cpu_url,
+               :gpu_id,:gpu_name,:gpu_url,
+               :ram_id,:ram_name,:ram_url,
+               :mb_id,:mb_name,:mb_url,
+               :ssd_id,:ssd_name,:ssd_url,
+               :psu_id,:psu_name,:psu_url,
+               :os_id,:os_name,:os_url,
+               :description,:total_amount)""", param);
     }
 }
