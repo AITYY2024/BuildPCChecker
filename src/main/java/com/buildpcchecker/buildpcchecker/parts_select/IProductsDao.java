@@ -38,4 +38,9 @@ public interface IProductsDao {
     //OSのテーブルから検索したものを表示する
     List<OsSelectForm> searchOsParts(String os_name);
 
+
+
+    //プリセット登録に使うAPI
+    Integer catchPresetInsert(PresetListForm presetListForm);
+
 }

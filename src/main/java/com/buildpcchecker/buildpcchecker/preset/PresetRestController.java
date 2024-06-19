@@ -19,18 +19,18 @@ public class PresetRestController {
     PresetService presetService;
 
     //プリセット一覧表示用
-    @GetMapping("/test")
-    public ResponseEntity<List<PresetListForm>> PresetList() {
-        try {
-            List<PresetListForm> presetList = presetService.findAll();
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetList, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            e.printStackTrace();//エラー内容をコンソール画面に表示するための処理
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<List<PresetListForm>> PresetList() {
+//        try {
+//            List<PresetListForm> presetList = presetService.findAll();
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetList, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            e.printStackTrace();//エラー内容をコンソール画面に表示するための処理
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 //    //テスト用（DeleteMappingを使用するにはJavaScript側からの指定がないといけない）
 //    @GetMapping("/test")

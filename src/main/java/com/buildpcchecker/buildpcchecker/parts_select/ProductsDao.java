@@ -150,4 +150,18 @@ public class ProductsDao implements IProductsDao{
             return list;
     }
 
+    //product_idをプリセットに使うidにして送る
+    public Integer catchPresetInsert(PresetListForm presetListForm){
+        var param = new MapSqlParameterSource();
+        param.addValue("cpu_id", presetListForm.getCpu_id());
+        param.addValue("gpu_id", presetListForm.getGpu_id());
+        param.addValue("ram_id", presetListForm.getRam_id());
+        param.addValue("ssd_id", presetListForm.getSsd_id());
+        param.addValue("psu_id", presetListForm.getPsu_id());
+        param.addValue("total_amount", presetListForm.getTotal_amount());
+        //param.addValue("description", presetListForm.get);
+        return jdbcTemplate.update("""
+               INSERT INTO preset (cpu_id,gpu_id,ram_id,ssd_id,psu_id,total_amount)
+               VALUES (:cpu_id,:gpu_id,:ram_id,:ssd_id,:psu_id,:total_amount)""", param);
+    }
 }
