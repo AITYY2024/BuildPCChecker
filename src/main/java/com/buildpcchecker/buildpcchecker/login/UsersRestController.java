@@ -5,9 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UsersRestController {
@@ -18,29 +16,41 @@ public class UsersRestController {
     public HttpSession session;
 
     //ログイン
-    @PostMapping("/test")
-    public ResponseEntity<UsersForm>login(String user_name, String password){
+    @PostMapping("/api/user")
+    public ResponseEntity<Integer>login(@RequestBody UsersForm usersForm){
+
         try {
-            var login = iusersService.findByUser(user_name,password);
+            var login = iusersService.findByUser(usersForm.getUser_name(),usersForm.getPassword());
 
-            var sessionUser = new  UsersForm();
-            sessionUser.setId(login.getId());
-            sessionUser.setUser_name(login.getUser_name());
-            sessionUser.setPassword(login.getPassword());
-            sessionUser.setRole(login.getRole());
-            session.setAttribute("sessionUser", sessionUser);
-
-            return new ResponseEntity<>(login, HttpStatus.OK);
-        }catch (NoSuchUsersException e){
+            if (login != null) {
+                var sessionUser = new  UsersForm();
+                sessionUser.setId(login.getId());
+                sessionUser.setUser_name(login.getUser_name());
+                sessionUser.setPassword(login.getPassword());
+                sessionUser.setRole(login.getRole());
+                session.setAttribute("sessionUser", sessionUser);
+                if (login.getRole() == 1){
+                    var role = 1;
+                    return new ResponseEntity<>(role, HttpStatus.OK);
+                }else if (login.getRole() == 2) {
+                    var role = 2;
+                    return new ResponseEntity<>(role, HttpStatus.OK);
+                }
+            } else {
+                var role = 0;
+                return new ResponseEntity<>(role, HttpStatus.OK);
+            }
+        } catch (NoSuchUsersException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     //新規登録
-    @GetMapping("/test")
-    public ResponseEntity<Integer>userInsert(String user_name, String password){
+    @PutMapping("/api/user_insert")
+    public ResponseEntity<Integer>userInsert(@RequestBody UsersForm usersForm){
         try {
-            var userInsert = iusersService.insert(user_name,password);
+            var userInsert = iusersService.insert(usersForm.getUser_name(),usersForm.getPassword());
             return new ResponseEntity<>(userInsert,HttpStatus.OK);
         }catch (NoSuchUsersException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
