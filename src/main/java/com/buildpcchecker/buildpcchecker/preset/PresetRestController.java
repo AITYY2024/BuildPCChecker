@@ -1,6 +1,7 @@
 package com.buildpcchecker.buildpcchecker.preset;
 
 import com.buildpcchecker.buildpcchecker.form.PresetListForm;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +16,34 @@ public class PresetRestController {
     @Autowired
     PresetService presetService;
 
+    @Autowired
+    private HttpSession session;
+
     //プリセット一覧表示用
-    @GetMapping("/api/product")
-    public ResponseEntity<List<PresetListForm>> PresetList(Integer user_id) {
-        try {
-            List<PresetListForm> presetList = presetService.findAll(1);
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetList, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/api/product")
+//    public ResponseEntity<List<PresetListForm>> PresetList(Integer user_id) {
+//        try {
+//            List<PresetListForm> presetList = presetService.findAll(user_id);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetList, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+//    @GetMapping("/api/product")
+//    public ResponseEntity<List<PresetListForm>> PresetList() {
+//        try {
+//            session.getAttribute();
+//            List<PresetListForm> presetList = presetService.findAll();
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetList, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 //    //プリセット詳細表示
 //    @GetMapping("/api/productDetail")
