@@ -20,8 +20,6 @@ public class CompatibleRestController {
     public ResponseEntity<List<CompatibleDisplayForm>> compatibleList() {
         try {
             var compatibleList = icompatibleService.compatibleAll();
-
-            System.out.println(compatibleList);
             return new ResponseEntity<>(compatibleList, HttpStatus.OK);
         } catch (NoSuchException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
