@@ -19,10 +19,16 @@ public class ProductsDao implements IProductsDao{
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
     @Override
-    public List<CpuSelectForm> tableCpuParts(){
-        return jdbcTemplate.query("""
+    public List<CpuSelectForm> tableCpuParts(String chipset_name){
+
+            var param = new MapSqlParameterSource();
+            param.addValue("chipset_name", "%" + chipset_name + "%");
+            var list = jdbcTemplate.query("""
                 SELECT * FROM cpu
-                """,new DataClassRowMapper<>(CpuSelectForm.class));
+                WHERE
+                gen IN (SELECT cpu_generation FROM compatible WHERE chipset_name LIKE :chipset_name)
+                """, param, new DataClassRowMapper<>(CpuSelectForm.class));
+            return list;
     }
 
     //GPUのテーブルを全て表示する
@@ -42,10 +48,15 @@ public class ProductsDao implements IProductsDao{
 
     //Mbのテーブルを全て表示する
     @Override
-    public List<MbSelectForm> tableMbParts(){
-        return jdbcTemplate.query("""
-                SELECT * FROM mb
-                """,new DataClassRowMapper<>(MbSelectForm.class));
+    public List<MbSelectForm> tableMbParts(String cpu_generation){
+            var param = new MapSqlParameterSource();
+            param.addValue("cpu_generation", "%" + cpu_generation + "%");
+            var list = jdbcTemplate.query("""
+            SELECT * FROM mb
+            WHERE
+            chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation)
+            """, param, new DataClassRowMapper<>(MbSelectForm.class));
+            return list;
     }
 
     //SSDのテーブルを全て表示する

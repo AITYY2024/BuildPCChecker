@@ -17,8 +17,8 @@ public class ProductsService implements IProductsService {
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
     @Override
-    public  List<CpuSelectForm> tableCpuParts(){
-        return productsDao.tableCpuParts();
+    public  List<CpuSelectForm> tableCpuParts(String chipset_name){
+        return productsDao.tableCpuParts(chipset_name);
     }
     //GPUのテーブルを全て表示する
     @Override
@@ -32,8 +32,8 @@ public class ProductsService implements IProductsService {
     }
     //Mbのテーブルを全て表示する
     @Override
-    public  List<MbSelectForm> tableMbParts(){
-        return productsDao.tableMbParts();
+    public  List<MbSelectForm> tableMbParts(String cpu_generation){
+        return productsDao.tableMbParts(cpu_generation);
     }
     //SSDのテーブルを全て表示する
     @Override
