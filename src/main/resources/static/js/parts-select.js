@@ -29,7 +29,6 @@
     //////////モーダル表示///////////
           const selectButtons = document.querySelectorAll('button[data-bs-toggle="modal"]');
           selectButtons.forEach(button => {
-            //button.addEventListener('click', async function(event) => {
             button.addEventListener('click', async function(event){
               const partsCategoryName = event.currentTarget.getAttribute('data-name');
               document.getElementById('selectModalLabel').setAttribute('data-name', partsCategoryName);
@@ -39,9 +38,10 @@
               let data;
               let selectModalTitle;
 
+              let chipset="";
+              let cpuGen="";
               switch(document.getElementById('selectModalLabel').value){
                 case 'CPU':
-                  let chipset=document.getElementById('spec4MB').value===null ? "":document.getElementById('spec4MB').value;
                   selectModalTitle = 'CPU';
                   data = await fetch(`/api/searchByCpuList`,{
                     method: 'GET',
@@ -64,7 +64,6 @@
                   data = await fetch(`/api/getRamList`);
                   break;
                 case 'MB':
-                  let cpuGen=document.getElementById('spec4CPU').value===null ? "":document.getElementById('spec4CPU').value;
                   selectModalTitle = 'マザーボード';
                   data = await fetch(`/api/searchByMbList`,{
                     method: 'GET',
@@ -95,9 +94,7 @@
               document.getElementById('selectModalLabel').textContent = selectModalTitle + 'を選択';
 
               let dataObj;
-              for (let i = 0; i < data.length; i++) {
-                dataObj = Object.values(data[i]);
-                partsCard = `
+              const partsCard = `
                   <div class="card my-2 border-primary-subtle border-3 parts-card" data-bs-dismiss="modal">
                     <div class="card-body border border-0 py-3 list-group-item list-group-item-action" aria-current="true">
                       <div class="d-flex w-100 justify-content-between">
@@ -107,12 +104,36 @@
                       <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
                       <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
                       <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
-                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4" id="spec4`+ partsCategoryName +`"></span>
+                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
                       <small class="float-end release"></small>
                     </div>
-                  </div>`
+                  </div>`;
+              partsList.insertAdjacentHTML('beforeend', partsCard);
+              partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', null);
+              partsList.querySelectorAll(".name")[i].textContent = "未選択";
+              partsList.querySelectorAll(".price")[i].textContent = '¥0' + dataObj?.[3].toLocaleString();
+              if (partsList.querySelectorAll(".spec1")[i] != null) {
+                partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+              }
+              if (partsList.querySelectorAll(".spec2")[i] != null) {
+                partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+                if(document.getElementById('selectModalLabel').value==="MB"){
+                  cpuGen=dataObj?.[6];
+                }
+              }
+              if (partsList.querySelectorAll(".spec3")[i] != null) {
+                partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+              }
+              if (partsList.querySelectorAll(".spec4")[i] != null) {
+                partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+                if(document.getElementById('selectModalLabel').value==="CPU"){
+                  cpuGen=dataObj?.[8];
+                }
+              }
+              partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+              for (let i = 0; i < data.length; i++) {
+                dataObj = Object.values(data[i]);
                 partsList.insertAdjacentHTML('beforeend', partsCard);
-
                 partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[0]);
                 partsList.querySelectorAll(".name")[i].textContent = dataObj?.[2];
                 partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[3].toLocaleString();
@@ -121,12 +142,18 @@
                 }
                 if (partsList.querySelectorAll(".spec2")[i] != null) {
                   partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+                  if(document.getElementById('selectModalLabel').value==="MB"){
+                    cpuGen=dataObj?.[6];
+                  }
                 }
                 if (partsList.querySelectorAll(".spec3")[i] != null) {
                   partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
                 }
                 if (partsList.querySelectorAll(".spec4")[i] != null) {
-                  (partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8]);
+                  partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+                  if(document.getElementById('selectModalLabel').value==="CPU"){
+                    cpuGen=dataObj?.[8];
+                  }
                 }
                 partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
 

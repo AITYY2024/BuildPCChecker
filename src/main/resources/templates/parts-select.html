@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>構成</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .main {
+          margin-bottom: 75px;
+        }
+        /* Modalの高さ設定 */
+        .modal-body {
+          max-height: calc(100svh - 240px);
+          overflow-y: auto;
+        }
+        .dropdown-menu {
+          min-width: 0 !important;
+        }
+        #bottomBar {
+          width: fit-content;
+        }
+        #sideView {
+          position: fixed;
+          right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<script>
+    const header = document.getElementById('header');
+    header.innerHTML = `
+      <div class="bg-body-tertiary d-flex justify-content-between align-items-center p-2" id="defaultNav">
+        <span class="mb-0 me-2 h5">Build PC Checker</span>
+        <div class="d-none d-sm-flex">
+          <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" aria-current="page" href="./parts-select.html">構成</a>
+          <a class="nav-link ms-4" href="./preset-list.html">プリセット</a>
+        </div>
+        <div class="btn-group ms-auto">
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='./login-redirect.html'">ログアウト</button>
+          <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#" id="themeBtn">カラーモード<i class="fa-regular fa-sun ms-2"></i></a></li>
+            <li><a class="dropdown-item" href="#">アカウント</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-body-tertiary d-sm-none p-2 ps-3" id="mobileNav">
+        <div class="d-flex justify-content-start">
+          <a class="nav-link border-bottom border-2 border-primary fw-semibold" href="./parts-select.html">構成</a>
+          <a class="nav-link ms-4" href="./preset-list.html">プリセット</a>
+        </div>
+      </div>`;
+
+    // ナビゲーションバーの上部固定切り替え
+    function setDefaultNavFixed() {
+      let defaultNav = document.getElementById('defaultNav');
+      if (window.innerWidth <= 576) {
+        defaultNav.classList.remove('fixed-top');
+      } else {
+        defaultNav.classList.add('fixed-top');
+      }
+    }
+
+    // 小さい画面用ナビゲーションバーの上部固定切り替え
+    function setMobileNavFixed() {
+      let mobileNav = document.getElementById('mobileNav');
+      if (window.scrollY >= 53.6) {
+        mobileNav.classList.add('fixed-top');
+      } else {
+        mobileNav.classList.remove('fixed-top');
+      }
+    }
+
+    // コンテンツがナビゲーションバーに被らないようにマージン調整
+    function setMainMargin() {
+      let defaultNav = document.getElementById('defaultNav');
+      let mobileNav = document.getElementById('mobileNav');
+      let main = document.querySelector('.main');
+      let navHeight = 0;
+      if (window.innerWidth <= 576) {
+        if (window.scrollY >= 53.6) {
+          navHeight = mobileNav.offsetHeight;
+        } else {
+          navHeight = 0;
+        }
+      } else {
+        navHeight = defaultNav.offsetHeight;
+      }
+      main.style.marginTop = navHeight + 10 + 'px';
+    }
+
+    // ウィンドウリサイズ時に実行
+    window.addEventListener('resize', () => {
+      setDefaultNavFixed();
+      setMainMargin();
+    });
+
+    // スクロール時に実行
+    document.addEventListener('scroll', () => {
+      setMobileNavFixed();
+      setMainMargin();
+    });
+
+    // ロード時に実行
+    window.addEventListener('load', () => {
+      setDefaultNavFixed();
+      setMobileNavFixed();
+      setMainMargin();
+    });
+
+    // テーマ切り替え
+    function toggleTheme() {
+      const currentTheme = document.documentElement.dataset.bsTheme;
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.bsTheme = newTheme;
+      const themeBtnIcon = document.getElementById("themeBtn").querySelector('i');
+      themeBtnIcon.classList.remove(currentTheme === 'light' ? 'fa-sun' : 'fa-moon');
+      themeBtnIcon.classList.add(newTheme === 'light' ? 'fa-sun' : 'fa-moon');
+    }
+
+    // ボタン押下時に実行
+    document.getElementById("themeBtn").addEventListener('click', () => {
+      toggleTheme();
+    });
+</script>
+
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-12 col-xl-10">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-2">構成</h4>
+
+                    <div class="row">
+
+                        <div class="col col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="cpu">
+                                <h5 class="card-header">CPU<span class="float-end text-danger price">¥0</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="CPU" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="gpu">
+                                <h5 class="card-header">グラフィックボード<span class="float-end text-danger price">¥0</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="GPU" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="memory">
+                                <h5 class="card-header">メモリ<span class="float-end text-danger price">0￥</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="MEMORY" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="mb">
+                                <h5 class="card-header">マザーボード<span class="float-end text-danger price">0￥</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="MB" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="ssd">
+                                <h5 class="card-header">SSD<span class="float-end text-danger price">0￥</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="SSD" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="psu">
+                                <h5 class="card-header">電源<span class="float-end text-danger price">0￥</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                                        <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="PSU" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-4">
+                            <div class="card my-2" id="os">
+                                <h5 class="card-header">OS<span class="float-end text-danger price">0￥</span></h5>
+                                <div class="card-body">
+                                    <h5 class="card-title name">未選択</h5>
+                                    <p class="card-text">
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-sm w-100" data-name="OS" data-bs-toggle="modal" data-bs-target="#selectModal">
+                                        選択
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-xl-8">
+                            <div class="card my-2">
+                                <h5 class="card-header">メモ</h5>
+                                <div class="card-body">
+                                    <div class="input-group">
+                                        <textarea id="description" class="form-control" rows="3" placeholder="メモを入力してください"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-2 d-xl-block d-none border rounded-2" id="sideView">
+            <h4 class="my-3">構成</h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item">CPU<br><span id="CPUPrice"></span></li>
+                <li class="list-group-item">グラフィックボード<br><span id="GPUPrice"></span></li>
+                <li class="list-group-item">メモリ<br><span id="MEMORYPrice"></span></li>
+                <li class="list-group-item">マザーボード<br><span id="MBPrice"></span></li>
+                <li class="list-group-item">ストレージ<br><span id="SSDPrice"></span></li>
+                <li class="list-group-item">電源<br><span id="PSUPrice"></span></li>
+                <li class="list-group-item">OS<br><span id="OSPrice"></span></li>
+                <li class="list-group-item fw-semibold">合計<br><span id="sideTotalPrice"></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="">
+    <div class="mx-auto bg-body-tertiary d-flex align-items-center m-2 p-2 border border-1 rounded-2 fixed-bottom" id="bottomBar">
+        <span class="mb-0 me-2 h5 text-nowrap">合計<span class="text-danger ms-2" id="totalPrice">¥0</span></span>
+        <div class="input-group ms-4">
+            <input id="presetName" type="text" class="form-control" placeholder="プリセット名">
+            <button id="presetSaveBtn" class="btn btn-primary" type="button">保存</button>
+        </div>
+    </div>
+</div>
+
+<!-- モーダル -->
+<div class="modal fade" id="selectModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="selectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectModalLabel"></h5>
+            </div>
+            <div class="modal-body">
+                <input id="searchWord" type="text" class="form-control" placeholder="検索キーワード">
+                <input id="minPrice" type="text" class="form-control" placeholder="下限金額">
+                <input id="maxPrice" type="text" class="form-control" placeholder="上限金額">
+                <button id="searchBtn" class="btn btn-primary" type="button">保存</button>
+                <div class="list-group" id="partsList">
+
+                </div>
+            </div>
+            <div class="modal-footer d-block">
+                <div class="row m-0 p-0">
+                    <div class="col ps-0 pe-0">
+                        <button type="button" class=" btn btn-sm w-100 btn-secondary" data-bs-dismiss="modal">
+                            閉じる
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script src="js/parts-select.js"></script>-->
+<script>
+'use strict'
+        window.addEventListener('load', () => {
+          let priceList = {"cpu": 0, "gpu": 0, "memory": 0, "mb": 0, "ssd": 0, "psu": 0, "os": 0};
+
+    //////URLのパラメータ受け取り//////
+          let param = location.search.substring(1).split('&');
+          let paramData = Number(param[0].split('='));
+
+    //////新規か編集か判定
+          let methodType="POST";
+            if(paramData[1]===null || paramData[1]==="" || paramData[1]===undefined){
+              methodType="PUT";
+            }
+    //////プリセット保存時に送信するオブジェクト//////
+          let presetDataList = {
+            "presetId": paramData[1],   //値が入っていなければ新規判定
+            "presetName": "",
+            "cpuId":    "", "cpuName":    "", "cpuUrl":    "",
+            "gpuId":    "", "gpuName":    "", "gpuUrl":    "",
+            "memoryId": "", "memoryName": "", "memoryUrl": "",
+            "mbId":     "", "mbName":     "", "mbUrl":     "",
+            "ssdId":    "", "ssdName":    "", "ssdUrl":    "",
+            "psuId":    "", "psuName":    "", "psuUrl":    "",
+            "osId":     "", "osName":     "", "osUrl":     "",
+            "description": "",
+            "totalPrice":0
+          };
+
+    //////////モーダル表示///////////
+          const selectButtons = document.querySelectorAll('button[data-bs-toggle="modal"]');
+          selectButtons.forEach(button => {
+            button.addEventListener('click', async function(event){
+              const partsCategoryName = event.currentTarget.getAttribute('data-name');
+              document.getElementById('selectModalLabel').setAttribute('data-name', partsCategoryName);
+              const partsList = document.getElementById('partsList');
+              partsList.innerHTML = '';
+
+              let data;
+              let selectModalTitle;
+
+              let chipset="";
+              let cpuGen="";
+              switch(document.getElementById('selectModalLabel').value){
+                case 'CPU':
+                  selectModalTitle = 'CPU';
+                  data = await fetch(`/api/searchByCpuList`,{
+                    method: 'GET',
+                    headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(createSearchData(
+                    searchWord,
+                    minPrice,
+                    maxPrice,
+                    chipset
+                  )),
+                })
+                case 'GPU':
+                  selectModalTitle = 'グラフィックボード';
+                  data = await fetch(`/api/getGpuList`);
+                  break;
+                case 'MEMORY':
+                  selectModalTitle = 'メモリ';
+                  data = await fetch(`/api/getRamList`);
+                  break;
+                case 'MB':
+                  selectModalTitle = 'マザーボード';
+                  data = await fetch(`/api/searchByMbList`,{
+                    method: 'GET',
+                    headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(createSearchData(
+                    searchWord,
+                    minPrice,
+                    maxPrice,
+                    cpuGen
+                  )),
+                });
+                  break;
+                case 'SSD':
+                  selectModalTitle = 'SSD';
+                  data = await fetch(`/api/getBySsdList`);
+                  break;
+                case 'PSU':
+                  selectModalTitle = '電源';
+                  data = await fetch(`/api/getByPsuList`);
+                  break;
+                case 'OS':
+                  selectModalTitle = 'OS';
+                  data = await fetch(`/api/getOsList`);
+                  break;
+              }
+              document.getElementById('selectModalLabel').textContent = selectModalTitle + 'を選択';
+
+              let dataObj;
+              const partsCard = `
+                  <div class="card my-2 border-primary-subtle border-3 parts-card" data-bs-dismiss="modal">
+                    <div class="card-body border border-0 py-3 list-group-item list-group-item-action" aria-current="true">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-2 name"></h5>
+                        <h5 class="text-danger price"></h5>
+                      </div>
+                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
+                      <small class="float-end release"></small>
+                    </div>
+                  </div>`;
+              partsList.insertAdjacentHTML('beforeend', partsCard);
+              partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', null);
+              partsList.querySelectorAll(".name")[i].textContent = "未選択";
+              partsList.querySelectorAll(".price")[i].textContent = '¥0' + dataObj?.[3].toLocaleString();
+              if (partsList.querySelectorAll(".spec1")[i] != null) {
+                partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+              }
+              if (partsList.querySelectorAll(".spec2")[i] != null) {
+                partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+                if(document.getElementById('selectModalLabel').value==="MB"){
+                  cpuGen=dataObj?.[6];
+                }
+              }
+              if (partsList.querySelectorAll(".spec3")[i] != null) {
+                partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+              }
+              if (partsList.querySelectorAll(".spec4")[i] != null) {
+                partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+                if(document.getElementById('selectModalLabel').value==="CPU"){
+                  cpuGen=dataObj?.[8];
+                }
+              }
+              partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+              for (let i = 0; i < data.length; i++) {
+                dataObj = Object.values(data[i]);
+                partsList.insertAdjacentHTML('beforeend', partsCard);
+                partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[0]);
+                partsList.querySelectorAll(".name")[i].textContent = dataObj?.[2];
+                partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[3].toLocaleString();
+                if (partsList.querySelectorAll(".spec1")[i] != null) {
+                  partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+                }
+                if (partsList.querySelectorAll(".spec2")[i] != null) {
+                  partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+                  if(document.getElementById('selectModalLabel').value==="MB"){
+                    cpuGen=dataObj?.[6];
+                  }
+                }
+                if (partsList.querySelectorAll(".spec3")[i] != null) {
+                  partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+                }
+                if (partsList.querySelectorAll(".spec4")[i] != null) {
+                  partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+                  if(document.getElementById('selectModalLabel').value==="CPU"){
+                    cpuGen=dataObj?.[8];
+                  }
+                }
+                partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+
+    ////////////選択パーツのデータをlistや各タグに格納////////////
+                const cards = document.querySelectorAll('.parts-card');
+                cards.forEach(function(card) {
+                  card.addEventListener('click', function() {
+                    const partsCategoryName = document.getElementById('selectModalLabel').getAttribute('data-name').toLowerCase();
+                    const partsCategoryCard = document.getElementById(partsCategoryName)
+                    const dataId = card.getAttribute('data-id');
+                    const selectPartsList = Object.values(data.find(item => item.product_id === dataId));
+
+                    partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[3].toLocaleString();
+                    partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[2];
+                    if (partsCategoryCard.querySelector(".spec1") != null) {
+                      partsCategoryCard.querySelector(".spec1").textContent = selectPartsList?.[5];
+                    }
+                    if (partsCategoryCard.querySelector(".spec2") != null) {
+                      partsCategoryCard.querySelector(".spec2").textContent = selectPartsList?.[6];
+                    }
+                    if (partsCategoryCard.querySelector(".spec3") != null) {
+                      partsCategoryCard.querySelector(".spec3").textContent = selectPartsList?.[7];
+                    }
+                    if (partsCategoryCard.querySelector(".spec4") != null) {
+                      (partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[8]);
+                    }
+
+                    priceList[partsCategoryName] = selectPartsList?.[3];
+                    document.getElementById(partsCategoryName+"Price").textContent="￥"+selectPartsList?.[3].toLocaleString();
+                    let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
+                    document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
+                    document.getElementById("sideTotalPrice").textContent="￥"+totalPrice.toLocaleString();
+
+    ////////////////プリセットデータ格納//////////////
+                    presetDataList[partsCategoryName + "Id"] = selectPartsList[0];
+                    presetDataList[partsCategoryName + "Name"] = selectPartsList?.[2];
+                    presetDataList[partsCategoryName + "Url"] = selectPartsList?.[1];
+                    presetDataList["description"] = document.getElementById("description").value;
+                    presetDataList["totalPrice"] = totalPrice;
+                    presetDataList["presetName"] = document.getElementById("presetName").value;
+
+                    console.log(presetDataList);
+                  });
+                });
+
+              }
+            });
+          });
+
+        document.getElementById('presetSaveBtn').addEventListener('click', () => {
+            fetch('/api/PresetListFormRegistration', {
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(presetDataList),
+            })
+           .then(res =>
+               console.log(res)
+               )
+        })
+
+        /////検索////
+        document.getElementById('searchBtn').addEventListener('click', async function(){
+          let searchWord = document.getElementById('searchWord').Value;
+          let minPrice = document.getElementById('minPrice').Value;
+          let maxPrice = document.getElementById('maxPrice').Value;
+
+          switch(document.getElementById('selectModalLabel').value){
+            case 'CPU':
+              let chipset=document.getElementById('spec4MB').value;
+              selectModalTitle = 'CPU';
+              data = await fetch(`/api/searchByCpuList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice,
+                chipset
+              )),
+            })
+            case 'GPU':
+              selectModalTitle = 'グラフィックボード';
+              data = await fetch(`/api/searchByGpuList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+            case 'MEMORY':
+              selectModalTitle = 'メモリ';
+              data = await fetch(`/api/searchByRamList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+            case 'MB':
+              let cpuGen=document.getElementById('spec4CPU').value;
+              selectModalTitle = 'マザーボード';
+              data = await fetch(`/api/searchByMbList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice,
+                cpuGen
+              )),
+            });
+              break;
+            case 'SSD':
+              selectModalTitle = 'SSD';
+              data = await fetch(`/api/searchBySsdList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+            case 'PSU':
+              selectModalTitle = '電源';
+              data = await fetch(`/api/searchByPsuList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+            case 'OS':
+              selectModalTitle = 'OS';
+              data = await fetch(`/api/searchByOsList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+          }
+
+          fetch('/api/PresetListFormRegistration', {
+              method: methodType,
+              headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(presetDataList),
+          })
+         .then(res =>
+             console.log(res)
+             )
+      })
+
+      ////////検索メソッドに送るオブジェクトの作成////////
+      function createSearchData(searchWord,minPrice,maxPrice,...compatible){
+        if(compatible.length>0){
+          return {
+            "searchWord":searchWord,
+            "minPrice":minPrice,
+            "maxPrice":maxPrice,
+            "compatible":compatible[0]
+          };
+        }else{
+          return {
+            "searchWord":searchWord,
+            "minPrice":minPrice,
+            "maxPrice":maxPrice
+          };
+        }
+      }
+
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
