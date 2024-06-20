@@ -11,6 +11,10 @@ public interface CompatibleService {
 
     CompatibleDisplayForm findById(int id);//互換性テーブル詳細
 
+    List<String> cpuGen(); //CPU GEN
+
+    List<String> mbChipset(); //MB CHIPSET
+
     int insert(CompatibleForm compatibleForm);//互換性テーブル追加
 
     int update(CompatibleForm compatibleForm);//互換性テーブル更新

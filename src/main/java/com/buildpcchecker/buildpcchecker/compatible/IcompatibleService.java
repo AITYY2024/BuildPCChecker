@@ -28,6 +28,14 @@ public class IcompatibleService implements CompatibleService{
         return icompatibleDao.findById(id);
     }
 
+    //CPU GEN
+    @Override
+    public List<String> cpuGen(){ return icompatibleDao.cpuGen();}
+
+    //MB CHIPSET
+    @Override
+    public List<String> mbChipset(){ return icompatibleDao.mbChipset();}
+
     //互換性テーブル追加
     @Override
     public int insert(CompatibleForm compatibleForm){
