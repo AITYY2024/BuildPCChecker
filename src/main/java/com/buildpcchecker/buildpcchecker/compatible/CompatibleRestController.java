@@ -20,6 +20,7 @@ public class CompatibleRestController {
     public ResponseEntity<List<CompatibleDisplayForm>> compatibleList() {
         try {
             var compatibleList = icompatibleService.compatibleAll();
+            System.out.println(compatibleList);
             return new ResponseEntity<>(compatibleList, HttpStatus.OK);
         } catch (NoSuchException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -32,6 +33,28 @@ public class CompatibleRestController {
 //        try {
 //            var compatibleDetail = icompatibleService.findById(id);
 //            return new ResponseEntity<>(compatibleDetail,HttpStatus.OK);
+//        }catch (NoSuchException e){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //CPU GEN
+//    @GetMapping("/api/compatible")
+//    public  ResponseEntity<List<String>> cpuGen(){
+//        try {
+//            var cpuGen = icompatibleService.cpuGen();
+//            return new ResponseEntity<>(cpuGen,HttpStatus.OK);
+//        }catch (NoSuchException e){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //MB CHIPSET
+//    @GetMapping("/api/compatible")
+//    public ResponseEntity<List<String>> mbChipset(){
+//        try {
+//            var mbChipset = icompatibleService.mbChipset();
+//            return new ResponseEntity<>(mbChipset,HttpStatus.OK);
 //        }catch (NoSuchException e){
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
@@ -53,7 +76,6 @@ public class CompatibleRestController {
     public ResponseEntity<Integer>compatibleUpdate(@RequestBody CompatibleForm compatibleForm){
         try {
             var compatibleUpdate = icompatibleService.update(compatibleForm);
-            System.out.println(compatibleForm);
             return new ResponseEntity<>(compatibleUpdate,HttpStatus.OK);
         }catch (NoSuchException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

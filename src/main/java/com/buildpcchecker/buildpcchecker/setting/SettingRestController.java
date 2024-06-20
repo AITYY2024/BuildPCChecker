@@ -27,8 +27,10 @@ public class SettingRestController {
     @DeleteMapping("/api/userDelete")
     public ResponseEntity<Integer>userDelete(){
         try {
-            var user = (UsersForm)session.getAttribute("sessionUser");
-            var userDelete = isettingService.delete(user.getId());
+//            var user = (UsersForm)session.getAttribute("sessionUser");
+//            var userDelete = isettingService.delete(user.getId());
+            var userDelete = isettingService.delete(11);
+            System.out.println(userDelete);
             return new ResponseEntity<>(userDelete,HttpStatus.OK);
         }catch (NoSuchIdException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
