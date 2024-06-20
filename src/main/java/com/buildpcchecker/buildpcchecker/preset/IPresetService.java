@@ -5,12 +5,7 @@ import com.buildpcchecker.buildpcchecker.form.PresetListForm;
 import java.util.List;
 
 public interface IPresetService {
+    List<PresetListForm> findAll();//プリセットレコード一覧
 
-    List<PresetListForm> findAll(Integer user_id);//プリセットテーブル一覧
-
-    PresetListForm findById(Integer preset_id);//プリセット詳細表示
-
-    Integer delete(Integer preset_id);//プリセットテーブル削除
-
-    Integer update(PresetListForm presetListForm);//プリセット編集
+    Integer delete(Integer preset_id);//プリセットレコード削除
 }
