@@ -17,8 +17,9 @@ public class PresetController {
 //    @GetMapping("/test")//http://localhost:8080/test
 //    public String test(){
 //
-//        System.out.println(presetService.findAll());//プリセットテーブル一覧テスト
-//        System.out.println(presetService.delete(1));//プリセットテーブル削除テスト
+//        System.out.println(presetService.findAll(1));//プリセットテーブル一覧テスト
+//        System.out.println(presetService.delete(2));//プリセットテーブル削除テスト
+//        System.out.println(presetService.update());//プリセットテーブル編集テスト
 //
 //        return "test";
 //    }
