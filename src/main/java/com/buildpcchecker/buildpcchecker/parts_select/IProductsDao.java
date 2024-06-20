@@ -40,7 +40,7 @@ public interface IProductsDao {
 
 
 
-    //プリセット登録に使うAPI
+    //パーツをプリセット登録する
     Integer catchPresetInsert(PresetListForm presetListForm);
 
 }

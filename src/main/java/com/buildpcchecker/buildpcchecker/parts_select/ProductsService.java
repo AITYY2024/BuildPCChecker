@@ -122,6 +122,7 @@ public class ProductsService implements IProductsService {
             return osList;
     }
 
+    //パーツをプリセット登録する
     public Integer catchPresetInsert(PresetListForm presetListForm){
         Integer insertNumber = productsDao.catchPresetInsert(presetListForm);
         return insertNumber;
