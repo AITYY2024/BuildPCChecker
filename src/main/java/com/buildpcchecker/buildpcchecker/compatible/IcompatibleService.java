@@ -1,5 +1,6 @@
 package com.buildpcchecker.buildpcchecker.compatible;
 
+import com.buildpcchecker.buildpcchecker.date.CompatibleDisplayForm;
 import com.buildpcchecker.buildpcchecker.date.CompatibleForm;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,14 @@ public class IcompatibleService implements CompatibleService{
 
     //互換性テーブル一覧
     @Override
-    public List<CompatibleForm> compatibleAll(){
+//    public List<CompatibleForm> compatibleAll(){
+    public List<CompatibleDisplayForm> compatibleAll(){
         return icompatibleDao.compatibleAll();
     }
 
     //互換性テーブル詳細
     @Override
-    public CompatibleForm findById(int id){
+    public CompatibleDisplayForm findById(int id){
         return icompatibleDao.findById(id);
     }
 

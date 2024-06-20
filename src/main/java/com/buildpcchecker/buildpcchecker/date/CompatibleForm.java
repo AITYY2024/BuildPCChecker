@@ -1,13 +1,16 @@
 package com.buildpcchecker.buildpcchecker.date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CompatibleForm {
 
-    private int id;//互換性テーブルid
+    private int compatibleId;//互換性テーブルid
 
-    private String cpu_generation;//cpuの世代
+    private String cpuGen;//cpuの世代
 
-    private String chipset_name;//チップセット名
+    private String chipset;//チップセット名
+
 }
