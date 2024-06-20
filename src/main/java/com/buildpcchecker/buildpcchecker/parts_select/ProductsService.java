@@ -54,8 +54,8 @@ public class ProductsService implements IProductsService {
     //検索欄に打った文字が名前に入っているパーツを表示する
     //CPUのテーブルから検索したものを表示する
     @Override
-    public List<CpuSelectForm> searchCpuParts(String cpu_name) {
-            List<CpuSelectForm> cpuList = productsDao.searchCpuParts(cpu_name);
+    public List<CpuSelectForm> searchCpuParts(String cpu_name,String chipset_name,int lowerLimit,int upperLimit) {
+            List<CpuSelectForm> cpuList = productsDao.searchCpuParts(cpu_name,chipset_name,lowerLimit,upperLimit);
 //        if(cpuList == null){
 //                throw new PartsNotFoundException();
 //        }
@@ -64,8 +64,8 @@ public class ProductsService implements IProductsService {
 
     //    //GPUのテーブルから検索したものを表示する
     @Override
-    public List<GpuSelectForm> searchGpuParts(String gpu_name) {
-            List<GpuSelectForm> gpuList = productsDao.searchGpuParts(gpu_name);
+    public List<GpuSelectForm> searchGpuParts(String gpu_name,int lowerLimit,int upperLimit) {
+            List<GpuSelectForm> gpuList = productsDao.searchGpuParts(gpu_name,lowerLimit,upperLimit);
 //        if(gpuList == null){
 //                throw new PartsNotFoundException();
 //        }
@@ -74,8 +74,8 @@ public class ProductsService implements IProductsService {
 
     //    //Memoryのテーブルから検索したものを表示する
         @Override
-    public List<MemorySelectForm> searchMemoryParts(String memory_name) {
-            List<MemorySelectForm> memoryList = productsDao.searchMemoryParts(memory_name);
+    public List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit) {
+            List<MemorySelectForm> memoryList = productsDao.searchMemoryParts(memory_name,lowerLimit,upperLimit);
 //        if(memoryList == null){
 //                throw new PartsNotFoundException();
 //        }
@@ -84,8 +84,8 @@ public class ProductsService implements IProductsService {
 
        //Mbのテーブルから検索したものを表示する
         @Override
-    public List<MbSelectForm> searchMbParts(String mb_name) {
-            List<MbSelectForm> mbList = productsDao.searchMbParts(mb_name);
+    public List<MbSelectForm> searchMbParts(String mb_name,String cpu_generation,int lowerLimit,int upperLimit) {
+            List<MbSelectForm> mbList = productsDao.searchMbParts(mb_name,cpu_generation,lowerLimit,upperLimit);
 //        if(mbList == null){
 //                throw new PartsNotFoundException();
 //        }
@@ -94,8 +94,8 @@ public class ProductsService implements IProductsService {
 
        //SSDのテーブルから検索したものを表示する
         @Override
-    public List<SsdSelectForm> searchSsdParts(String ssd_name) {
-            List<SsdSelectForm> ssdList = productsDao.searchSsdParts(ssd_name);
+    public List<SsdSelectForm> searchSsdParts(String ssd_name,int lowerLimit,int upperLimit) {
+            List<SsdSelectForm> ssdList = productsDao.searchSsdParts(ssd_name,lowerLimit,upperLimit);
 //        if(ssdList == null){
 //                throw new PartsNotFoundException();
 //        }
@@ -104,8 +104,8 @@ public class ProductsService implements IProductsService {
 
         //PSUのテーブルから検索したものを表示する
         @Override
-    public List<PsuSelectForm> searchPsuParts(String psu_name) {
-            List<PsuSelectForm> psuList = productsDao.searchPsuParts(psu_name);
+    public List<PsuSelectForm> searchPsuParts(String psu_name,int lowerLimit,int upperLimit) {
+            List<PsuSelectForm> psuList = productsDao.searchPsuParts(psu_name,lowerLimit,upperLimit);
 //        if(psuList == null){
 //                throw new PartsNotFoundException();
 //        }
@@ -114,8 +114,8 @@ public class ProductsService implements IProductsService {
 
     //    //OSのテーブルから検索したものを表示する
         @Override
-    public List<OsSelectForm> searchOsParts(String os_name) {
-            List<OsSelectForm> osList = productsDao.searchOsParts(os_name);
+    public List<OsSelectForm> searchOsParts(String os_name,int lowerLimit,int upperLimit) {
+            List<OsSelectForm> osList = productsDao.searchOsParts(os_name,lowerLimit,upperLimit);
 //        if(osList == null){
 //                throw new PartsNotFoundException();
 //        }
