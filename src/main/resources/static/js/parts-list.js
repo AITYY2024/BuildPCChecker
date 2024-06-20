@@ -39,11 +39,22 @@
               let data;
               let selectModalTitle;
 
-              switch (partsCategoryName) {
+              switch(document.getElementById('selectModalLabel').value){
                 case 'CPU':
+                  let chipset=document.getElementById('spec4MB').value===null ? "":document.getElementById('spec4MB').value;
                   selectModalTitle = 'CPU';
-                  data = await fetch(`/api/getCpuList`);
-                  break;
+                  data = await fetch(`/api/searchByCpuList`,{
+                    method: 'GET',
+                    headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(createSearchData(
+                    searchWord,
+                    minPrice,
+                    maxPrice,
+                    chipset
+                  )),
+                })
                 case 'GPU':
                   selectModalTitle = 'グラフィックボード';
                   data = await fetch(`/api/getGpuList`);
@@ -53,16 +64,28 @@
                   data = await fetch(`/api/getRamList`);
                   break;
                 case 'MB':
+                  let cpuGen=document.getElementById('spec4CPU').value===null ? "":document.getElementById('spec4CPU').value;
                   selectModalTitle = 'マザーボード';
-                  data = await fetch(`/api/getMbList`);
+                  data = await fetch(`/api/searchByMbList`,{
+                    method: 'GET',
+                    headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(createSearchData(
+                    searchWord,
+                    minPrice,
+                    maxPrice,
+                    cpuGen
+                  )),
+                });
                   break;
                 case 'SSD':
                   selectModalTitle = 'SSD';
-                  data = await fetch(`/api/getSsdList`);
+                  data = await fetch(`/api/getBySsdList`);
                   break;
                 case 'PSU':
                   selectModalTitle = '電源';
-                  data = await fetch(`/api/getPsuList`);
+                  data = await fetch(`/api/getByPsuList`);
                   break;
                 case 'OS':
                   selectModalTitle = 'OS';
@@ -84,7 +107,7 @@
                       <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
                       <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
                       <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
-                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
+                      <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4" id="spec4`+ partsCategoryName +`"></span>
                       <small class="float-end release"></small>
                     </div>
                   </div>`
@@ -153,7 +176,7 @@
 
         document.getElementById('presetSaveBtn').addEventListener('click', () => {
             fetch('/api/PresetListFormRegistration', {
-                method: methodType,
+                method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
              },
@@ -164,6 +187,7 @@
                )
         })
 
+        /////検索////
         document.getElementById('searchBtn').addEventListener('click', async function(){
           let searchWord = document.getElementById('searchWord').Value;
           let minPrice = document.getElementById('minPrice').Value;
@@ -171,10 +195,53 @@
 
           switch(document.getElementById('selectModalLabel').value){
             case 'CPU':
-              let cpuGen=document.getElementById('spec4').value;
+              let chipset=document.getElementById('spec4MB').value;
               selectModalTitle = 'CPU';
-              data = await fetch(`/api/getCpuList`,{
-                method: methodType,
+              data = await fetch(`/api/searchByCpuList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice,
+                chipset
+              )),
+            })
+            case 'GPU':
+              selectModalTitle = 'グラフィックボード';
+              data = await fetch(`/api/searchByGpuList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+            case 'MEMORY':
+              selectModalTitle = 'メモリ';
+              data = await fetch(`/api/searchByRamList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
+              break;
+            case 'MB':
+              let cpuGen=document.getElementById('spec4CPU').value;
+              selectModalTitle = 'マザーボード';
+              data = await fetch(`/api/searchByMbList`,{
+                method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
              },
@@ -184,34 +251,49 @@
                 maxPrice,
                 cpuGen
               )),
-            })
-           .then(res =>
-               console.log(res)
-               )
-              break;
-            case 'GPU':
-              selectModalTitle = 'グラフィックボード';
-              data = await fetch(`/api/getGpuList`);
-              break;
-            case 'MEMORY':
-              selectModalTitle = 'メモリ';
-              data = await fetch(`/api/getRamList`);
-              break;
-            case 'MB':
-              selectModalTitle = 'マザーボード';
-              data = await fetch(`/api/getMbList`);
+            });
               break;
             case 'SSD':
               selectModalTitle = 'SSD';
-              data = await fetch(`/api/getSsdList`);
+              data = await fetch(`/api/searchBySsdList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
               break;
             case 'PSU':
               selectModalTitle = '電源';
-              data = await fetch(`/api/getPsuList`);
+              data = await fetch(`/api/searchByPsuList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
               break;
             case 'OS':
               selectModalTitle = 'OS';
-              data = await fetch(`/api/getOsList`);
+              data = await fetch(`/api/searchByOsList`,{
+                method: 'GET',
+                headers: {
+               'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(createSearchData(
+                searchWord,
+                minPrice,
+                maxPrice
+              )),
+            });
               break;
           }
 
