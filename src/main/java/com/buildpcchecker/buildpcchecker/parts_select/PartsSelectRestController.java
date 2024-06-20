@@ -21,9 +21,9 @@ public class PartsSelectRestController {
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
 //    @GetMapping("/tryDateSend")
-//    public ResponseEntity<List<CpuSelectForm>> cpuTable(){
+//    public ResponseEntity<List<CpuSelectForm>> cpuTable(String chipset_name){
 //        try {
-//            List<CpuSelectForm> testCpu = productsService.tableCpuParts();
+//            List<CpuSelectForm> testCpu = productsService.tableCpuParts(chipset_name);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(testCpu, HttpStatus.OK);
 //        } catch (PartsNotFoundException e) {
@@ -60,9 +60,9 @@ public class PartsSelectRestController {
 
     //Mbのテーブルを全て表示する
 //        @GetMapping("/testPartsCategory")
-//    public ResponseEntity<List<MbSelectForm>> mbTable(){
+//    public ResponseEntity<List<MbSelectForm>> mbTable(String cpu_generation){
 //        try {
-//            List<MbSelectForm> testMb = productsService.tableMbParts();
+//            List<MbSelectForm> testMb = productsService.tableMbParts(cpu_generation);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(testMb, HttpStatus.OK);
 //        } catch (PartsNotFoundException e) {

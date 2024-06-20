@@ -8,13 +8,13 @@ public interface IProductsDao {
 
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
-    List<CpuSelectForm> tableCpuParts();
+    List<CpuSelectForm> tableCpuParts(String chipset_name);
     //GPUのテーブルを全て表示する
     List<GpuSelectForm> tableGpuParts();
     //Memoryのテーブルを全て表示する
     List<MemorySelectForm> tableMemoryParts();
     //Mbのテーブルを全て表示する
-    List<MbSelectForm> tableMbParts();
+    List<MbSelectForm> tableMbParts(String cpu_generation);
     //SSDのテーブルを全て表示する
     List<SsdSelectForm> tableSsdParts();
     //PSUのテーブルを全て表示する

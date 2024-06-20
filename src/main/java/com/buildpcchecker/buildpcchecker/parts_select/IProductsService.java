@@ -8,13 +8,13 @@ public interface IProductsService {
 
     //選んだカテゴリーのパーツを全て表示する
     //CPUのテーブルを全て表示する
-    public List<CpuSelectForm> tableCpuParts();
+    public List<CpuSelectForm> tableCpuParts(String chipset_name);
     //GPUのテーブルを全て表示する
     public List<GpuSelectForm> tableGpuParts();
     //Memoryのテーブルを全て表示する
     public List<MemorySelectForm> tableMemoryParts();
     //Mbのテーブルを全て表示する
-    public List<MbSelectForm> tableMbParts();
+    public List<MbSelectForm> tableMbParts(String cpu_generation);
     //SSDのテーブルを全て表示する
     public List<SsdSelectForm> tableSsdParts();
     //PSUのテーブルを全て表示する
