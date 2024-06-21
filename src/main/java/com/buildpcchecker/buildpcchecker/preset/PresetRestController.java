@@ -1,6 +1,9 @@
 package com.buildpcchecker.buildpcchecker.preset;
 
+import com.buildpcchecker.buildpcchecker.date.UsersForm;
 import com.buildpcchecker.buildpcchecker.form.PresetListForm;
+import com.buildpcchecker.buildpcchecker.form.PresetListFormJs;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +18,41 @@ public class PresetRestController {
     @Autowired
     PresetService presetService;
 
-    //プリセット一覧表示用
-    @GetMapping("/api/product")
-    public ResponseEntity<List<PresetListForm>> PresetList(Integer user_id) {
-        try {
-            List<PresetListForm> presetList = presetService.findAll(1);
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetList, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+    @Autowired
+    private HttpSession session;
 
-//    //プリセット詳細表示
+    //プリセット一覧表示用（テスト用）
+//    @GetMapping("/api/product")
+//    public ResponseEntity<List<PresetListForm>> PresetList() {
+//        try {
+//            List<PresetListForm> presetList = presetService.findAll(1);
+//            System.out.println(presetList);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetList, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+//    // sessionの情報を保存できないため、全体で繋げる時に完成させる
+//    // プリセット一覧表示用
+//    @GetMapping("/api/product")
+//    public ResponseEntity<List<PresetListForm>> PresetList() {
+//        try {
+//            session.setAttribute("sessionUser", 1);
+//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+//            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetList, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+//    //プリセット詳細表示用
 //    @GetMapping("/api/productDetail")
 //    public ResponseEntity<PresetListForm> presetDetail(Integer preset_id) {
 //        try {
@@ -42,12 +66,12 @@ public class PresetRestController {
 //    }
 
 //    //プリセット削除用
-//    @DeleteMapping(value = "/api/productDelete")
-//    public ResponseEntity<Integer> delete(@RequestBody PresetListForm presetListForm) {
+//    @DeleteMapping("/api/productDelete")
+//    public ResponseEntity<Integer> deletePreset(@RequestBody Integer preset_id) {
 //        try {
-//            Integer deletedPreset = presetService.delete(1);
+//            Integer delete = presetService.deletePreset(preset_id);
 //            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(deletedPreset, HttpStatus.OK);
+//            return new ResponseEntity<>(delete, HttpStatus.OK);
 //        } catch (RuntimeException e) {
 //            // ステータスコード400番を返す
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -55,41 +79,27 @@ public class PresetRestController {
 //    }
 
 //    //プリセット編集用
-//    @PutMapping(value = "/api/")
-//    public ResponseEntity inputUser(@RequestBody ) {
-//        session.setAttribute("sessionUser", users);
+//    @PutMapping("/api/productEdit")
+//    public ResponseEntity<Integer> editPreset(@RequestBody PresetListFormJs presetListFormJs) {
 //        try {
-////            Integer deletedPreset = presetService.delete(1);
-////            // データとステータスコード200番を返す
-////            return new ResponseEntity<>(deletedPreset, HttpStatus.OK);
-////        } catch (RuntimeException e) {
-////            // ステータスコード400番を返す
-////            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-////        }
-//        return ResponseEntity.ok(HttpEntity.EMPTY);
-//    }
-
-//    //テスト用（DeleteMappingを使用するにはJavaScript側からの指定がないといけない）
-//    @GetMapping("/test")
-//    public ResponseEntity<Integer> delete(Integer preset_id) {
-//        try {
-//            Integer deletedPreset = presetService.delete(1);
+////            System.out.println(presetListFormJs);
+//             Integer edit = presetService.editPreset(presetListFormJs);
 //            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(deletedPreset, HttpStatus.OK);
+//            return new ResponseEntity<>(edit, HttpStatus.OK);
 //        } catch (RuntimeException e) {
 //            // ステータスコード400番を返す
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
 //    }
 
-//    //最終的に記述する内容
-//    //プリセット削除用
-//    @DeleteMapping("/test/{preset_id}")
-//    public ResponseEntity<Integer> delete(@PathVariable Integer preset_id) {
+//    //プリセットコピー用
+//    @PostMapping("/api/productCopy")
+//    public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
 //        try {
-//            Integer deletedPreset = presetService.delete(preset_id);
+//            Integer copy = presetService.copyPreset(presetListFormJs);
+////            System.out.println(editPreset);
 //            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(deletedPreset, HttpStatus.OK);
+//            return new ResponseEntity<>(copy, HttpStatus.OK);
 //        } catch (RuntimeException e) {
 //            // ステータスコード400番を返す
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

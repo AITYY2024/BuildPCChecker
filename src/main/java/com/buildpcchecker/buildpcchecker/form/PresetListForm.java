@@ -68,7 +68,7 @@ public class PresetListForm {
     private String os_url;//os_URL
 
 
-    private Integer description;//メモ
+    private String description;//メモ
 
     private Integer total_amount;//合計金額
 

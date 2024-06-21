@@ -1,6 +1,7 @@
 package com.buildpcchecker.buildpcchecker.preset;
 
 import com.buildpcchecker.buildpcchecker.form.PresetListForm;
+import com.buildpcchecker.buildpcchecker.form.PresetListFormJs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -18,7 +19,9 @@ public class PresetDao implements IPresetDao {
     //プリセットテーブル一覧
     @Override
     public List<PresetListForm> findAll(Integer user_id) {
-        return jdbcTemplate.query("SELECT * FROM preset WHERE user_id = :user_id;",
+        var param = new MapSqlParameterSource();
+        param.addValue("user_id", user_id);
+        return jdbcTemplate.query("SELECT * FROM preset WHERE user_id = :user_id;", param,
                 new DataClassRowMapper<>(PresetListForm.class));
     }
 
@@ -34,7 +37,7 @@ public class PresetDao implements IPresetDao {
 
     //プリセットテーブル削除
     @Override
-    public Integer delete(Integer preset_id) {
+    public Integer deletePreset(Integer preset_id) {
         var param = new MapSqlParameterSource();
         param.addValue("preset_id", preset_id);
         return jdbcTemplate.update("DELETE FROM preset WHERE preset_id = :preset_id", param);
@@ -42,65 +45,128 @@ public class PresetDao implements IPresetDao {
 
     //プリセット編集
     @Override
-    public Integer update(PresetListForm presetListForm) {
+    public Integer editPreset(PresetListFormJs presetListFormJs) {
         var param = new MapSqlParameterSource();
-        param.addValue("preset_name", presetListForm.getPreset_name());
+        param.addValue("preset_id", presetListFormJs.getPresetId());
+        param.addValue("preset_name", presetListFormJs.getPresetName());
 
-        param.addValue("cpu_id", presetListForm.getCpu_id());
-        param.addValue("cpu_name", presetListForm.getCpu_name());
-        param.addValue("cpu_url", presetListForm.getCpu_url());
+        param.addValue("cpu_id", presetListFormJs.getCpuId());
+        param.addValue("cpu_name", presetListFormJs.getCpuName());
+        param.addValue("cpu_url", presetListFormJs.getCpuUrl());
 
-        param.addValue("gpu_id", presetListForm.getGpu_id());
-        param.addValue("gpu_name", presetListForm.getGpu_name());
-        param.addValue("gpu_url", presetListForm.getGpu_url());
+        param.addValue("gpu_id", presetListFormJs.getGpuId());
+        param.addValue("gpu_name", presetListFormJs.getGpuName());
+        param.addValue("gpu_url", presetListFormJs.getGpuUrl());
 
-        param.addValue("ram_id", presetListForm.getRam_id());
-        param.addValue("ram_name", presetListForm.getRam_name());
-        param.addValue("ram_url", presetListForm.getRam_url());
+        param.addValue("ram_id", presetListFormJs.getMemoryId());
+        param.addValue("ram_name", presetListFormJs.getMemoryName());
+        param.addValue("ram_url", presetListFormJs.getMemoryUrl());
 
-        param.addValue("mb_id", presetListForm.getMb_id());
-        param.addValue("mb_name", presetListForm.getMb_name());
-        param.addValue("mb_url", presetListForm.getMb_url());
+        param.addValue("mb_id", presetListFormJs.getMbId());
+        param.addValue("mb_name", presetListFormJs.getMbName());
+        param.addValue("mb_url", presetListFormJs.getMbUrl());
 
-        param.addValue("ssd_id", presetListForm.getSsd_id());
-        param.addValue("ssd_name", presetListForm.getSsd_name());
-        param.addValue("ssd_url", presetListForm.getSsd_url());
+        param.addValue("ssd_id", presetListFormJs.getSsdId());
+        param.addValue("ssd_name", presetListFormJs.getSsdName());
+        param.addValue("ssd_url", presetListFormJs.getSsdUrl());
 
-        param.addValue("psu_id", presetListForm.getPsu_id());
-        param.addValue("psu_name", presetListForm.getPsu_name());
-        param.addValue("psu_url", presetListForm.getPsu_url());
+        param.addValue("psu_id", presetListFormJs.getPsuId());
+        param.addValue("psu_name", presetListFormJs.getPsuName());
+        param.addValue("psu_url", presetListFormJs.getPsuUrl());
 
-        param.addValue("os_id", presetListForm.getOs_id());
-        param.addValue("os_name", presetListForm.getOs_name());
-        param.addValue("os_url", presetListForm.getOs_url());
+        param.addValue("os_id", presetListFormJs.getOsId());
+        param.addValue("os_name", presetListFormJs.getOsName());
+        param.addValue("os_url", presetListFormJs.getOsUrl());
 
-        param.addValue("description", presetListForm.getDescription());
-        param.addValue("total_amount", presetListForm.getTotal_amount());
+        param.addValue("description", presetListFormJs.getDescription());
+        param.addValue("total_amount", presetListFormJs.getTotalPrice());
         return jdbcTemplate.update("UPDATE preset SET " +
-                "preset_name = :getCpu_id(), " +
-                "cpu_id = :getCpu_id(), cpu_name = :getCpu_name(), cpu_url = :getCpu_url(), " +
-                "gpu_id = :getGpu_id(), gpu_name = :getGpu_name(), gpu_url = :getGpu_url(), " +
-                "ram_id = :getRam_id(), ram_name = :getRam_name(), ram_url = :getRam_url(), " +
-                "mb_id = :getMb_id(), mb_name = :getMb_name(), mb_url =:getMb_url(), " +
-                "ssd_id = :getSsd_id(), ssd_name = :getSsd_name(), ssd_url = :getSsd_url(), " +
-                "psu_id = :getPsu_id(), psu_name = :getPsu_name(), psu_url = :getPsu_url(), " +
-                "os_id = :getOs_id(), os_name = :getOs_name(), os_url = :getOs_url(), " +
-                "description = :getDescription(), " +
-                "total_amount = :getTotal_amount() " +
-                "WHERE preset_id = :getPreset_id",
+                "preset_name = :preset_name, " +
+                "cpu_id = :cpu_id, cpu_name = :cpu_name, cpu_url = :cpu_url, " +
+                "gpu_id = :gpu_id, gpu_name = :gpu_name, gpu_url = :gpu_url, " +
+                "ram_id = :ram_id, ram_name = :ram_name, ram_url = :ram_url, " +
+                "mb_id = :mb_id, mb_name = :mb_name, mb_url =:mb_url, " +
+                "ssd_id = :ssd_id, ssd_name = :ssd_name, ssd_url = :ssd_url, " +
+                "psu_id = :psu_id, psu_name = :psu_name, psu_url = :psu_url, " +
+                "os_id = :os_id, os_name = :os_name, os_url = :os_url, " +
+                "description = :description, " +
+                "total_amount = :total_amount, " +
+                "update_at = LOCALTIMESTAMP " +
+                "WHERE preset_id = :preset_id",
                 param);
     }
 
-
-//    SQL："UPDATE preset SET cpu_id = CPU, gpu_id = GPU, ram_id = RAM, ssd_id = SSD, psu_id = PSU,  WHERE preset_id = :preset_id;"
-//    SQL："var PresetId = 1;" +
-//            "UPDATE FROM preset " +
-//            "SET cpu_name = SELECT product_name FROM cpu WHERE product_id = (SELECT cpu_id FROM preset WHERE PresetId)" +
-//            "gpu_name = SELECT product_name FROM gpu WHERE Product_id = (SELECT gpu_id FROM preset WHERE PresetId)" +
-//            "WHERE preset_id;"
-
     //プリセットコピー
+    @Override
+    public Integer copyPreset(PresetListFormJs presetListFormJs) {
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_name", presetListFormJs.getPresetName());
+
+        param.addValue("cpu_id", presetListFormJs.getCpuId());
+        param.addValue("cpu_name", presetListFormJs.getCpuName());
+        param.addValue("cpu_url", presetListFormJs.getCpuUrl());
+
+        param.addValue("gpu_id", presetListFormJs.getGpuId());
+        param.addValue("gpu_name", presetListFormJs.getGpuName());
+        param.addValue("gpu_url", presetListFormJs.getGpuUrl());
+
+        param.addValue("ram_id", presetListFormJs.getMemoryId());
+        param.addValue("ram_name", presetListFormJs.getMemoryName());
+        param.addValue("ram_url", presetListFormJs.getMemoryUrl());
+
+        param.addValue("mb_id", presetListFormJs.getMbId());
+        param.addValue("mb_name", presetListFormJs.getMbName());
+        param.addValue("mb_url", presetListFormJs.getMbUrl());
+
+        param.addValue("ssd_id", presetListFormJs.getSsdId());
+        param.addValue("ssd_name", presetListFormJs.getSsdName());
+        param.addValue("ssd_url", presetListFormJs.getSsdUrl());
+
+        param.addValue("psu_id", presetListFormJs.getPsuId());
+        param.addValue("psu_name", presetListFormJs.getPsuName());
+        param.addValue("psu_url", presetListFormJs.getPsuUrl());
+
+        param.addValue("os_id", presetListFormJs.getOsId());
+        param.addValue("os_name", presetListFormJs.getOsName());
+        param.addValue("os_url", presetListFormJs.getOsUrl());
+
+        param.addValue("description", presetListFormJs.getDescription());
+        param.addValue("total_amount", presetListFormJs.getTotalPrice());
+        return jdbcTemplate.update("INSERT INTO preset" +
+                                        "(preset_name, " +
+                                        "cpu_id, cpu_name, cpu_url, " +
+                                        "gpu_id, gpu_name, gpu_url, " +
+                                        "ram_id, ram_name, ram_url, " +
+                                        "mb_id, mb_name, mb_url, " +
+                                        "ssd_id, ssd_name, ssd_url, " +
+                                        "psu_id, psu_name, psu_url, " +
+                                        "os_id, os_name, os_url, " +
+                                        "description, " +
+                                        "total_amount, " +
+                                        "update_at)" +
+
+                                        "VALUES(" +
+                                        ":preset_name, " +
+                                        ":cpu_id, :cpu_name, :cpu_url, " +
+                                        ":gpu_id, :gpu_name, :gpu_url, " +
+                                        ":ram_id, :ram_name, :ram_url, " +
+                                        ":mb_id, :mb_name, :mb_url, " +
+                                        ":ssd_id, :ssd_name, :ssd_url, " +
+                                        ":psu_id, :psu_name, :psu_url, " +
+                                        ":os_id, :os_name, :os_url, " +
+                                        ":description, " +
+                                        ":total_amount, " +
+                                        "LOCALTIMESTAMP) "
+                                        , param);
+    }
 
 
-    //プリセット更新
+//    //プリセット更新
+//    @Override
+//    public Integer updatePreset(Integer preset_id) {
+//        var param = new MapSqlParameterSource();
+//        param.addValue("preset_id", preset_id);
+//        return jdbcTemplate.update("UPDATE preset SET );
+//    }
+
 }

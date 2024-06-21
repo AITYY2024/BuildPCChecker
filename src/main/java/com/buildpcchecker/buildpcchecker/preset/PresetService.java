@@ -1,6 +1,7 @@
 package com.buildpcchecker.buildpcchecker.preset;
 
 import com.buildpcchecker.buildpcchecker.form.PresetListForm;
+import com.buildpcchecker.buildpcchecker.form.PresetListFormJs;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,19 @@ public class PresetService implements IPresetService {
 
     //プリセットテーブル削除
     @Override
-    public Integer delete(Integer preset_id){
-        return presetDao.delete(preset_id);
+    public Integer deletePreset(Integer preset_id){
+        return presetDao.deletePreset(preset_id);
     }
 
     //プリセット編集
     @Override
-    public Integer update(PresetListForm presetListForm) {
-        return presetDao.update(presetListForm);
+    public Integer editPreset(PresetListFormJs presetListFormJs) {
+        return presetDao.editPreset(presetListFormJs);
+    }
+
+    //プリセットコピー
+    @Override
+    public Integer copyPreset(PresetListFormJs presetListFormJs){
+        return presetDao.copyPreset(presetListFormJs);
     }
 }
