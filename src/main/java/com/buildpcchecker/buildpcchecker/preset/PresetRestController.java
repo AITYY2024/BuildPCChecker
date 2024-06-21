@@ -106,4 +106,18 @@ public class PresetRestController {
 //        }
 //    }
 
+    //プリセット更新用
+    @PutMapping("/api/productUpdate")
+    public ResponseEntity<Integer> updatePreset(@RequestBody PresetListFormJs presetListFormJs){
+        try {
+            Integer update = presetService.updatePreset(presetListFormJs.getPresetId());
+//            System.out.println(update);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(update, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

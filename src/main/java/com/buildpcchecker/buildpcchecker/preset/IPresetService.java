@@ -16,4 +16,6 @@ public interface IPresetService {
     Integer editPreset(PresetListFormJs presetListFormJs);//プリセット編集
 
     Integer copyPreset(PresetListFormJs presetListFormJs);//プリセットコピー
+
+    Integer updatePreset(Integer preset_id);//プリセット更新
 }
