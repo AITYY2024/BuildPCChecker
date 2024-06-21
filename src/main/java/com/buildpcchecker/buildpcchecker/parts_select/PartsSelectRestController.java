@@ -4,10 +4,7 @@ import com.buildpcchecker.buildpcchecker.form.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -113,7 +110,9 @@ public class PartsSelectRestController {
     //検索欄に打った文字が名前に入っているパーツを表示する
     //CPUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByCpuList")
-    public ResponseEntity<List<CpuSelectForm>> cpuSearch(String cpu_name,String chipset_name,int lowerLimit,int upperLimit){
+    public ResponseEntity<List<CpuSelectForm>> cpuSearch(
+            @RequestParam String cpu_name,@RequestParam String chipset_name
+            ,@RequestParam int lowerLimit,@RequestParam int upperLimit){
         try {
             List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(cpu_name,chipset_name,lowerLimit,upperLimit);
             // データとステータスコード200番を返す
@@ -127,7 +126,8 @@ public class PartsSelectRestController {
 
 //    //GPUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByGpuList")
-    public ResponseEntity<List<GpuSelectForm>> gpuSearch(String gpu_name,int lowerLimit,int upperLimit){
+    public ResponseEntity<List<GpuSelectForm>> gpuSearch(
+            @RequestParam String gpu_name,@RequestParam int lowerLimit,@RequestParam int upperLimit){
         try {
             List<GpuSelectForm> testGpuSearch = productsService.searchGpuParts(gpu_name,lowerLimit,upperLimit);
             // データとステータスコード200番を返す
@@ -140,7 +140,8 @@ public class PartsSelectRestController {
 
     //Memoryのテーブルから検索したものを表示する
     @GetMapping("/api/searchByRamList")
-    public ResponseEntity<List<MemorySelectForm>> memorySearch(String memory_name,int lowerLimit,int upperLimit){
+    public ResponseEntity<List<MemorySelectForm>> memorySearch(
+            @RequestParam String memory_name,@RequestParam int lowerLimit,@RequestParam int upperLimit){
         try {
             List<MemorySelectForm> testMemorySearch = productsService.searchMemoryParts(memory_name,lowerLimit,upperLimit);
             // データとステータスコード200番を返す
@@ -153,7 +154,9 @@ public class PartsSelectRestController {
 
     //Mbのテーブルから検索したものを表示する
     @GetMapping("/api/searchByMbList")
-    public ResponseEntity<List<MbSelectForm>> mbSearch(String mb_name,String cpu_generation,int lowerLimit,int upperLimit){
+    public ResponseEntity<List<MbSelectForm>> mbSearch(
+            @RequestParam String mb_name,@RequestParam String cpu_generation
+            ,@RequestParam int lowerLimit,@RequestParam int upperLimit){
         try {
             List<MbSelectForm> testMbSearch = productsService.searchMbParts(mb_name,cpu_generation,lowerLimit,upperLimit);
             // データとステータスコード200番を返す
@@ -179,18 +182,18 @@ public class PartsSelectRestController {
 
     //PSUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByPsuList")
-    public ResponseEntity<List<PsuSelectForm>> psuSearch(String psu_name,int lowerLimit,int upperLimit){
+    public ResponseEntity<List<PsuSelectForm>> psuSearch(String psu_name,int lowerLimit,int upperLimit) {
         try {
-            List<PsuSelectForm> testPsuSearch = productsService.searchPsuParts(psu_name,lowerLimit,upperLimit);
+            List<PsuSelectForm> testPsuSearch = productsService.searchPsuParts(psu_name, lowerLimit, upperLimit);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testPsuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
             // ステータスコード400番を返す
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
 
-    //OSのテーブルから検索したものを表示する
+        }
+
+        //OSのテーブルから検索したものを表示する
 //    @GetMapping("/api/searchByOsList")
 //    public ResponseEntity<List<OsSelectForm>> osSearch(String os_name,int lowerLimit,int upperLimit){
 //        try {
@@ -203,7 +206,7 @@ public class PartsSelectRestController {
 //        }
 //    }
 
-    //プリセットを登録するAPI
+        //プリセットを登録するAPI
 //    @PostMapping(value = "/api/PresetListFormRegistration")
 //    public ResponseEntity<Integer> presetRegistration(@RequestBody PresetListForm presetListForm){
 //        try {
@@ -215,5 +218,5 @@ public class PartsSelectRestController {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
 //    }
-
+    }
 }
