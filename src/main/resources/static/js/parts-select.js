@@ -92,9 +92,6 @@
                   data = fetch(`/api/getOsList`);
                   break;
               }
-              console.log('cateName:'+partsCategoryName);
-              console.log(data);
-              console.log(document.getElementById('selectModalLabel').value);
               document.getElementById('selectModalLabel').textContent = selectModalTitle + 'を選択';
 
               let dataObj;
@@ -115,7 +112,7 @@
               partsList.insertAdjacentHTML('beforeend', partsCard);
               partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
               partsList.querySelectorAll(".name")[0].textContent = "未選択";
-              partsList.querySelectorAll(".price")[0].textContent = '¥0' + dataObj?.[3].toLocaleString();
+              partsList.querySelectorAll(".price")[0].textContent = '¥0';
               if (partsList.querySelectorAll(".spec1")[0] != null) {
                 partsList.querySelectorAll(".spec1")[0].textContent = dataObj?.[5];
               }
