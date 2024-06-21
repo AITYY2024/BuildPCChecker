@@ -179,4 +179,22 @@
 //})
 
 //プリセット更新
+document.getElementById('update-btn').addEventListener('click', () => {
+    // リクエストで送信するJSON用のオブジェクト作成
+    const product = {
+            //Javaのフォームクラスのフィールド名:document.getElementById('HTMLのID').value
+            presetId: document.getElementById('preset_id').value,
+        }
+    // POSTでリクエスト送信
+    // userをJSONに変換して送る
+    fetch('/api/productUpdate', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(product),
+    })
+    .then(res => console.log(res))
+})
+
 

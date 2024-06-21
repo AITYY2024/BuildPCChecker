@@ -161,12 +161,29 @@ public class PresetDao implements IPresetDao {
     }
 
 
-//    //プリセット更新
-//    @Override
-//    public Integer updatePreset(Integer preset_id) {
-//        var param = new MapSqlParameterSource();
-//        param.addValue("preset_id", preset_id);
-//        return jdbcTemplate.update("UPDATE preset SET );
-//    }
+    //プリセット更新
+    @Override
+    public Integer updatePreset(Integer preset_id) {
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        return jdbcTemplate.update("""
+                UPDATE preset
+                SET cpu_name = COALESCE((SELECT product_name FROM cpu WHERE product_id = (SELECT cpu_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    gpu_name = COALESCE((SELECT product_name FROM gpu WHERE product_id = (SELECT gpu_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    ram_name = COALESCE((SELECT product_name FROM memory WHERE product_id = (SELECT ram_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    mb_name = COALESCE((SELECT product_name FROM mb WHERE product_id = (SELECT mb_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    ssd_name = COALESCE((SELECT product_name FROM ssd WHERE product_id = (SELECT ssd_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    psu_name = COALESCE((SELECT product_name FROM psu WHERE product_id = (SELECT psu_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    os_name = COALESCE((SELECT product_name FROM os WHERE product_id = (SELECT os_id FROM preset WHERE preset_id = :preset_id)), '情報がありません'),
+                    total_amount = COALESCE(
+                                  (SELECT price FROM cpu WHERE product_id = (SELECT cpu_id FROM preset WHERE preset_id = :preset_id)) +
+                                  (SELECT price FROM gpu WHERE product_id = (SELECT gpu_id FROM preset WHERE preset_id = :preset_id)) +
+                                  (SELECT price FROM memory WHERE product_id = (SELECT ram_id FROM preset WHERE preset_id = :preset_id)) +
+                                  (SELECT price FROM mb WHERE product_id = (SELECT mb_id FROM preset WHERE preset_id = :preset_id)) +
+                                  (SELECT price FROM ssd WHERE product_id = (SELECT ssd_id FROM preset WHERE preset_id = :preset_id)) +
+                                  (SELECT price FROM psu WHERE product_id = (SELECT psu_id FROM preset WHERE preset_id = :preset_id)) +
+                                  (SELECT price FROM os WHERE product_id = (SELECT os_id FROM preset WHERE preset_id = :preset_id)), -1)
+                WHERE preset_id = :preset_id;""", param);
+    }
 
 }
