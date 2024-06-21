@@ -31,4 +31,9 @@ public class CompatibleController {
 //
 //        return "test";//test.htmlを作る
 //    }
+
+    @GetMapping("/test-compatible")
+    public String compatible(){
+        return "test-compatible";}
+
 }
