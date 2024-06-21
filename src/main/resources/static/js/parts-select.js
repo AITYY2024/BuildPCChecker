@@ -39,24 +39,16 @@
               document.getElementById('selectModalLabel').value=partsCategoryName;
               const partsList = document.getElementById('partsList');
               partsList.innerHTML = '';
-
+              let requestPram="searchWord="+
+                              "&minPrice="+0+
+                              "&maxPrice="+2147483647;
               let data;
               let selectModalTitle;
               switch(document.getElementById('selectModalLabel').value){
                 case 'CPU':
                   selectModalTitle = 'CPU';
-                  data = fetch(`/api/searchByCpuList`,{
-                    method: 'GET',
-                    headers: {
-                   'Content-Type': 'application/json',
-                 },
-                 body: JSON.stringify(createSearchData(
-                    searchWord,
-                    minPrice,
-                    maxPrice,
-                    chipset
-                  )),
-                })
+                  requestPram+="&chipset="+chipset;
+                  data = fetch(`/api/searchByCpuList?`+requestPram);
                 case 'GPU':
                   selectModalTitle = 'グラフィックボード';
                   data = fetch(`/api/getGpuList`);
@@ -67,18 +59,8 @@
                   break;
                 case 'MB':
                   selectModalTitle = 'マザーボード';
-                  data = fetch(`/api/searchByMbList`,{
-                    method: 'GET',
-                    headers: {
-                   'Content-Type': 'application/json',
-                 },
-                 body: JSON.stringify(createSearchData(
-                    searchWord,
-                    minPrice,
-                    maxPrice,
-                    cpuGen
-                  )),
-                });
+                  requestPram+="&cpuGen="+cpuGen;
+                  data = fetch(`/api/searchByMbList?`+requestPram);
                   break;
                 case 'SSD':
                   selectModalTitle = 'SSD';
@@ -207,7 +189,7 @@
 
         document.getElementById('presetSaveBtn').addEventListener('click', () => {
             fetch('/api/PresetListFormRegistration', {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
              },
@@ -223,111 +205,40 @@
           let searchWord = document.getElementById('searchWord').Value;
           let minPrice = document.getElementById('minPrice').Value;
           let maxPrice = document.getElementById('maxPrice').Value;
-
+          let requestPram="searchWord="+searchWord+
+                          "&minPrice="+minPrice+
+                          "&maxPrice="+maxPrice;
           let selectModalTitle;
           let data;
           switch(document.getElementById('selectModalLabel').value){
             case 'CPU':
               selectModalTitle = 'CPU';
-              data = fetch(`/api/searchByCpuList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice,
-                chipset
-              )),
-            })
-            .then(res =>
-              console.log(res)
-              )
+              requestPram+="&chipset="+chipset;
+              data = fetch(`/api/searchByCpuList?`+requestPram);
             case 'GPU':
               selectModalTitle = 'グラフィックボード';
-              data = fetch(`/api/searchByGpuList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice
-              )),
-            });
+              data = fetch(`/api/searchByGpuList?`+requestPram);
               break;
             case 'MEMORY':
               selectModalTitle = 'メモリ';
-              data = fetch(`/api/searchByRamList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice
-              )),
-            });
+              data = fetch(`/api/searchByRamList?`+requestPram);
               break;
             case 'MB':
               selectModalTitle = 'マザーボード';
-              data = fetch(`/api/searchByMbList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice,
-                cpuGen
-              )),
-            });
+              requestPram+="&cpuGen="+cpuGen;
+              data = fetch(`/api/searchByMbList?`+requestPram);
               break;
             case 'SSD':
               selectModalTitle = 'SSD';
-              data = fetch(`/api/searchBySsdList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice
-              )),
-            });
+              data = fetch(`/api/searchBySsdList?`+requestPram);
               break;
             case 'PSU':
               selectModalTitle = '電源';
-              data = fetch(`/api/searchByPsuList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice
-              )),
-            });
+              data = fetch(`/api/searchByPsuList?`+requestPram);
               break;
             case 'OS':
               selectModalTitle = 'OS';
-              data = fetch(`/api/searchByOsList`,{
-                method: 'POST',
-                headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(createSearchData(
-                searchWord,
-                minPrice,
-                maxPrice
-              )),
-            });
+              data = fetch(`/api/searchByOsList?`+requestPram);
             break;
         }
     let dataObj;
