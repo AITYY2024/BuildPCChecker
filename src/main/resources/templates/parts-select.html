@@ -276,14 +276,14 @@
         <div class="col-xl-2 d-xl-block d-none border rounded-2" id="sideView">
             <h4 class="my-3">構成</h4>
             <ul class="list-group mb-3">
-                <li class="list-group-item">CPU<br>¥88,165</li>
-                <li class="list-group-item">グラフィックボード<br>¥279,800</li>
-                <li class="list-group-item">メモリ<br>¥13,800</li>
-                <li class="list-group-item">マザーボード<br>¥42,980</li>
-                <li class="list-group-item">ストレージ<br>¥11,980</li>
-                <li class="list-group-item">電源<br>¥20,457</li>
-                <li class="list-group-item">OS<br>¥21,750</li>
-                <li class="list-group-item fw-semibold">合計<br>¥1,000,000</li>
+                <li class="list-group-item">CPU<br><span id="CPUPrice"></span></li>
+                <li class="list-group-item">グラフィックボード<br><span id="GPUPrice"></span></li>
+                <li class="list-group-item">メモリ<br><span id="MEMORYPrice"></span></li>
+                <li class="list-group-item">マザーボード<br><span id="MBPrice"></span></li>
+                <li class="list-group-item">ストレージ<br><span id="SSDPrice"></span></li>
+                <li class="list-group-item">電源<br><span id="PSUPrice"></span></li>
+                <li class="list-group-item">OS<br><span id="OSPrice"></span></li>
+                <li class="list-group-item fw-semibold">合計<br><span id="sideTotalPrice"></span></li>
             </ul>
         </div>
     </div>
@@ -307,6 +307,10 @@
                 <h5 class="modal-title" id="selectModalLabel"></h5>
             </div>
             <div class="modal-body">
+                <input id="searchWord" type="text" class="form-control" placeholder="検索キーワード">
+                <input id="minPrice" type="text" class="form-control" placeholder="下限金額">
+                <input id="maxPrice" type="text" class="form-control" placeholder="上限金額">
+                <button id="searchBtn" class="btn btn-primary" type="button">保存</button>
                 <div class="list-group" id="partsList">
 
                 </div>
@@ -324,10 +328,8 @@
     </div>
 </div>
 
-<!--<script src="js/parts-list.js"></script>-->
-<script>
+<script src="js/parts-select.js"></script>
 
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
