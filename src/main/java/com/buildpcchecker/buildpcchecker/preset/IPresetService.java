@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IPresetService {
 
-    List<PresetListForm> findAll(Integer user_id);//プリセットテーブル一覧
+    List<PresetListForm> findAll(Integer user_id);//プリセット一覧表示
 
     PresetListForm findById(Integer preset_id);//プリセット詳細表示
 
-    Integer deletePreset(Integer preset_id);//プリセットテーブル削除
+    Integer deletePreset(Integer preset_id);//プリセット削除
 
     Integer editPreset(PresetListFormJs presetListFormJs);//プリセット編集
 

@@ -16,7 +16,7 @@ public class PresetDao implements IPresetDao {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    //プリセットテーブル一覧
+    //プリセット一覧表示
     @Override
     public List<PresetListForm> findAll(Integer user_id) {
         var param = new MapSqlParameterSource();
@@ -35,7 +35,7 @@ public class PresetDao implements IPresetDao {
         return list.isEmpty() ? null : list.get(0);
     }
 
-    //プリセットテーブル削除
+    //プリセット削除
     @Override
     public Integer deletePreset(Integer preset_id) {
         var param = new MapSqlParameterSource();
