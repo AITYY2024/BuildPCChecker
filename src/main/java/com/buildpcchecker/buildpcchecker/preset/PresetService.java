@@ -15,7 +15,7 @@ public class PresetService implements IPresetService {
     @Autowired
     private PresetDao presetDao;
 
-    //プリセットテーブル一覧
+    //プリセット一覧表示
     @Override
     public List<PresetListForm> findAll(Integer user_id){
         return presetDao.findAll(user_id);
@@ -27,7 +27,7 @@ public class PresetService implements IPresetService {
         return presetDao.findById(preset_id);
     }
 
-    //プリセットテーブル削除
+    //プリセット削除
     @Override
     public Integer deletePreset(Integer preset_id){
         return presetDao.deletePreset(preset_id);
