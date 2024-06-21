@@ -4,7 +4,7 @@
 
     //////URLのパラメータ受け取り//////
           let param = location.search.substring(1).split('&');
-          paramData = Number(param[0].split('='));
+          let paramData = Number(param[0].split('='));
 
     //////新規か編集か判定
           let methodType="POST";
@@ -236,6 +236,9 @@
                 chipset
               )),
             })
+            .then(res =>
+              console.log(res)
+              )
             case 'GPU':
               selectModalTitle = 'グラフィックボード';
               data = await fetch(`/api/searchByGpuList`,{
@@ -321,20 +324,72 @@
                 maxPrice
               )),
             });
-              break;
-          }
-
-          fetch('/api/PresetListFormRegistration', {
-              method: methodType,
-              headers: {
-             'Content-Type': 'application/json',
-           },
-           body: JSON.stringify(presetDataList),
-          })
-         .then(res =>
-             console.log(res)
-             )
-      })
+            break;
+        }
+        let dataObj;
+            const partsCard = `
+                <div class="card my-2 border-primary-subtle border-3 parts-card" data-bs-dismiss="modal">
+                  <div class="card-body border border-0 py-3 list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-2 name"></h5>
+                      <h5 class="text-danger price"></h5>
+                    </div>
+                    <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                    <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                    <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                    <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
+                    <small class="float-end release"></small>
+                  </div>
+                </div>`;
+            partsList.insertAdjacentHTML('beforeend', partsCard);
+            partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', null);
+            partsList.querySelectorAll(".name")[i].textContent = "未選択";
+            partsList.querySelectorAll(".price")[i].textContent = '¥0' + dataObj?.[3].toLocaleString();
+            if (partsList.querySelectorAll(".spec1")[i] != null) {
+              partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+            }
+            if (partsList.querySelectorAll(".spec2")[i] != null) {
+              partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+              if(document.getElementById('selectModalLabel').value==="MB"){
+                cpuGen=dataObj?.[6];
+              }
+            }
+            if (partsList.querySelectorAll(".spec3")[i] != null) {
+              partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+            }
+            if (partsList.querySelectorAll(".spec4")[i] != null) {
+              partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+              if(document.getElementById('selectModalLabel').value==="CPU"){
+                cpuGen=dataObj?.[8];
+              }
+            }
+            partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+            for (let i = 0; i < data.length; i++) {
+              dataObj = Object.values(data[i]);
+              partsList.insertAdjacentHTML('beforeend', partsCard);
+              partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[0]);
+              partsList.querySelectorAll(".name")[i].textContent = dataObj?.[2];
+              partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[3].toLocaleString();
+              if (partsList.querySelectorAll(".spec1")[i] != null) {
+                partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+              }
+              if (partsList.querySelectorAll(".spec2")[i] != null) {
+                partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+                if(document.getElementById('selectModalLabel').value==="MB"){
+                  cpuGen=dataObj?.[6];
+                }
+              }
+              if (partsList.querySelectorAll(".spec3")[i] != null) {
+                partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+              }
+              if (partsList.querySelectorAll(".spec4")[i] != null) {
+                partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+                if(document.getElementById('selectModalLabel').value==="CPU"){
+                  cpuGen=dataObj?.[8];
+                }
+              }
+              partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+        };
 
       ////////検索メソッドに送るオブジェクトの作成////////
       function createSearchData(searchWord,minPrice,maxPrice,...compatible){
@@ -353,6 +408,5 @@
           };
         }
       }
-
+  })
 });
-
