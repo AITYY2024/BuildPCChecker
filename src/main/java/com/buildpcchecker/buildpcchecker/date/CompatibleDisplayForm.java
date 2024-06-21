@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CompatibleDisplayForm {
+public class CompatibleDisplayForm { //表示用Form
 
     private int id;//互換性テーブルid
 
