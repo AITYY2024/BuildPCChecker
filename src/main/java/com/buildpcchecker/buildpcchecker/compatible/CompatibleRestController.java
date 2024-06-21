@@ -29,9 +29,9 @@ public class CompatibleRestController {
 
 //    //互換性テーブル詳細
 //    @GetMapping("/api/compatible")
-//    public ResponseEntity<CompatibleDisplayForm>compatibleDetail(int id){
+//    public ResponseEntity<CompatibleDisplayForm>compatibleDetail(@RequestBody CompatibleDisplayForm compatibleDisplayForm){
 //        try {
-//            var compatibleDetail = icompatibleService.findById(id);
+//            var compatibleDetail = icompatibleService.findById(compatibleDisplayForm.getId());
 //            return new ResponseEntity<>(compatibleDetail,HttpStatus.OK);
 //        }catch (NoSuchException e){
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
