@@ -47,7 +47,7 @@
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //新規登録uoo
+    //新規登録
     @PutMapping("/api/user_insert")
     public ResponseEntity<Integer> userInsert(@RequestBody UsersForm usersForm) {
         try {
