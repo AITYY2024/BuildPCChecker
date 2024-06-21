@@ -92,6 +92,8 @@
                   data = fetch(`/api/getOsList`);
                   break;
               }
+              console.log(data);
+              
               document.getElementById('selectModalLabel').textContent = selectModalTitle + 'を選択';
 
               let dataObj;
