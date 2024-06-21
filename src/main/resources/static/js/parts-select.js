@@ -202,9 +202,9 @@
 /////検索////
         document.getElementById('searchBtn').addEventListener('click', function(){
           partsList.innerHTML = '';
-          let searchWord = document.getElementById('searchWord').Value;
-          let minPrice = document.getElementById('minPrice').Value;
-          let maxPrice = document.getElementById('maxPrice').Value;
+          let searchWord = document.getElementById('searchWord').Value===undefined?"":document.getElementById('searchWord').Value;
+          let minPrice = document.getElementById('minPrice').Value===undefined?"":document.getElementById('minPrice').Value;
+          let maxPrice = document.getElementById('maxPrice').Value===undefined?"":document.getElementById('maxPrice').Value;
           let requestPram="searchWord="+searchWord+
                           "&minPrice="+minPrice+
                           "&maxPrice="+maxPrice;
