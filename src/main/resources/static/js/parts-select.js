@@ -29,9 +29,10 @@
     //////////モーダル表示///////////
           const selectButtons = document.querySelectorAll('button[data-bs-toggle="modal"]');
           selectButtons.forEach(button => {
-            button.addEventListener('click', async function(event){
+            button.addEventListener('click', function(event){
               const partsCategoryName = event.currentTarget.getAttribute('data-name');
               document.getElementById('selectModalLabel').setAttribute('data-name', partsCategoryName);
+              document.getElementById('selectModalLabel').value=partsCategoryName;
               const partsList = document.getElementById('partsList');
               partsList.innerHTML = '';
 
@@ -43,7 +44,7 @@
               switch(document.getElementById('selectModalLabel').value){
                 case 'CPU':
                   selectModalTitle = 'CPU';
-                  data = await fetch(`/api/searchByCpuList`,{
+                  data = fetch(`/api/searchByCpuList`,{
                     method: 'GET',
                     headers: {
                    'Content-Type': 'application/json',
@@ -57,15 +58,15 @@
                 })
                 case 'GPU':
                   selectModalTitle = 'グラフィックボード';
-                  data = await fetch(`/api/getGpuList`);
+                  data = fetch(`/api/getGpuList`);
                   break;
                 case 'MEMORY':
                   selectModalTitle = 'メモリ';
-                  data = await fetch(`/api/getRamList`);
+                  data = fetch(`/api/getRamList`);
                   break;
                 case 'MB':
                   selectModalTitle = 'マザーボード';
-                  data = await fetch(`/api/searchByMbList`,{
+                  data = fetch(`/api/searchByMbList`,{
                     method: 'GET',
                     headers: {
                    'Content-Type': 'application/json',
@@ -80,17 +81,20 @@
                   break;
                 case 'SSD':
                   selectModalTitle = 'SSD';
-                  data = await fetch(`/api/getBySsdList`);
+                  data = fetch(`/api/getBySsdList`);
                   break;
                 case 'PSU':
                   selectModalTitle = '電源';
-                  data = await fetch(`/api/getByPsuList`);
+                  data = fetch(`/api/getByPsuList`);
                   break;
                 case 'OS':
                   selectModalTitle = 'OS';
-                  data = await fetch(`/api/getOsList`);
+                  data = fetch(`/api/getOsList`);
                   break;
               }
+              console.log('cateName:'+partsCategoryName);
+              console.log(data);
+              console.log(document.getElementById('selectModalLabel').value);
               document.getElementById('selectModalLabel').textContent = selectModalTitle + 'を選択';
 
               let dataObj;
@@ -109,28 +113,28 @@
                     </div>
                   </div>`;
               partsList.insertAdjacentHTML('beforeend', partsCard);
-              partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', null);
-              partsList.querySelectorAll(".name")[i].textContent = "未選択";
-              partsList.querySelectorAll(".price")[i].textContent = '¥0' + dataObj?.[3].toLocaleString();
-              if (partsList.querySelectorAll(".spec1")[i] != null) {
-                partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+              partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
+              partsList.querySelectorAll(".name")[0].textContent = "未選択";
+              partsList.querySelectorAll(".price")[0].textContent = '¥0' + dataObj?.[3].toLocaleString();
+              if (partsList.querySelectorAll(".spec1")[0] != null) {
+                partsList.querySelectorAll(".spec1")[0].textContent = dataObj?.[5];
               }
-              if (partsList.querySelectorAll(".spec2")[i] != null) {
-                partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+              if (partsList.querySelectorAll(".spec2")[0] != null) {
+                partsList.querySelectorAll(".spec2")[0].textContent = dataObj?.[6];
                 if(document.getElementById('selectModalLabel').value==="MB"){
                   cpuGen=dataObj?.[6];
                 }
               }
-              if (partsList.querySelectorAll(".spec3")[i] != null) {
-                partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+              if (partsList.querySelectorAll(".spec3")[0] != null) {
+                partsList.querySelectorAll(".spec3")[0].textContent = dataObj?.[7];
               }
-              if (partsList.querySelectorAll(".spec4")[i] != null) {
-                partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+              if (partsList.querySelectorAll(".spec4")[0] != null) {
+                partsList.querySelectorAll(".spec4")[0].textContent = dataObj?.[8];
                 if(document.getElementById('selectModalLabel').value==="CPU"){
                   cpuGen=dataObj?.[8];
                 }
               }
-              partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+              partsList.querySelectorAll(".release")[0].textContent = dataObj?.[4];
               for (let i = 0; i < data.length; i++) {
                 dataObj = Object.values(data[i]);
                 partsList.insertAdjacentHTML('beforeend', partsCard);
@@ -215,7 +219,7 @@
         })
 
         /////検索////
-        document.getElementById('searchBtn').addEventListener('click', async function(){
+        document.getElementById('searchBtn').addEventListener('click', function(){
           let searchWord = document.getElementById('searchWord').Value;
           let minPrice = document.getElementById('minPrice').Value;
           let maxPrice = document.getElementById('maxPrice').Value;
@@ -224,7 +228,7 @@
             case 'CPU':
               let chipset=document.getElementById('spec4MB').value;
               selectModalTitle = 'CPU';
-              data = await fetch(`/api/searchByCpuList`,{
+              data = fetch(`/api/searchByCpuList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
@@ -241,7 +245,7 @@
               )
             case 'GPU':
               selectModalTitle = 'グラフィックボード';
-              data = await fetch(`/api/searchByGpuList`,{
+              data = fetch(`/api/searchByGpuList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
@@ -255,7 +259,7 @@
               break;
             case 'MEMORY':
               selectModalTitle = 'メモリ';
-              data = await fetch(`/api/searchByRamList`,{
+              data = fetch(`/api/searchByRamList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
@@ -270,7 +274,7 @@
             case 'MB':
               let cpuGen=document.getElementById('spec4CPU').value;
               selectModalTitle = 'マザーボード';
-              data = await fetch(`/api/searchByMbList`,{
+              data = fetch(`/api/searchByMbList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
@@ -285,7 +289,7 @@
               break;
             case 'SSD':
               selectModalTitle = 'SSD';
-              data = await fetch(`/api/searchBySsdList`,{
+              data = fetch(`/api/searchBySsdList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
@@ -299,7 +303,7 @@
               break;
             case 'PSU':
               selectModalTitle = '電源';
-              data = await fetch(`/api/searchByPsuList`,{
+              data = fetch(`/api/searchByPsuList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
@@ -313,7 +317,7 @@
               break;
             case 'OS':
               selectModalTitle = 'OS';
-              data = await fetch(`/api/searchByOsList`,{
+              data = fetch(`/api/searchByOsList`,{
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
