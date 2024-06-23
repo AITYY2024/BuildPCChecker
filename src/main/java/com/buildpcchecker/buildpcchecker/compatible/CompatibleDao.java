@@ -18,4 +18,6 @@ public interface CompatibleDao {
     int insert(CompatibleForm compatibleForm);//互換性テーブル追加
 
     int update(CompatibleForm compatibleForm);//互換性テーブル更新
+
+    int delete(int id); //互換性テーブル削除
 }

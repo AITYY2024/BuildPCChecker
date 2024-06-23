@@ -71,12 +71,23 @@ public class CompatibleRestController {
         }
     }
 
-//    //互換性テーブル更新
+    //互換性テーブル更新
     @PutMapping("/api/compatible")
     public ResponseEntity<Integer>compatibleUpdate(@RequestBody CompatibleForm compatibleForm){
         try {
             var compatibleUpdate = icompatibleService.update(compatibleForm);
             return new ResponseEntity<>(compatibleUpdate,HttpStatus.OK);
+        }catch (NoSuchException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //互換性テーブル削除
+    @DeleteMapping("/api/compatible")
+    public ResponseEntity<Integer>compatibleDelete(@RequestBody CompatibleForm compatibleForm){
+        try {
+            var compatibleDelete = icompatibleService.delete(compatibleForm.getCompatibleId());
+            return new ResponseEntity<>(compatibleDelete,HttpStatus.OK);
         }catch (NoSuchException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -23,7 +23,14 @@ public class IcompatibleDao implements CompatibleDao{
     //互換性テーブル一覧
     @Override
     public List<CompatibleDisplayForm>compatibleAll(){
-        return jdbcTemplate.query("SELECT * FROM compatible ORDER BY cpu_generation",
+        return jdbcTemplate.query("""
+                        SELECT *\s
+                        FROM compatible
+                        ORDER BY
+                          CASE
+                            WHEN cpu_generation LIKE 'Ryzen%' THEN CAST(SUBSTRING(cpu_generation FROM '(\\d+)') AS INTEGER)
+                            WHEN cpu_generation LIKE '第%' THEN CAST(SUBSTRING(cpu_generation FROM '(\\d+)') AS INTEGER)
+                          END DESC;""",
                                     new DataClassRowMapper<>(CompatibleDisplayForm.class));
     }
 
@@ -81,9 +88,17 @@ public class IcompatibleDao implements CompatibleDao{
         param.addValue("cpu_generation",compatibleForm.getCpuGen());
         param.addValue("chipset_name",compatibleForm.getChipset());
         return jdbcTemplate.update("UPDATE compatible " +
-                                    "SET cpu_generation = :cpu_generation" +
+                "SET cpu_generation = :cpu_generation" +
                                     ",chipset_name = :chipset_name " +
                                     "WHERE id = :id",param);
+    }
+
+    //互換性テーブル削除
+    @Override
+    public int delete(int id){
+        var param = new MapSqlParameterSource();
+        param.addValue("id",id);
+        return jdbcTemplate.update("DELETE FROM compatible WHERE id = :id",param);
     }
 
 }
