@@ -46,38 +46,38 @@
               let res; //JSONデータ
               let data;//JSONデータ内の内容を入れる
               let selectModalTitle;
-                      switch(document.getElementById('selectModalLabel').value){
-                             case 'CPU':
-                               selectModalTitle = 'CPU';
-                               requestPram+="&chipset="+chipset;
-                               res = await fetch(`/api/searchByCpuList?`+requestPram);
-                               break;
-                             case 'GPU':
-                               selectModalTitle = 'グラフィックボード';
-                               res = await fetch(`/api/getGpuList`);
-                               break;
-                             case 'MEMORY':
-                               selectModalTitle = 'メモリ';
-                               res = await fetch(`/api/getRamList`);
-                               break;
-                             case 'MB':
-                               selectModalTitle = 'マザーボード';
-                               requestPram+="&cpuGen="+cpuGen;
-                               res = await fetch(`/api/searchByMbList?`+requestPram);
-                               break;
-                             case 'SSD':
-                                  selectModalTitle = 'SSD';
-                                  res = await fetch(`/api/getBySsdList`);
-                                  break;
-                             case 'PSU':
-                                  selectModalTitle = '電源';
-                                  res = await fetch(`/api/getByPsuList`);
-                                  break;
-                             case 'OS':
-                                  selectModalTitle = 'OS';
-                                  res = await fetch(`/api/getOsList`);
-                                  break;
-                             }
+              switch(document.getElementById('selectModalLabel').value){
+                case 'CPU':
+                  selectModalTitle = 'CPU';
+                  requestPram+="&chipset="+chipset;
+                  res = await fetch(`/api/searchByCpuList?`+requestPram);
+                  break;
+                case 'GPU':
+                  selectModalTitle = 'グラフィックボード';
+                  res = await fetch(`/api/getGpuList`);
+                  break;
+                case 'MEMORY':
+                  selectModalTitle = 'メモリ';
+                  res = await fetch(`/api/getRamList`);
+                  break;
+                case 'MB':
+                  selectModalTitle = 'マザーボード';
+                  requestPram+="&cpuGen="+cpuGen;
+                  res = await fetch(`/api/searchByMbList?`+requestPram);
+                  break;
+                case 'SSD':
+                  selectModalTitle = 'SSD';
+                  res = await fetch(`/api/getBySsdList`);
+                  break;
+                case 'PSU':
+                  selectModalTitle = '電源';
+                  res = await fetch(`/api/getByPsuList`);
+                  break;
+                case 'OS':
+                  selectModalTitle = 'OS';
+                  res = await fetch(`/api/getOsList`);
+                  break;
+              }
 
               data=res.json();
               data.then(dataList =>{
@@ -101,7 +101,7 @@
                       </div>`;
                   // 未選択を追加
                   partsList.insertAdjacentHTML('beforeend', partsCard);
-                  partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
+                  partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', "");
                   partsList.querySelectorAll(".name")[0].textContent = "未選択";
                   partsList.querySelectorAll(".price")[0].textContent = '¥0';
                   partsList.querySelectorAll(".spec1")[0].textContent = "";
@@ -153,24 +153,34 @@
                         const partsCategoryName = document.getElementById('selectModalLabel').getAttribute('data-name').toLowerCase();
                         const partsCategoryCard = document.getElementById(partsCategoryName)
                         const dataId = card.getAttribute('data-id');
-                        const selectPartsList = Object.values(dataList.find(item => item.product_id === dataId));
-                        partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[3];
-                     //   partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[3].toLocaleString();
-                        partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[2];
+                        let selectPartsList;
+                        if(dataId===null || dataId==="" || dataId===undefined){
+                          selectPartsList = Object.values({
+                            "id": "",
+                            "product_id": "",
+                            "url": "",
+                            "product_name": "未選択",
+                            "price": 0,
+                            "release_date": ""
+                          });
+                        }else{
+                          selectPartsList = Object.values(dataList.find(item => item.product_id === dataId));
+                        }
+                        partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[4].toLocaleString();
+                        partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[3];
                         if (partsCategoryCard.querySelector(".spec1") != null) {
-                          partsCategoryCard.querySelector(".spec1").textContent = selectPartsList?.[5];
+                          partsCategoryCard.querySelector(".spec1").textContent = selectPartsList?.[6];
                         }
                         if (partsCategoryCard.querySelector(".spec2") != null) {
-                          partsCategoryCard.querySelector(".spec2").textContent = selectPartsList?.[6];
+                          partsCategoryCard.querySelector(".spec2").textContent = selectPartsList?.[7];
                         }
                         if (partsCategoryCard.querySelector(".spec3") != null) {
-                          partsCategoryCard.querySelector(".spec3").textContent = selectPartsList?.[7];
+                          partsCategoryCard.querySelector(".spec3").textContent = selectPartsList?.[8];
                         }
                         if (partsCategoryCard.querySelector(".spec4") != null) {
-                          (partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[8]);
+                          (partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9]);
                         }
 
-                        console.log(document.getElementById('selectModalLabel').value+"Price");
                         priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
                         let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
                         document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + priceList[partsCategoryName];
@@ -178,9 +188,9 @@
                         document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
         ////////////////プリセットデータ格納//////////////
-                        presetDataList[partsCategoryName + "Id"] = selectPartsList[0];
-                        presetDataList[partsCategoryName + "Name"] = selectPartsList?.[2];
-                        presetDataList[partsCategoryName + "Url"] = selectPartsList?.[1];
+                        presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
+                        presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
+                        presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
                         presetDataList["description"] = document.getElementById("description").value;
                         presetDataList["totalPrice"] = totalPrice;
                         presetDataList["presetName"] = document.getElementById("presetName").value;
@@ -205,10 +215,10 @@
             })
            .then(res =>
                console.log(res)
-           )
+               )
         })
 /////検索////
-        document.getElementById('searchBtn').addEventListener('click', function(){
+        document.getElementById('searchBtn').addEventListener('click', async function(){
           partsList.innerHTML = '';
           let searchWord = document.getElementById('searchWord').Value;
           let minPrice = document.getElementById('minPrice').Value;
@@ -217,38 +227,40 @@
                           "&minPrice="+minPrice+
                           "&maxPrice="+maxPrice;
           let selectModalTitle;
-          let data;
+          let res;
           switch(document.getElementById('selectModalLabel').value){
             case 'CPU':
               selectModalTitle = 'CPU';
               requestPram+="&chipset="+chipset;
-              data = fetch(`/api/searchByCpuList?`+requestPram);
+              res = await fetch(`/api/searchByCpuList?`+requestPram);
+              break;
             case 'GPU':
               selectModalTitle = 'グラフィックボード';
-              data = fetch(`/api/searchByGpuList?`+requestPram);
+              res = await fetch(`/api/searchByGpuList?`+requestPram);
               break;
             case 'MEMORY':
               selectModalTitle = 'メモリ';
-              data = fetch(`/api/searchByRamList?`+requestPram);
+              res = await fetch(`/api/searchByRamList?`+requestPram);
               break;
             case 'MB':
               selectModalTitle = 'マザーボード';
               requestPram+="&cpuGen="+cpuGen;
-              data = fetch(`/api/searchByMbList?`+requestPram);
+              res = await fetch(`/api/searchByMbList?`+requestPram);
               break;
             case 'SSD':
               selectModalTitle = 'SSD';
-              data = fetch(`/api/searchBySsdList?`+requestPram);
+              res = await fetch(`/api/searchBySsdList?`+requestPram);
               break;
             case 'PSU':
               selectModalTitle = '電源';
-              data = fetch(`/api/searchByPsuList?`+requestPram);
+              res = await fetch(`/api/searchByPsuList?`+requestPram);
               break;
             case 'OS':
               selectModalTitle = 'OS';
-              data = fetch(`/api/searchByOsList?`+requestPram);
+              res = await fetch(`/api/searchByOsList?`+requestPram);
             break;
         }
+    let dataList=res.JSON();
     let dataObj;
       const partsCard = `
           <div class="card my-2 border-primary-subtle border-3 parts-card" data-bs-dismiss="modal">
@@ -268,50 +280,42 @@
       partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
       partsList.querySelectorAll(".name")[0].textContent = "未選択";
       partsList.querySelectorAll(".price")[0].textContent = '¥0';
-      if (partsList.querySelectorAll(".spec1")[0] != null) {
-        partsList.querySelectorAll(".spec1")[0].textContent = dataObj?.[5];
+      partsList.querySelectorAll(".spec1")[0].textContent = '';
+      partsList.querySelectorAll(".spec2")[0].textContent = '';
+      if(document.getElementById('selectModalLabel').value==="MB"){
+        cpuGen='';
       }
-      if (partsList.querySelectorAll(".spec2")[0] != null) {
-        partsList.querySelectorAll(".spec2")[0].textContent = dataObj?.[6];
-        if(document.getElementById('selectModalLabel').value==="MB"){
-          cpuGen=dataObj?.[6];
-        }
+      partsList.querySelectorAll(".spec3")[0].textContent = '';
+      partsList.querySelectorAll(".spec4")[0].textContent = '';
+      if(document.getElementById('selectModalLabel').value==="CPU"){
+        cpuGen='';
       }
-      if (partsList.querySelectorAll(".spec3")[0] != null) {
-        partsList.querySelectorAll(".spec3")[0].textContent = dataObj?.[7];
-      }
-      if (partsList.querySelectorAll(".spec4")[0] != null) {
-        partsList.querySelectorAll(".spec4")[0].textContent = dataObj?.[8];
-        if(document.getElementById('selectModalLabel').value==="CPU"){
-          cpuGen=dataObj?.[8];
-        }
-      }
-      partsList.querySelectorAll(".release")[0].textContent = dataObj?.[4];
-      for (let i = 1; i < data.length; i++) {
-        dataObj = Object.values(data[i]);
+      partsList.querySelectorAll(".release")[0].textContent = '';
+      for (let i = 1; i < dataList.length; i++) {
+        dataObj = Object.values(dataList[i]);
         partsList.insertAdjacentHTML('beforeend', partsCard);
-        partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[0]);
-        partsList.querySelectorAll(".name")[i].textContent = dataObj?.[2];
-        partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[3].toLocaleString();
+        partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
+        partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
+        partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4];
         if (partsList.querySelectorAll(".spec1")[i] != null) {
-          partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+          partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[6];
         }
         if (partsList.querySelectorAll(".spec2")[i] != null) {
-          partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+          partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[7];
           if(document.getElementById('selectModalLabel').value==="MB"){
-            cpuGen=dataObj?.[6];
+            cpuGen=dataObj?.[7];
           }
         }
         if (partsList.querySelectorAll(".spec3")[i] != null) {
-          partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+          partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[8];
         }
         if (partsList.querySelectorAll(".spec4")[i] != null) {
-          partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+          partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[9];
           if(document.getElementById('selectModalLabel').value==="CPU"){
-            cpuGen=dataObj?.[8];
+            cpuGen=dataObj?.[9];
           }
         }
-        partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+        partsList.querySelectorAll(".release")[i].textContent = dataObj?.[5];
       };
   })
 });
