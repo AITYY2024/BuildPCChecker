@@ -34,13 +34,13 @@ public class PresetController {
 //    }
 
 
-    @GetMapping("/preset-list")//http://localhost:8080/test
-    public String presetList(){
-
-//        System.out.println(presetService.findAll());//プリセットテーブル一覧テスト
-//        System.out.println(presetService.delete(1));//プリセットテーブル削除テスト
-
-        return "preset-list";
-    }
+//    @GetMapping("/preset-list")//http://localhost:8080/test
+//    public String presetList(){
+//
+////        System.out.println(presetService.findAll());//プリセットテーブル一覧テスト
+////        System.out.println(presetService.delete(1));//プリセットテーブル削除テスト
+//
+//        return "preset-list";
+//    }
 
 }
