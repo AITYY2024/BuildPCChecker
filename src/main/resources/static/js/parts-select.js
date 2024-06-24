@@ -79,7 +79,8 @@
               }
 
               data=res.json();
-              data.then(dataObj =>{
+              data.then(dataList =>{
+                  let dataObj;
                   document.getElementById('selectModalLabel').textContent = selectModalTitle + 'を選択';
 
                   // let dataObj;
@@ -97,54 +98,52 @@
                           <small class="float-end release"></small>
                         </div>
                       </div>`;
+                  // 未選択を追加
                   partsList.insertAdjacentHTML('beforeend', partsCard);
                   partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
                   partsList.querySelectorAll(".name")[0].textContent = "未選択";
                   partsList.querySelectorAll(".price")[0].textContent = '¥0';
-                  if (partsList.querySelectorAll(".spec1")[0] != null) {
-                    partsList.querySelectorAll(".spec1")[0].textContent = dataObj?.[5];
+                  partsList.querySelectorAll(".spec1")[0].textContent = "";
+                  partsList.querySelectorAll(".spec2")[0].textContent = "";
+                  if(document.getElementById('selectModalLabel').value==="MB"){
+                    chipset="";
                   }
-                  if (partsList.querySelectorAll(".spec2")[0] != null) {
-                    partsList.querySelectorAll(".spec2")[0].textContent = dataObj?.[6];
-                    if(document.getElementById('selectModalLabel').value==="MB"){
-                      chipset=dataObj?.[6];
-                    }
+                  partsList.querySelectorAll(".spec3")[0].textContent = "";
+                  partsList.querySelectorAll(".spec4")[0].textContent = "";
+                  if(document.getElementById('selectModalLabel').value==="CPU"){
+                    cpuGen="";
                   }
-                  if (partsList.querySelectorAll(".spec3")[0] != null) {
-                    partsList.querySelectorAll(".spec3")[0].textContent = dataObj?.[7];
-                  }
-                  if (partsList.querySelectorAll(".spec4")[0] != null) {
-                    partsList.querySelectorAll(".spec4")[0].textContent = dataObj?.[8];
-                    if(document.getElementById('selectModalLabel').value==="CPU"){
-                      cpuGen=dataObj?.[8];
-                    }
-                  }
-                  partsList.querySelectorAll(".release")[0].textContent = dataObj?.[4];
-                  for (let i = 1; i < data.length; i++) {
-                    dataObj = Object.values(data[i]);
+                  partsList.querySelectorAll(".release")[0].textContent = "";
+                  
+                  //JSONデータをモーダルに表示
+                  for (let i = 0; i < dataList.length; i++) {
+                    dataObj = Object.values(dataList[i]);
+                    console.log(dataObj);
+                  
                     partsList.insertAdjacentHTML('beforeend', partsCard);
-                    partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[0]);
-                    partsList.querySelectorAll(".name")[i].textContent = dataObj?.[2];
-                    partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[3].toLocaleString();
+                    partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
+                    partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
+                    partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4];
+                    // partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4].toLocaleString();
                     if (partsList.querySelectorAll(".spec1")[i] != null) {
-                      partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[5];
+                      partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[6];
                     }
                     if (partsList.querySelectorAll(".spec2")[i] != null) {
-                      partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[6];
+                      partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[7];
                       if(document.getElementById('selectModalLabel').value==="MB"){
-                        cpuGen=dataObj?.[6];
+                        cpuGen=dataObj?.[7];
                       }
                     }
                     if (partsList.querySelectorAll(".spec3")[i] != null) {
-                      partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[7];
+                      partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[8];
                     }
                     if (partsList.querySelectorAll(".spec4")[i] != null) {
-                      partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[8];
+                      partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[9];
                       if(document.getElementById('selectModalLabel').value==="CPU"){
-                        cpuGen=dataObj?.[8];
+                        cpuGen=dataObj?.[9];
                       }
                     }
-                    partsList.querySelectorAll(".release")[i].textContent = dataObj?.[4];
+                    partsList.querySelectorAll(".release")[i].textContent = dataObj?.[5];
     
         ////////////選択パーツのデータをlistや各タグに格納////////////
                     const cards = document.querySelectorAll('.parts-card');
