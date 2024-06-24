@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>プリセット</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .main {
+          margin-bottom: 75px;
+        }
+        /* Modalの高さ設定 */
+        .modal-body {
+          max-height: calc(100svh - 240px);
+          overflow-y: auto;
+        }
+        .dropdown-menu {
+          min-width: 0 !important;
+        }
+        #bottomBar {
+          width: fit-content;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<script>
+    const header = document.getElementById('header');
+    header.innerHTML = `
+      <div class="bg-body-tertiary d-flex justify-content-between align-items-center p-2" id="defaultNav">
+        <span class="mb-0 me-2 h5">Build PC Checker</span>
+        <div class="d-none d-sm-flex">
+          <a class="nav-link ms-4" href="./parts-select.html">構成</a>
+          <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" href="./preset-list.html">プリセット</a>
+        </div>
+        <div class="btn-group ms-auto">
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='./login-redirect.html'">ログアウト</button>
+          <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="javascript:void(0);" id="themeBtn">カラーモード<i class="fa-regular fa-sun ms-2"></i></a></li>
+            <li><a class="dropdown-item" href="./setting.html">アカウント</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-body-tertiary d-sm-none p-2 ps-3" id="mobileNav">
+        <div class="d-flex justify-content-start">
+          <a class="nav-link" href="./parts-select.html">構成</a>
+          <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" href="./preset-list.html">プリセット</a>
+        </div>
+      </div>`;
+
+    // ナビゲーションバーの上部固定切り替え
+    function setDefaultNavFixed() {
+      let defaultNav = document.getElementById('defaultNav');
+      if (window.innerWidth <= 576) {
+        defaultNav.classList.remove('fixed-top');
+      } else {
+        defaultNav.classList.add('fixed-top');
+      }
+    }
+
+    // 小さい画面用ナビゲーションバーの上部固定切り替え
+    function setMobileNavFixed() {
+      let mobileNav = document.getElementById('mobileNav');
+      if (window.scrollY >= 53.6) {
+        mobileNav.classList.add('fixed-top');
+      } else {
+        mobileNav.classList.remove('fixed-top');
+      }
+    }
+
+    // コンテンツがナビゲーションバーに被らないようにマージン調整
+    function setMainMargin() {
+      let defaultNav = document.getElementById('defaultNav');
+      let mobileNav = document.getElementById('mobileNav');
+      let main = document.querySelector('.main');
+      let navHeight = 0;
+      if (window.innerWidth <= 576) {
+        if (window.scrollY >= 53.6) {
+          navHeight = mobileNav.offsetHeight;
+        } else {
+          navHeight = 0;
+        }
+      } else {
+        navHeight = defaultNav.offsetHeight;
+      }
+      main.style.marginTop = navHeight + 10 + 'px';
+    }
+
+    // ウィンドウリサイズ時に実行
+    window.addEventListener('resize', () => {
+      setDefaultNavFixed();
+      setMainMargin();
+    });
+
+    // スクロール時に実行
+    document.addEventListener('scroll', () => {
+      setMobileNavFixed();
+      setMainMargin();
+    });
+
+    // ロード時に実行
+    window.addEventListener('load', () => {
+      setDefaultNavFixed();
+      setMobileNavFixed();
+      setMainMargin();
+    });
+
+    // テーマ切り替え
+    function toggleTheme() {
+      const currentTheme = document.documentElement.dataset.bsTheme;
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.bsTheme = newTheme;
+      const themeBtnIcon = document.getElementById("themeBtn").querySelector('i');
+      themeBtnIcon.classList.remove(currentTheme === 'light' ? 'fa-sun' : 'fa-moon');
+      themeBtnIcon.classList.add(newTheme === 'light' ? 'fa-sun' : 'fa-moon');
+    }
+
+    // ボタン押下時に実行
+    document.getElementById("themeBtn").addEventListener('click', () => {
+      toggleTheme();
+    });
+</script>
+
+<div class="container-sm main">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-2">プリセット</h4>
+            <div class="row" id="presetList">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mx-auto bg-body-tertiary d-flex align-items-center m-2 p-0  rounded-2 fixed-bottom" id="bottomBar">
+    <div class="input-group">
+        <label class="input-group-text">差額計算</label>
+        <select class="form-select" id="preset1">
+            <option value="" selected>選択</option>
+        </select>
+        <label class="input-group-text">-</label>
+        <select class="form-select" id="preset2" disabled>
+        </select>
+        <label class="input-group-text">=</label>
+        <label class="input-group-text text-primary" id="sumPrice">選択してください</label>
+    </div>
+</div>
+
+<!-- モーダル -->
+<div class="modal fade" id="detailModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectModalLabel"></h5>
+                <div class="input-group w-auto">
+                    <span class="input-group-text">最終更新：2024/6/30 10:25</span>
+                    <button type="button" class="btn btn-primary">
+                        更新<i class="fa-solid fa-rotate ms-2"></i>
+                    </button>
+                </div>
+                <!-- <button type="button" class="btn btn-primary">
+                  最新のデータに更新<i class="fa-solid fa-rotate ms-2"></i>
+                </button> -->
+            </div>
+            <div class="modal-body" id="presetDataList">
+                <!-- list-group-flush -->
+                <div class="list-group list-group-flush">
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="cpuUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">CPU</h5>
+                            <h5 id="cpuName"></h5>
+                        </div>
+                        <!-- <small class="float-end text-body-secondary">4.2GHz 16C/32T Ryzen 7000シリーズ SocketAM5</small> -->
+                    </a>
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="gpuUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">グラフィックボード</h5>
+                            <h5 id="gpuName"></h5>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="memoryUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">メモリ</h5>
+                            <h5 id="memoryName"></h5>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="mbUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">マザーボード</h5>
+                            <h5 id="mbName"></h5>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="ssdUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">SSD</h5>
+                            <h5 id="ssdName"></h5>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="psuUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">電源</h5>
+                            <h5 id="psuName"></h5>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="list-group-item list-group-item-action" id="osUrl">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">OS</h5>
+                            <h5 id="osName"></h5>
+                        </div>
+                    </a>
+                    <a class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between pt-2">
+                            <h5 class="me-3">合計価格</h5>
+                            <h5 class="text-danger" id="totalPrice"></h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer d-block">
+                <div class="row m-0 p-0 mb-2">
+                    <div class="col-4 ps-0 pe-1">
+                        <a href="./parts-select.html?presetId=0">
+                            <button type="button" class=" btn w-100 btn-primary">
+                                コピー
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-4 ps-1 pe-1">
+                        <a id="editUrl">
+                            <button type="button" class=" btn w-100 btn-primary">
+                                編集
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-4 ps-1 pe-0">
+                        <button type="button" class=" btn w-100 btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            削除
+                        </button>
+                    </div>
+                </div>
+                <div class="row m-0 p-0">
+                    <div class="col ps-0 pe-0">
+                        <button type="button" class=" btn w-100 btn-secondary" data-bs-dismiss="modal">
+                            閉じる
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- モーダル -->
+<div class="modal fade" id="deleteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">確認</h5>
+            </div>
+            <div class="modal-body">
+                <span id="deletePresetName"></span>を削除しますか？
+            </div>
+            <div class="modal-footer d-block">
+                <div class="row m-0 p-0">
+                    <div class="col ps-0 pe-1">
+                        <button type="button" class="btn w-100 btn-secondary" data-bs-dismiss="modal">
+                            閉じる
+                        </button>
+                    </div>
+                    <div class="col ps-1 pe-0">
+                        <button type="button" id="deleteBtn" class="btn w-100 btn-danger" data-bs-dismiss="modal">
+                            削除
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('load', async function(){
+      //presetデータ一覧表示
+      let res=await fetch('/api/presetList');
+      let dataList=res.json();
+      dataList.then(data=>{
+          setPresetData(data);
+      });
+
+      function setPresetData(data) {
+        const presetList = document.getElementById('presetList');
+        for (let i = 0; i < data.length; i++) {
+          presetCard = `
+            <div class="col-xs-12 col-md-6 col-xl-4">
+              <div class="card my-2 preset-card">
+                <div class="card-body pb-0">
+                  <h5 class="card-title"><span class="name"></span><span class="float-end text-danger price"></span>
+                  </h5>
+                  <p class="card-text">
+                    <div class="row">
+                      <div class="col-9 pe-1">
+                        <button type="button" class="btn btn-sm btn-primary w-100 detail" data-bs-toggle="modal" data-bs-target="#detailModal">
+                          詳細
+                        </button>
+                      </div>
+                      <div class="col-3 ps-1">
+                        <button type="button" class="btn btn-sm btn-danger w-100 delete" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                          削除
+                        </button>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>`
+          presetList.insertAdjacentHTML('beforeend', presetCard);
+
+          presetList.querySelectorAll('.detail')[i].setAttribute('data-id', data[i].preset_id);
+          presetList.querySelectorAll('.detail')[i].setAttribute('data-name', data[i].preset_name);
+          presetList.querySelectorAll('.delete')[i].setAttribute('data-id', data[i].preset_id);
+          presetList.querySelectorAll('.delete')[i].setAttribute('data-name', data[i].preset_name);
+          presetList.querySelectorAll(".name")[i].textContent = data[i].preset_name;
+          presetList.querySelectorAll(".price")[i].textContent = data[i].total_amount.toLocaleString('ja-JP', {style:'currency', currency: 'JPY'}).replace('￥', '¥');
+        }
+
+        //////詳細モーダル表示/////
+        const detailModalButtons = document.querySelectorAll('button[data-bs-target="#detailModal"]');
+
+        const deleteBtn = document.getElementById('deleteBtn');
+
+        detailModalButtons.forEach(button => {
+          button.addEventListener('click', (event) => {
+            const presetName = event.currentTarget.getAttribute('data-name');
+            document.getElementById('selectModalLabel').textContent = presetName;
+            const presetId = event.currentTarget.getAttribute('data-id');
+            deleteBtn.setAttribute('data-id', presetId);
+            document.getElementById('deletePresetName').textContent = presetName;
+            const selectPartsList = data.find(item => item.preset_id === Number(presetId));
+            const presetDataList = document.getElementById('presetDataList');
+            document.getElementById('cpuName').textContent = selectPartsList.cpu_name;
+            document.getElementById('gpuName').textContent = selectPartsList.gpu_name;
+            document.getElementById('memoryName').textContent = selectPartsList.ram_name;
+            document.getElementById('mbName').textContent = selectPartsList.mb_name;
+            document.getElementById('ssdName').textContent = selectPartsList.ssd_name;
+            document.getElementById('psuName').textContent = selectPartsList.psu_name;
+            document.getElementById('osName').textContent = selectPartsList.os_name;
+            document.getElementById('totalPrice').textContent = selectPartsList.total_amount.toLocaleString('ja-JP', {style:'currency', currency: 'JPY'}).replace('￥', '¥');
+            document.getElementById("cpuUrl").href = selectPartsList.cpu_url;
+            document.getElementById("gpuUrl").href = selectPartsList.gpu_url;
+            document.getElementById("memoryUrl").href = selectPartsList.ram_url;
+            document.getElementById("mbUrl").href = selectPartsList.mb_url;
+            document.getElementById("ssdUrl").href = selectPartsList.ssd_url;
+            document.getElementById("psuUrl").href = selectPartsList.psu_url;
+            document.getElementById("osUrl").href = selectPartsList.os_url;
+            document.getElementById("editUrl").href = './parts-select.html?presetId=' + selectPartsList.preset_id;
+          });
+        });
+
+        const deleteModalButtons = document.querySelectorAll('.delete');
+        deleteModalButtons.forEach(button => {
+          button.addEventListener('click', (event) => {
+            const presetId = event.currentTarget.getAttribute('data-id');
+            deleteBtn.setAttribute('data-id', presetId);
+            const presetName = event.currentTarget.getAttribute('data-name');
+            document.getElementById('deletePresetName').textContent = presetName;
+          });
+        });
+
+        let preset1Price = 0;
+        let preset2Price = 0;
+        let sum = 0
+
+        const selectPreset1Name = document.getElementById('preset1');
+        const selectPreset2Name = document.getElementById('preset2');
+        const presetPriceSum = document.getElementById('sumPrice');
+
+        for (let i = 0; i < data.length; i++) {
+          const option = document.createElement('option');
+          option.value = data[i].preset_id;
+          option.setAttribute('data-price', data[i].total_amount);
+          option.textContent = data[i].preset_name;
+          selectPreset1Name.appendChild(option);
+        }
+
+        selectPreset1Name.addEventListener('change', function() {
+          selectPreset2Name.innerHTML = '';
+          if (this.value === '') {
+            selectPreset2Name.disabled = true;
+            presetPriceSum.classList.add('text-primary');
+            presetPriceSum.classList.remove('text-danger');
+            presetPriceSum.textContent = "選択してください";
+          } else {
+            selectPreset2Name.disabled = false;
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].preset_id != this.value) {
+                const option = document.createElement('option');
+                option.value = data[i].preset_id;
+                const presetId = option.setAttribute('data-price', data[i].total_amount);
+                option.textContent = data[i].preset_name;
+                selectPreset2Name.appendChild(option);
+              }
+            }
+            preset1Price = this.options[this.selectedIndex].getAttribute('data-price');
+            preset2Price = selectPreset2Name.options[selectPreset2Name.selectedIndex].getAttribute('data-price');
+            sum = Number(preset1Price) - Number(preset2Price);
+            presetPriceSum.textContent = sum.toLocaleString('ja-JP', {style:'currency', currency: 'JPY'}).replace('￥', '¥');
+            if (sum <= 0) {
+              presetPriceSum.classList.add('text-danger');
+              presetPriceSum.classList.remove('text-primary');
+            } else {
+              presetPriceSum.classList.add('text-primary');
+              presetPriceSum.classList.remove('text-danger');
+            }
+          }
+
+        });
+
+        selectPreset2Name.addEventListener('change', function() {
+          preset1Price = selectPreset1Name.options[selectPreset1Name.selectedIndex].getAttribute('data-price');
+          preset2Price = this.options[this.selectedIndex].getAttribute('data-price');
+          sum = Number(preset1Price) - Number(preset2Price);
+          presetPriceSum.textContent = sum.toLocaleString('ja-JP', {style:'currency', currency: 'JPY'}).replace('￥', '¥');
+          if (sum <= 0) {
+            presetPriceSum.classList.add('text-danger');
+            presetPriceSum.classList.remove('text-primary');
+          } else {
+            presetPriceSum.classList.add('text-primary');
+            presetPriceSum.classList.remove('text-danger');
+          }
+        });
+
+      }
+
+      deleteBtn.addEventListener('click', function() {
+        const deletePresetId = this.getAttribute('data-id');
+        console.log(deletePresetId);
+        // deletePresetIdをもとにpresetを削除するfetchを追加
+      });
+
+
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
