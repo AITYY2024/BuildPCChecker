@@ -15,9 +15,9 @@ public class IusersDao implements UsersDao {
 
     //ログイン
     @Override
-    public UsersForm findByUser(String user_name, String password){
+    public UsersForm findByUser(String userName, String password){
         var param = new MapSqlParameterSource();
-        param.addValue("user_name", user_name);
+        param.addValue("user_name", userName);
         param.addValue("password", password);
 
         var list = jdbcTemplate.query("SELECT * FROM users " +
@@ -28,9 +28,9 @@ public class IusersDao implements UsersDao {
 
     //新規登録
     @Override
-    public int insert(String user_name, String password){
+    public int insert(String userName, String password){
         var param = new MapSqlParameterSource();
-        param.addValue("user_name", user_name);
+        param.addValue("user_name", userName);
         param.addValue("password", password);
         return jdbcTemplate.update("INSERT INTO users (user_name,password,role) " +
                                     "VALUES (:user_name,:password,2)",param);

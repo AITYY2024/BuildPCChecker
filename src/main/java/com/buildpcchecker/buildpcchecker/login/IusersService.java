@@ -14,13 +14,13 @@ public class IusersService implements UsersService {
 
     //ログイン
     @Override
-    public UsersForm findByUser(String user_name, String password){
-        return iusersDao.findByUser(user_name,password);
+    public UsersForm findByUser(String userName, String password){
+        return iusersDao.findByUser(userName,password);
     }
 
     //新規登録
     @Override
-    public int insert(String user_name, String password){
-        return iusersDao.insert(user_name,password);
+    public int insert(String userName, String password){
+        return iusersDao.insert(userName,password);
     }
 }
