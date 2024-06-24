@@ -88,13 +88,12 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<CpuSelectForm> searchCpuParts(
             String cpu_name,String chipset_name,int lowerLimit,int upperLimit){
-
-            var param = new MapSqlParameterSource();
-            param.addValue("cpu_name", "%" + cpu_name + "%");
-            param.addValue("chipset_name", "%" + chipset_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("cpu_name", "%" + cpu_name + "%");
+        param.addValue("chipset_name", "%" + chipset_name + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
                 SELECT * FROM cpu
                 WHERE
                 gen IN (SELECT cpu_generation FROM compatible WHERE chipset_name LIKE :chipset_name)
@@ -104,7 +103,7 @@ public class ProductsDao implements IProductsDao{
                 price < :upperLimit
                 AND
                 product_name LIKE :cpu_name""", param, new DataClassRowMapper<>(CpuSelectForm.class));
-            return list;
+        return list;
     }
 
     //GPUのテーブルから検索したものを表示する
@@ -112,8 +111,8 @@ public class ProductsDao implements IProductsDao{
     public List<GpuSelectForm> searchGpuParts(String gpu_name,int lowerLimit,int upperLimit){
             var param = new MapSqlParameterSource();
             param.addValue("gpu_name", "%" + gpu_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
                 SELECT * FROM gpu
                 WHERE product_name LIKE :gpu_name
@@ -129,8 +128,8 @@ public class ProductsDao implements IProductsDao{
     public List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit){
             var param = new MapSqlParameterSource();
             param.addValue("memory_name", "%" + memory_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
                 SELECT * FROM memory
                 WHERE product_name LIKE :memory_name
@@ -149,8 +148,8 @@ public class ProductsDao implements IProductsDao{
             var param = new MapSqlParameterSource();
             param.addValue("mb_name", "%" + mb_name + "%");
             param.addValue("cpu_generation", "%" + cpu_generation + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
             SELECT * FROM mb
             WHERE
@@ -170,8 +169,8 @@ public class ProductsDao implements IProductsDao{
     public List<SsdSelectForm> searchSsdParts(String ssd_name,int lowerLimit,int upperLimit){
             var param = new MapSqlParameterSource();
             param.addValue("ssd_name", "%" + ssd_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
                 SELECT * FROM ssd
                 WHERE product_name LIKE :ssd_name
@@ -188,8 +187,8 @@ public class ProductsDao implements IProductsDao{
     public List<PsuSelectForm> searchPsuParts(String psu_name,int lowerLimit,int upperLimit){
             var param = new MapSqlParameterSource();
             param.addValue("psu_name", "%" + psu_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
                 SELECT * FROM psu
                 WHERE product_name LIKE :psu_name
@@ -206,8 +205,8 @@ public class ProductsDao implements IProductsDao{
     public List<OsSelectForm> searchOsParts(String os_name,int lowerLimit,int upperLimit){
             var param = new MapSqlParameterSource();
             param.addValue("os_name", "%" + os_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
                 SELECT * FROM os
                 WHERE product_name LIKE :os_name

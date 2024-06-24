@@ -111,10 +111,14 @@ public class PartsSelectRestController {
     //CPUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByCpuList")
     public ResponseEntity<List<CpuSelectForm>> cpuSearch(
-            @RequestParam String cpu_name,@RequestParam String chipset_name
-            ,@RequestParam int lowerLimit,@RequestParam int upperLimit){
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice,
+            @RequestParam(defaultValue = "") String chipset
+    ){
         try {
-            List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(cpu_name,chipset_name,lowerLimit,upperLimit);
+            List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(
+                    searchWord,chipset,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testCpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -127,13 +131,17 @@ public class PartsSelectRestController {
 //    //GPUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByGpuList")
     public ResponseEntity<List<GpuSelectForm>> gpuSearch(
-            @RequestParam String gpu_name,@RequestParam int lowerLimit,@RequestParam int upperLimit){
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice){
         try {
-            List<GpuSelectForm> testGpuSearch = productsService.searchGpuParts(gpu_name,lowerLimit,upperLimit);
+            List<GpuSelectForm> testGpuSearch = productsService.searchGpuParts(
+                    searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testGpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
             // ステータスコード400番を返す
+            System.out.println("出来てない");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -141,9 +149,12 @@ public class PartsSelectRestController {
     //Memoryのテーブルから検索したものを表示する
     @GetMapping("/api/searchByRamList")
     public ResponseEntity<List<MemorySelectForm>> memorySearch(
-            @RequestParam String memory_name,@RequestParam int lowerLimit,@RequestParam int upperLimit){
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice){
         try {
-            List<MemorySelectForm> testMemorySearch = productsService.searchMemoryParts(memory_name,lowerLimit,upperLimit);
+            List<MemorySelectForm> testMemorySearch = productsService.searchMemoryParts(
+                    searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMemorySearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -155,10 +166,13 @@ public class PartsSelectRestController {
     //Mbのテーブルから検索したものを表示する
     @GetMapping("/api/searchByMbList")
     public ResponseEntity<List<MbSelectForm>> mbSearch(
-            @RequestParam String mb_name,@RequestParam String cpu_generation
-            ,@RequestParam int lowerLimit,@RequestParam int upperLimit){
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice,
+            @RequestParam(defaultValue = "") String cpu_generation){
         try {
-            List<MbSelectForm> testMbSearch = productsService.searchMbParts(mb_name,cpu_generation,lowerLimit,upperLimit);
+            List<MbSelectForm> testMbSearch = productsService.searchMbParts(
+                    searchWord,cpu_generation,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMbSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -169,9 +183,13 @@ public class PartsSelectRestController {
 
     //SSDのテーブルから検索したものを表示する
     @GetMapping("/api/searchBySsdList")
-    public ResponseEntity<List<SsdSelectForm>> ssdSearch(String ssd_name,int lowerLimit,int upperLimit){
+    public ResponseEntity<List<SsdSelectForm>> ssdSearch(
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice){
         try {
-            List<SsdSelectForm> testSsdSearch = productsService.searchSsdParts(ssd_name,lowerLimit,upperLimit);
+            List<SsdSelectForm> testSsdSearch = productsService.searchSsdParts(
+                    searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testSsdSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -182,9 +200,13 @@ public class PartsSelectRestController {
 
     //PSUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByPsuList")
-    public ResponseEntity<List<PsuSelectForm>> psuSearch(String psu_name,int lowerLimit,int upperLimit) {
+    public ResponseEntity<List<PsuSelectForm>> psuSearch(
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice) {
         try {
-            List<PsuSelectForm> testPsuSearch = productsService.searchPsuParts(psu_name, lowerLimit, upperLimit);
+            List<PsuSelectForm> testPsuSearch = productsService.searchPsuParts(
+                    searchWord, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testPsuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -192,31 +214,39 @@ public class PartsSelectRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         }
-
-        //OSのテーブルから検索したものを表示する
-//    @GetMapping("/api/searchByOsList")
-//    public ResponseEntity<List<OsSelectForm>> osSearch(String os_name,int lowerLimit,int upperLimit){
-//        try {
-//            List<OsSelectForm> testOsSearch = productsService.searchOsParts(os_name,lowerLimit,upperLimit);
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(testOsSearch, HttpStatus.OK);
-//        } catch (PartsNotFoundException e) {
-//            // ステータスコード400番を返す
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-        //プリセットを登録するAPI
-//    @PostMapping(value = "/api/PresetListFormRegistration")
-//    public ResponseEntity<Integer> presetRegistration(@RequestBody PresetListForm presetListForm){
-//        try {
-//            Integer presetregistration = productsService.catchPresetInsert(presetListForm);
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(presetregistration, HttpStatus.OK);
-//        } catch (PartsNotFoundException e) {
-//            // ステータスコード400番を返す
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
     }
+//OSのテーブルから検索したものを表示する
+
+    @GetMapping("/api/searchByOsList")
+    public ResponseEntity<List<OsSelectForm>> OsSearch(
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice) {
+        try {
+            List<OsSelectForm> testOsSearch = productsService.searchOsParts(
+                    searchWord, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(testOsSearch, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    //プリセットを登録するAPI
+    @PostMapping(value = "/api/PresetListFormRegistration")
+    public ResponseEntity<Integer> presetRegistration (@RequestBody PresetListForm presetListForm) {
+        try {
+            Integer presetregistration = productsService.catchPresetInsert(presetListForm);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetregistration, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }
+
