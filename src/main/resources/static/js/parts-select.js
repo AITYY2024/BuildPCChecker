@@ -49,8 +49,9 @@
               switch(document.getElementById('selectModalLabel').value){
                 case 'CPU':
                   selectModalTitle = 'CPU';
-                  requestPram+="&chipset="+chipset;
+                  requestPram+="chipset="+chipset;
                   res = await fetch(`/api/searchByCpuList?`+requestPram);
+                  break;
                 case 'GPU':
                   selectModalTitle = 'グラフィックボード';
                   res = await fetch(`/api/getGpuList`);
@@ -61,7 +62,7 @@
                   break;
                 case 'MB':
                   selectModalTitle = 'マザーボード';
-                  requestPram+="&cpuGen="+cpuGen;
+                  requestPram+="cpuGen="+cpuGen;
                   res = await fetch(`/api/searchByMbList?`+requestPram);
                   break;
                 case 'SSD':
@@ -164,8 +165,7 @@
                           });
                         }else{
                           selectPartsList = Object.values(dataList.find(item => item.product_id === dataId));
-                        }                    
-                        console.log(selectPartsList);
+                        }
                         partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[4].toLocaleString();
                         partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[3];
                         if (partsCategoryCard.querySelector(".spec1") != null) {
