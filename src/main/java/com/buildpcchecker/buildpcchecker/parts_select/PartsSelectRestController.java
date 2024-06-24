@@ -30,10 +30,12 @@ public class PartsSelectRestController {
 //    }
 
     //GPUのテーブルを全て表示する
-        @GetMapping("/api/getGpuList")
+    @GetMapping("/api/getGpuList")
     public ResponseEntity<List<GpuSelectForm>> gpuTable(){
+        System.out.println("call gpuTable");
         try {
             List<GpuSelectForm> testGpu = productsService.tableGpuParts();
+//            System.out.println(testGpu);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testGpu, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -95,7 +97,7 @@ public class PartsSelectRestController {
     }
 
     //Osのテーブルを全て表示する
-        @GetMapping("/api/getOsList")
+    @GetMapping("/api/getOsList")
     public ResponseEntity<List<OsSelectForm>> osTable(){
         try {
             List<OsSelectForm> testOs = productsService.tableOsParts();

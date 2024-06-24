@@ -35,7 +35,7 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<GpuSelectForm> tableGpuParts(){
         return jdbcTemplate.query("""
-                SELECT * FROM gpu
+                SELECT * FROM gpu;
                 """,new DataClassRowMapper<>(GpuSelectForm.class));
     }
     //Memoryのテーブルを全て表示する
