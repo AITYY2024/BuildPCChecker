@@ -233,6 +233,7 @@
               selectModalTitle = 'CPU';
               requestPram+="&chipset="+chipset;
               res = await fetch(`/api/searchByCpuList?`+requestPram);
+              break;
             case 'GPU':
               selectModalTitle = 'グラフィックボード';
               res = await fetch(`/api/searchByGpuList?`+requestPram);
