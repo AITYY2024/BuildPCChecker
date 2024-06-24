@@ -35,27 +35,30 @@ public class PresetRestController {
 //        }
 //    }
 
-//    // sessionの情報を保存できないため、全体で繋げる時に完成させる
-//    // プリセット一覧表示用API
-//    @GetMapping("/api/product")
-//    public ResponseEntity<List<PresetListForm>> PresetList() {
-//        try {
-//            session.setAttribute("sessionUser", 1);
-//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+    // sessionの情報を保存できないため、全体で繋げる時に完成させる
+    // プリセット一覧表示用API
+    @GetMapping("/api/preset")
+    public ResponseEntity<List<PresetListForm>> PresetList() {
+        try {
+            // session.setAttribute("sessionUser", 1);
+            //var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
 //            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(presetList, HttpStatus.OK);
-//        } catch (RuntimeException e) {
-//            // ステータスコード400番を返す
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+
+            List<PresetListForm> presetList = presetService.findAll(2);
+
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetList, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 //    //プリセット詳細表示用API
-//    @GetMapping("/api/productDetail")
-//    public ResponseEntity<PresetListForm> presetDetail(Integer preset_id) {
+//    @GetMapping("/api/presetDetail")
+//    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
 //        try {
-//            PresetListForm presetDetails = presetService.findById(2);
+//            PresetListForm presetDetails = presetService.findById(preset_id);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
 //        } catch (RuntimeException e) {
