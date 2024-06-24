@@ -54,7 +54,7 @@ public class PresetRestController {
     }
 
     //プリセット削除用API
-    @DeleteMapping("/api/productDelete")
+    @DeleteMapping("/api/presetDelete")
     public ResponseEntity<Integer> deletePreset(@RequestBody Integer preset_id) {
         try {
             Integer delete = presetService.deletePreset(preset_id);
@@ -67,7 +67,7 @@ public class PresetRestController {
     }
 
     //プリセット編集用API
-    @PutMapping("/api/productEdit")
+    @PutMapping("/api/presetEdit")
     public ResponseEntity<Integer> editPreset(@RequestBody PresetListFormJs presetListFormJs) {
         try {
              Integer edit = presetService.editPreset(presetListFormJs);
@@ -80,7 +80,7 @@ public class PresetRestController {
     }
 
     //プリセットコピー用API
-    @PostMapping("/api/productCopy")
+    @PostMapping("/api/presetCopy")
     public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
             Integer copy = presetService.copyPreset(presetListFormJs);
@@ -93,7 +93,7 @@ public class PresetRestController {
     }
 
     //プリセット更新用API
-    @PutMapping("/api/productUpdate")
+    @PutMapping("/api/presetUpdate")
     public ResponseEntity<Integer> updatePreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
             Integer update = presetService.updatePreset(presetListFormJs.getPresetId());
