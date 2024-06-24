@@ -92,8 +92,8 @@ public class ProductsDao implements IProductsDao{
             var param = new MapSqlParameterSource();
             param.addValue("cpu_name", "%" + cpu_name + "%");
             param.addValue("chipset_name", "%" + chipset_name + "%");
-            param.addValue("chipset_name",lowerLimit);
-            param.addValue("chipset_name",upperLimit);
+            param.addValue("lowerLimit",lowerLimit);
+            param.addValue("upperLimit",upperLimit);
             var list = jdbcTemplate.query("""
                 SELECT * FROM cpu
                 WHERE

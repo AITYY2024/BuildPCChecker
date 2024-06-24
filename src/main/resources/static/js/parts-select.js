@@ -49,7 +49,7 @@
               switch(document.getElementById('selectModalLabel').value){
                 case 'CPU':
                   selectModalTitle = 'CPU';
-                  requestPram+="chipset="+chipset;
+                  requestPram+="&chipset="+chipset;
                   res = await fetch(`/api/searchByCpuList?`+requestPram);
                   break;
                 case 'GPU':
@@ -62,7 +62,7 @@
                   break;
                 case 'MB':
                   selectModalTitle = 'マザーボード';
-                  requestPram+="cpuGen="+cpuGen;
+                  requestPram+="&cpuGen="+cpuGen;
                   res = await fetch(`/api/searchByMbList?`+requestPram);
                   break;
                 case 'SSD':

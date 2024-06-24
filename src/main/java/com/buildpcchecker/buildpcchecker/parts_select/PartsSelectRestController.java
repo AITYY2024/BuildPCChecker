@@ -111,10 +111,13 @@ public class PartsSelectRestController {
     //CPUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByCpuList")
     public ResponseEntity<List<CpuSelectForm>> cpuSearch(
-            @RequestParam String cpu_name,@RequestParam String chipset_name
-            ,@RequestParam int lowerLimit,@RequestParam int upperLimit){
+            @RequestParam(defaultValue = "") String searchWord,
+            @RequestParam(defaultValue = "0") String minPrice,
+            @RequestParam(defaultValue = "2147483647") String maxPrice,
+            @RequestParam(defaultValue = "") String chipset
+            ){
         try {
-            List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(cpu_name,chipset_name,lowerLimit,upperLimit);
+            List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(searchWord,chipset,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testCpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
