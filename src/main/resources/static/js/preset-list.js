@@ -8,8 +8,8 @@ window.addEventListener('load', async function(){
 
     //presetデータ一覧表示
     function setPresetData(data) {
-      data.innerHTML='';
       const presetList = document.getElementById('presetList');
+      presetList.innerHTML='';
       for (let i = 0; i < data.length; i++) {
         presetCard = `
           <div class="col-xs-12 col-md-6 col-xl-4">
@@ -79,7 +79,7 @@ window.addEventListener('load', async function(){
           document.getElementById("ssdUrl").href = selectPartsList.ssd_url;
           document.getElementById("psuUrl").href = selectPartsList.psu_url;
           document.getElementById("osUrl").href = selectPartsList.os_url;
-        //   document.getElementById("editUrl").href = './parts-select.html?presetId=' + selectPartsList.preset_id;
+        //   document.getElementById("updateAt").value = '最終更新：'+selectPartsList.update_at;
         });
       });
 
@@ -102,6 +102,10 @@ window.addEventListener('load', async function(){
       const selectPreset2Name = document.getElementById('preset2');
       const presetPriceSum = document.getElementById('sumPrice');
 
+      for (let i = 0; i < data.length; i++) {
+        selectPreset1Name.remove(i);
+      }
+      
       for (let i = 0; i < data.length; i++) {
         const option = document.createElement('option');
         option.value = data[i].preset_id;
