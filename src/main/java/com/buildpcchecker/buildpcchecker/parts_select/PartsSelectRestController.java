@@ -138,6 +138,7 @@ public class PartsSelectRestController {
         try {
             List<GpuSelectForm> testGpuSearch = productsService.searchGpuParts(
                     searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
+
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testGpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -170,11 +171,11 @@ public class PartsSelectRestController {
             @RequestParam(defaultValue = "") String searchWord,
             @RequestParam(defaultValue = "0") String minPrice,
             @RequestParam(defaultValue = "2147483647") String maxPrice,
-            @RequestParam(defaultValue = "") String cpu_generation){
+            @RequestParam(defaultValue = "") String cpuGen){
         try {
             List<MbSelectForm> testMbSearch = productsService.searchMbParts(
-                    searchWord,cpu_generation,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
-            System.out.println("Mb" + cpu_generation);
+                    searchWord,cpuGen,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
+            System.out.println("Mb" + cpuGen);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMbSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
