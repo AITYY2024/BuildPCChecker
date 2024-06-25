@@ -83,9 +83,9 @@ public class CompatibleRestController {
 
     //互換性テーブル削除
     @DeleteMapping("/api/compatible")
-    public ResponseEntity<Integer>compatibleDelete(@RequestBody CompatibleForm compatibleForm){
+    public ResponseEntity<Integer>compatibleDelete(@RequestBody int id){
         try {
-            var compatibleDelete = icompatibleService.delete(compatibleForm.getCompatibleId());
+            var compatibleDelete = icompatibleService.delete(id);
             return new ResponseEntity<>(compatibleDelete,HttpStatus.OK);
         }catch (NoSuchException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
