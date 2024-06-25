@@ -16,7 +16,7 @@ import java.util.List;
 public class PresetRestController {
 
     @Autowired
-    PresetService presetService;
+    IPresetService IpresetService;
 
     @Autowired
     private HttpSession session;
@@ -31,7 +31,7 @@ public class PresetRestController {
 //            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
 //            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
 
-            List<PresetListForm> presetList = presetService.findAll(2);
+            List<PresetListForm> presetList = IpresetService.findAll(2);
 
             // データとステータスコード200番を返す
             return new ResponseEntity<>(presetList, HttpStatus.OK);
@@ -45,7 +45,7 @@ public class PresetRestController {
 //    @GetMapping("/api/presetDetail")
 //    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
 //        try {
-//            PresetListForm presetDetails = presetService.findById(preset_id);
+//            PresetListForm presetDetails = IpresetService.findById(preset_id);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
 //        } catch (RuntimeException e) {
@@ -58,7 +58,7 @@ public class PresetRestController {
 //    @DeleteMapping("/api/presetDelete")
 //    public ResponseEntity<Integer> deletePreset(@RequestBody Integer preset_id) {
 //        try {
-//            Integer delete = presetService.deletePreset(preset_id);
+//            Integer delete = IpresetService.deletePreset(preset_id);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(delete, HttpStatus.OK);
 //        } catch (RuntimeException e) {
@@ -71,7 +71,7 @@ public class PresetRestController {
 //    @PutMapping("/api/presetEdit")
 //    public ResponseEntity<Integer> editPreset(@RequestBody PresetListFormJs presetListFormJs) {
 //        try {
-//             Integer edit = presetService.editPreset(presetListFormJs);
+//             Integer edit = IpresetService.editPreset(presetListFormJs);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(edit, HttpStatus.OK);
 //        } catch (RuntimeException e) {
@@ -84,7 +84,7 @@ public class PresetRestController {
 //    @PostMapping("/api/presetCopy")
 //    public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
 //        try {
-//            Integer copy = presetService.copyPreset(presetListFormJs);
+//            Integer copy = IpresetService.copyPreset(presetListFormJs);
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(copy, HttpStatus.OK);
 //        } catch (RuntimeException e) {
@@ -97,7 +97,7 @@ public class PresetRestController {
     @PostMapping("/api/presetCopy")
     public ResponseEntity<Integer> copyPreset(@RequestBody Integer preset_id){
         try {
-            Integer copy = presetService.copyPreset(preset_id);
+            Integer copy = IpresetService.copyPreset(preset_id);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(copy, HttpStatus.OK);
         } catch (RuntimeException e) {
@@ -110,7 +110,7 @@ public class PresetRestController {
 //    @PutMapping("/api/presetUpdate")
 //    public ResponseEntity<Integer> updatePreset(@RequestBody PresetListFormJs presetListFormJs){
 //        try {
-//            Integer update = presetService.updatePreset(presetListFormJs.getPresetId());
+//            Integer update = IpresetService.updatePreset(presetListFormJs.getPresetId());
 //            // データとステータスコード200番を返す
 //            return new ResponseEntity<>(update, HttpStatus.OK);
 //        } catch (RuntimeException e) {

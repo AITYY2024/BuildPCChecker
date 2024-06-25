@@ -15,9 +15,7 @@ public interface IPresetDao {
 
     Integer editPreset(PresetListFormJs presetListFormJs);//プリセット編集
 
-//    Integer copyPreset(PresetListFormJs presetListFormJs);//プリセットコピー
-
-    Integer copyPreset(Integer preset_id);//プリセットコピー改変版
+    Integer copyPreset(PresetListForm data);//プリセットコピー
 
     Integer updatePreset(Integer preset_id);//プリセット更新
 }

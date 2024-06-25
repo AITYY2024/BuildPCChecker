@@ -39,16 +39,11 @@ public class PresetService implements IPresetService {
         return presetDao.editPreset(presetListFormJs);
     }
 
-//    //プリセットコピー
-//    @Override
-//    public Integer copyPreset(PresetListFormJs presetListFormJs){
-//        return presetDao.copyPreset(presetListFormJs);
-//    }
-
-    //プリセットコピー改変版
+    //プリセットコピー
     @Override
     public Integer copyPreset(Integer preset_id){
-        return presetDao.copyPreset(preset_id);
+        var data = findById(preset_id);
+        return presetDao.copyPreset(data);
     }
 
     //プリセット更新
