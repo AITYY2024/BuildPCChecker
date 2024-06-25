@@ -119,6 +119,7 @@ public class PartsSelectRestController {
         try {
             List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(
                     searchWord,chipset,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
+            System.out.println("cpu"+chipset);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testCpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -173,6 +174,7 @@ public class PartsSelectRestController {
         try {
             List<MbSelectForm> testMbSearch = productsService.searchMbParts(
                     searchWord,cpu_generation,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
+            System.out.println("Mb" + cpu_generation);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMbSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
