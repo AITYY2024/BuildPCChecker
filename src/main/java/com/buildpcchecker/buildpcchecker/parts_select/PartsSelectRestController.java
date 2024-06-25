@@ -30,7 +30,7 @@ public class PartsSelectRestController {
 //    }
 
     //GPUのテーブルを全て表示する
-        @GetMapping("/api/getGpuList")
+    @GetMapping("/api/getGpuList")
     public ResponseEntity<List<GpuSelectForm>> gpuTable(){
         try {
             List<GpuSelectForm> testGpu = productsService.tableGpuParts();
@@ -43,7 +43,7 @@ public class PartsSelectRestController {
     }
 
     //Memoryのテーブルを全て表示する
-        @GetMapping("/api/getRamList")
+    @GetMapping("/api/getRamList")
     public ResponseEntity<List<MemorySelectForm>> memoryTable(){
         try {
             List<MemorySelectForm> testMemory = productsService.tableMemoryParts();
@@ -69,7 +69,7 @@ public class PartsSelectRestController {
 //    }
 
     //SSDのテーブルを全て表示する
-        @GetMapping("/api/getBySsdList")
+    @GetMapping("/api/getBySsdList")
     public ResponseEntity<List<SsdSelectForm>> ssdTable(){
         try {
             List<SsdSelectForm> testSsd = productsService.tableSsdParts();
@@ -82,7 +82,7 @@ public class PartsSelectRestController {
     }
 
     //PSUのテーブルを全て表示する
-        @GetMapping("/api/getByPsuList")
+    @GetMapping("/api/getByPsuList")
     public ResponseEntity<List<PsuSelectForm>> psuTable(){
         try {
             List<PsuSelectForm> testPsu = productsService.tablePsuParts();
@@ -95,7 +95,7 @@ public class PartsSelectRestController {
     }
 
     //Osのテーブルを全て表示する
-        @GetMapping("/api/getOsList")
+    @GetMapping("/api/getOsList")
     public ResponseEntity<List<OsSelectForm>> osTable(){
         try {
             List<OsSelectForm> testOs = productsService.tableOsParts();
@@ -129,7 +129,7 @@ public class PartsSelectRestController {
     }
 
 
-//    //GPUのテーブルから検索したものを表示する
+    //    //GPUのテーブルから検索したものを表示する
     @GetMapping("/api/searchByGpuList")
     public ResponseEntity<List<GpuSelectForm>> gpuSearch(
             @RequestParam(defaultValue = "") String searchWord,
@@ -252,4 +252,3 @@ public class PartsSelectRestController {
 
 
 }
-
