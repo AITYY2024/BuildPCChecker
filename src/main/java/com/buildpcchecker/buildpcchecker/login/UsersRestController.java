@@ -21,12 +21,12 @@ public class UsersRestController {
     public ResponseEntity<Integer> login(@RequestBody UsersForm usersForm) {
 
         try {
-            var login = iusersService.findByUser(usersForm.getUser_name(), usersForm.getPassword());
+            var login = iusersService.findByUser(usersForm.getUserName(), usersForm.getPassword());
 
             if (login != null) {
                 var sessionUser = new UsersForm();
                 sessionUser.setId(login.getId());
-                sessionUser.setUser_name(login.getUser_name());
+                sessionUser.setUserName(login.getUserName());
                 sessionUser.setPassword(login.getPassword());
                 sessionUser.setRole(login.getRole());
                 session.setAttribute("sessionUser", sessionUser);
@@ -48,10 +48,10 @@ public class UsersRestController {
     }
 
     //新規登録
-    @PutMapping("/api/user_insert")
+    @PutMapping("/api/user")
     public ResponseEntity<Integer> userInsert(@RequestBody UsersForm usersForm) {
         try {
-            var userInsert = iusersService.insert(usersForm.getUser_name(), usersForm.getPassword());
+            var userInsert = iusersService.insert(usersForm.getUserName(), usersForm.getPassword());
             return new ResponseEntity<>(userInsert, HttpStatus.OK);
         } catch (NoSuchUsersException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

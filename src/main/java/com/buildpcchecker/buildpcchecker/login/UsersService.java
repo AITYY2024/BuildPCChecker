@@ -4,7 +4,7 @@ import com.buildpcchecker.buildpcchecker.date.UsersForm;
 
 public interface UsersService {
 
-    UsersForm findByUser(String user_name, String password);//ログイン
+    UsersForm findByUser(String userName, String password);//ログイン
 
-    int insert(String user_name, String password);//新規登録
+    int insert(String userName, String password);//新規登録
 }

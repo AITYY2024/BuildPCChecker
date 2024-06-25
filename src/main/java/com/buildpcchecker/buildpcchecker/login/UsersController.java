@@ -11,9 +11,9 @@ public class UsersController {
 
 
 
-    @GetMapping("/test-login")
+    @GetMapping("/login") //http://localhost:8080/login
     public String login(){
-        return "test-login";
+        return "login";
     }
 
 

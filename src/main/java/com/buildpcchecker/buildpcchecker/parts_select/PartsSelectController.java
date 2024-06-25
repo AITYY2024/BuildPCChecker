@@ -15,10 +15,10 @@ public class PartsSelectController {
     @Autowired
     ProductsService productsService;
 
-//    @GetMapping("/testPartsCategory")
-//    public String testparts(){
-//        return "/testPartsCategory";
-//    }
+    @GetMapping("/parts-select")
+    public String testparts(){
+        return "/parts-select";
+    }
 //    @PostMapping("/testPartsCategory")
 //    public String testcheck(){
 //        return "/testPartsCategory";

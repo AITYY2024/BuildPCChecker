@@ -9,8 +9,12 @@ public class SettingController {
     @Autowired
     IsettingService isettingService;
 
-    @GetMapping("/test-setting")
-    public String test(){
-        return "test-setting";
+    @GetMapping("/setting") //http://localhost:8080/setting
+    public String setting(){
+        return "setting";
     }
+
+    @GetMapping("/login-redirect")
+    public String delete(){return "login-redirect";}
 }
+

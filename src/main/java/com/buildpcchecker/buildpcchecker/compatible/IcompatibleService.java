@@ -47,4 +47,8 @@ public class IcompatibleService implements CompatibleService{
     public int update(CompatibleForm compatibleForm){
         return icompatibleDao.update(compatibleForm);
     }
+
+    //互換性テーブル削除
+    @Override
+    public int delete(int id){ return icompatibleDao.delete(id);}
 }
