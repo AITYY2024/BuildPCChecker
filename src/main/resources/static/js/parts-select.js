@@ -78,6 +78,7 @@
                   res = await fetch(`/api/getOsList`);
                   break;
               }
+              console.log(requestPram);
 
               data=res.json();
               data.then(dataList =>{
@@ -119,7 +120,7 @@
                   //JSONデータをモーダルに表示
                   for (let i = 1; i < dataList.length; i++) {
                     dataObj = Object.values(dataList[i-1]);
-                    console.log(dataObj);
+//                    console.log(dataObj);
 
                     partsList.insertAdjacentHTML('beforeend', partsCard);
                     partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
@@ -132,7 +133,7 @@
                     if (partsList.querySelectorAll(".spec2")[i] != null) {
                       partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[7];
                       if(document.getElementById('selectModalLabel').value==="MB"){
-                        cpuGen=dataObj?.[7];
+                        chipset=dataObj?.[7];
                       }
                     }
                     if (partsList.querySelectorAll(".spec3")[i] != null) {
@@ -195,7 +196,7 @@
                         presetDataList["totalPrice"] = totalPrice;
                         presetDataList["presetName"] = document.getElementById("presetName").value;
 
-                        console.log(presetDataList);
+//                        console.log(presetDataList);
                       });
                     });
 
@@ -210,12 +211,12 @@
                 method: 'GET',
                 headers: {
                'Content-Type': 'application/json',
-             },
+                },
              body: JSON.stringify(presetDataList),
             })
-           .then(res =>
-               console.log(res)
-               )
+//           .then(res =>
+//               console.log(res)
+//               )
         })
 /////検索////
         document.getElementById('searchBtn').addEventListener('click', async function(){
@@ -232,6 +233,7 @@
             case 'CPU':
               selectModalTitle = 'CPU';
               requestPram+="&chipset="+chipset;
+              console.log(requestPram);
               res = await fetch(`/api/searchByCpuList?`+requestPram);
               break;
             case 'GPU':
@@ -303,7 +305,7 @@
         if (partsList.querySelectorAll(".spec2")[i] != null) {
           partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[7];
           if(document.getElementById('selectModalLabel').value==="MB"){
-            cpuGen=dataObj?.[7];
+            chipset=dataObj?.[7];
           }
         }
         if (partsList.querySelectorAll(".spec3")[i] != null) {
