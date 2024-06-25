@@ -80,6 +80,7 @@
               }
               console.log(requestPram);
 
+
               data=res.json();
               data.then(dataList =>{
                   let dataObj;
@@ -208,134 +209,156 @@
 
         document.getElementById('presetSaveBtn').addEventListener('click', () => {
             fetch('/api/PresetListFormRegistration', {
-                method: 'GET',
+                method: 'Post',
                 headers: {
                'Content-Type': 'application/json',
                 },
-             body: JSON.stringify(presetDataList),
+    options:{
+        method:'POST',
+         body: JSON.stringify(presetDataList),
+    }
+
+
             })
 //           .then(res =>
 //               console.log(res)
 //               )
+
         })
 /////検索////
-        document.getElementById('searchBtn').addEventListener('click', async function(){
-          partsList.innerHTML = '';
-          let searchWord = document.getElementById('searchWord').Value;
-          let minPrice = document.getElementById('minPrice').Value;
-          let maxPrice = document.getElementById('maxPrice').Value;
-          let requestPram="searchWord="+searchWord+
-                          "&minPrice="+minPrice+
-                          "&maxPrice="+maxPrice;
-          let selectModalTitle;
-          let res;
-          switch(document.getElementById('selectModalLabel').value){
-            case 'CPU':
-              selectModalTitle = 'CPU';
-              requestPram+="&chipset="+chipset;
-              console.log(requestPram);
-              res = await fetch(`/api/searchByCpuList?`+requestPram);
-              break;
-            case 'GPU':
-              selectModalTitle = 'グラフィックボード';
-              res = await fetch(`/api/searchByGpuList?`+requestPram);
-              break;
-            case 'MEMORY':
-              selectModalTitle = 'メモリ';
-              res = await fetch(`/api/searchByRamList?`+requestPram);
-              break;
-            case 'MB':
-              selectModalTitle = 'マザーボード';
-              requestPram+="&cpuGen="+cpuGen;
-              res = await fetch(`/api/searchByMbList?`+requestPram);
-              break;
-            case 'SSD':
-              selectModalTitle = 'SSD';
-              res = await fetch(`/api/searchBySsdList?`+requestPram);
-              break;
-            case 'PSU':
-              selectModalTitle = '電源';
-              res = await fetch(`/api/searchByPsuList?`+requestPram);
-              break;
-            case 'OS':
-              selectModalTitle = 'OS';
-              res = await fetch(`/api/searchByOsList?`+requestPram);
+    document.getElementById('searchBtn').addEventListener('click', async function(){
+        partsList.innerHTML = '';
+        let searchWord = document.getElementById('searchWord').value;
+        let minPrice = document.getElementById('minPrice').value;
+        let maxPrice = document.getElementById('maxPrice').value;
+        let requestPram="searchWord=" + searchWord + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice;
+        let selectModalTitle;
+        let res;
+        switch(document.getElementById('selectModalLabel').value){
+          case 'CPU':
+            selectModalTitle = 'CPU';
+            requestPram += "&chipset="+chipset;
+            console.log(requestPram);
+            res = await fetch(`/api/searchByCpuList?` + requestPram);
+            break;
+          case 'GPU':
+            selectModalTitle = 'グラフィックボード';
+            res = await fetch(`/api/searchByGpuList?` + requestPram);
+            break;
+          case 'MEMORY':
+            selectModalTitle = 'メモリ';
+            res = await fetch(`/api/searchByRamList?` + requestPram);
+            break;
+          case 'MB':
+            selectModalTitle = 'マザーボード';
+            requestPram += "&cpuGen="+cpuGen;
+            res = await fetch(`/api/searchByMbList?` + requestPram);
+            break;
+          case 'SSD':
+            selectModalTitle = 'SSD';
+            res = await fetch(`/api/searchBySsdList?` + requestPram);
+            break;
+          case 'PSU':
+            selectModalTitle = '電源';
+            res = await fetch(`/api/searchByPsuList?` + requestPram);
+            break;
+          case 'OS':
+            selectModalTitle = 'OS';
+            res = await fetch(`/api/searchByOsList?` + requestPram);
             break;
         }
-    let dataList=res.JSON();
-    let dataObj;
-      const partsCard = `
-          <div class="card my-2 border-primary-subtle border-3 parts-card" data-bs-dismiss="modal">
-            <div class="card-body border border-0 py-3 list-group-item list-group-item-action" aria-current="true">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-2 name"></h5>
-                <h5 class="text-danger price"></h5>
-              </div>
-              <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
-              <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
-              <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
-              <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
-              <small class="float-end release"></small>
-            </div>
-          </div>`;
-      partsList.insertAdjacentHTML('beforeend', partsCard);
-      partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
-      partsList.querySelectorAll(".name")[0].textContent = "未選択";
-      partsList.querySelectorAll(".price")[0].textContent = '¥0';
-      partsList.querySelectorAll(".spec1")[0].textContent = '';
-      partsList.querySelectorAll(".spec2")[0].textContent = '';
-      if(document.getElementById('selectModalLabel').value==="MB"){
-        cpuGen='';
-      }
-      partsList.querySelectorAll(".spec3")[0].textContent = '';
-      partsList.querySelectorAll(".spec4")[0].textContent = '';
-      if(document.getElementById('selectModalLabel').value==="CPU"){
-        cpuGen='';
-      }
-      partsList.querySelectorAll(".release")[0].textContent = '';
-      for (let i = 1; i < dataList.length; i++) {
-        dataObj = Object.values(dataList[i]);
-        partsList.insertAdjacentHTML('beforeend', partsCard);
-        partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
-        partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
-        partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4];
-        if (partsList.querySelectorAll(".spec1")[i] != null) {
-          partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[6];
-        }
-        if (partsList.querySelectorAll(".spec2")[i] != null) {
-          partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[7];
-          if(document.getElementById('selectModalLabel').value==="MB"){
-            chipset=dataObj?.[7];
-          }
-        }
-        if (partsList.querySelectorAll(".spec3")[i] != null) {
-          partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[8];
-        }
-        if (partsList.querySelectorAll(".spec4")[i] != null) {
-          partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[9];
-          if(document.getElementById('selectModalLabel').value==="CPU"){
-            cpuGen=dataObj?.[9];
-          }
-        }
-        partsList.querySelectorAll(".release")[i].textContent = dataObj?.[5];
-      };
-  })
-});
+        console.log(requestPram);
 
-////////検索メソッドに送るオブジェクトの作成////////
-function createSearchData(searchWord,minPrice,maxPrice,...compatible){
-  if(compatible.length>0){
-    return {
-      "searchWord":searchWord,
-      "minPrice":minPrice,
-      "maxPrice":maxPrice,
-      "compatible":compatible[0]
-    };
-  }else{
-    return {
-      "searchWord":searchWord,
-      "minPrice":minPrice,
-      "maxPrice":maxPrice
-    };
+        let data=res.json();
+        data.then(dataList => {
+          dataList = dataList.filter(item => item.product_id !== null);
+          let dataObj;
+
+          const partsCard = `
+            <div class="card my-2 border-primary-subtle border-3 parts-card" data-bs-dismiss="modal">
+              <div class="card-body border border-0 py-3 list-group-item list-group-item-action" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-2 name"></h5>
+                  <h5 class="text-danger price"></h5>
+                </div>
+                <span class="badge text-secondary border border-1 border-secondary rounded-5 spec1"></span>
+                <span class="badge text-secondary border border-1 border-secondary rounded-5 spec2"></span>
+                <span class="badge text-secondary border border-1 border-secondary rounded-5 spec3"></span>
+                <span class="badge text-secondary border border-1 border-secondary rounded-5 spec4"></span>
+                <small class="float-end release"></small>
+              </div>
+            </div>`;
+          partsList.insertAdjacentHTML('beforeend', partsCard);
+          partsList.querySelectorAll('.parts-card')[0].setAttribute('data-id', null);
+          partsList.querySelectorAll(".name")[0].textContent = "未選択";
+          partsList.querySelectorAll(".price")[0].textContent = '¥0';
+          partsList.querySelectorAll(".spec1")[0].textContent = '';
+          partsList.querySelectorAll(".spec2")[0].textContent = '';
+          if(document.getElementById('selectModalLabel').value==="MB"){
+            cpuGen='';
+          }
+          partsList.querySelectorAll(".spec3")[0].textContent = '';
+          partsList.querySelectorAll(".spec4")[0].textContent = '';
+          if(document.getElementById('selectModalLabel').value==="CPU"){
+            cpuGen='';
+          }
+          partsList.querySelectorAll(".release")[0].textContent = '';
+          for (let i = 1; i < dataList.length; i++) {
+            dataObj = Object.values(dataList[i]);
+            partsList.insertAdjacentHTML('beforeend', partsCard);
+            partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
+            partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
+            partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4];
+            if (partsList.querySelectorAll(".spec1")[i] != null) {
+              partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[6];
+            }
+            if (partsList.querySelectorAll(".spec2")[i] != null) {
+              partsList.querySelectorAll(".spec2")[i].textContent = dataObj?.[7];
+              if(document.getElementById('selectModalLabel').value==="MB"){
+                chipset=dataObj?.[7];
+              }
+            }
+            if (partsList.querySelectorAll(".spec3")[i] != null) {
+              partsList.querySelectorAll(".spec3")[i].textContent = dataObj?.[8];
+            }
+            if (partsList.querySelectorAll(".spec4")[i] != null) {
+              partsList.querySelectorAll(".spec4")[i].textContent = dataObj?.[9];
+              if(document.getElementById('selectModalLabel').value==="CPU"){
+                cpuGen=dataObj?.[9];
+              }
+            }
+            partsList.querySelectorAll(".release")[i].textContent = dataObj?.[5];
+          };
+        })
+      })
+
+      document.getElementById('presetSaveBtn').addEventListener('click', () => {
+        fetch('/api/PresetListFormRegistration', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json', },
+          body: JSON.stringify(presetDataList),
+        })
+        .then(res =>
+          console.log(res)
+        )
+      })
+
+    });
+
+  ////////検索メソッドに送るオブジェクトの作成////////
+  function createSearchData(searchWord,minPrice,maxPrice,...compatible){
+    if(compatible.length > 0){
+      return {
+        "searchWord":searchWord,
+        "minPrice":minPrice,
+        "maxPrice":maxPrice,
+        "compatible":compatible[0]
+      };
+    }else{
+      return {
+        "searchWord":searchWord,
+        "minPrice":minPrice,
+        "maxPrice":maxPrice
+      };
+    }
   }
-}
