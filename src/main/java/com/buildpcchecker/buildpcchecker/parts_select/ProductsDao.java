@@ -133,7 +133,7 @@ public class ProductsDao implements IProductsDao{
             var list = jdbcTemplate.query("""
                 SELECT * FROM memory
                 WHERE product_name LIKE :memory_name
-                                AND
+                AND
                 price > :lowerLimit
                 AND
                 price < :upperLimit
