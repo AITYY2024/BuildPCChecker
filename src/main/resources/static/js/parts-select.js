@@ -78,7 +78,6 @@
                   res = await fetch(`/api/getOsList`);
                   break;
               }
-              console.log(requestPram);
 
 
               data=res.json();
