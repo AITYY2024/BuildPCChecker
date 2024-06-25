@@ -10,7 +10,7 @@ public class PsuSelectForm {
     private String url;
     private String product_name;
     private Integer price;
-    private Date release_date;
+    private String release_date;
     private String capacity;
     private String formfactor;
     private String spec_80plus;

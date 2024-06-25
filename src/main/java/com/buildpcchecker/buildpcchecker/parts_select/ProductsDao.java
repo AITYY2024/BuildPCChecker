@@ -26,7 +26,8 @@ public class ProductsDao implements IProductsDao{
             var list = jdbcTemplate.query("""
                 SELECT * FROM cpu
                 WHERE
-                gen IN (SELECT cpu_generation FROM compatible WHERE chipset_name LIKE :chipset_name)
+                gen IN (SELECT cpu_generation FROM compatible WHERE chipset_name LIKE :chipset_name ORDER BY id)
+                ORDER BY id
                 """, param, new DataClassRowMapper<>(CpuSelectForm.class));
             return list;
     }
@@ -35,14 +36,14 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<GpuSelectForm> tableGpuParts(){
         return jdbcTemplate.query("""
-                SELECT * FROM gpu
+                SELECT * FROM gpu ORDER BY id
                 """,new DataClassRowMapper<>(GpuSelectForm.class));
     }
     //Memoryのテーブルを全て表示する
     @Override
     public List<MemorySelectForm> tableMemoryParts(){
         return jdbcTemplate.query("""
-                SELECT * FROM memory
+                SELECT * FROM memory ORDER BY id
                 """,new DataClassRowMapper<>(MemorySelectForm.class));
     }
 
@@ -54,7 +55,8 @@ public class ProductsDao implements IProductsDao{
             var list = jdbcTemplate.query("""
             SELECT * FROM mb
             WHERE
-            chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation)
+            chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation ORDER BY id)
+            ORDER BY id
             """, param, new DataClassRowMapper<>(MbSelectForm.class));
             return list;
     }
@@ -63,7 +65,7 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<SsdSelectForm> tableSsdParts(){
         return jdbcTemplate.query("""
-                SELECT * FROM ssd
+                SELECT * FROM ssd ORDER BY id
                 """,new DataClassRowMapper<>(SsdSelectForm.class));
     }
 
@@ -71,7 +73,7 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<PsuSelectForm> tablePsuParts(){
         return jdbcTemplate.query("""
-                SELECT * FROM psu
+                SELECT * FROM psu ORDER BY id
                 """,new DataClassRowMapper<>(PsuSelectForm.class));
     }
 
@@ -79,7 +81,7 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<OsSelectForm> tableOsParts(){
         return jdbcTemplate.query("""
-                SELECT * FROM os
+                SELECT * FROM os ORDER BY id
                 """,new DataClassRowMapper<>(OsSelectForm.class));
     }
 
@@ -102,7 +104,8 @@ public class ProductsDao implements IProductsDao{
                 AND
                 price < :upperLimit
                 AND
-                product_name LIKE :cpu_name""", param, new DataClassRowMapper<>(CpuSelectForm.class));
+                product_name LIKE :cpu_name
+                ORDER BY id""", param, new DataClassRowMapper<>(CpuSelectForm.class));
         return list;
     }
 
@@ -119,7 +122,8 @@ public class ProductsDao implements IProductsDao{
                 AND
                 price > :lowerLimit
                 AND
-                price < :upperLimit""", param, new DataClassRowMapper<>(GpuSelectForm.class));
+                price < :upperLimit
+                ORDER BY id""", param, new DataClassRowMapper<>(GpuSelectForm.class));
             return list;
     }
 
@@ -137,6 +141,7 @@ public class ProductsDao implements IProductsDao{
                 price > :lowerLimit
                 AND
                 price < :upperLimit
+                ORDER BY id
                 """, param, new DataClassRowMapper<>(MemorySelectForm.class));
             return list;
     }
@@ -160,7 +165,7 @@ public class ProductsDao implements IProductsDao{
             price < :upperLimit
             AND
             product_name LIKE :mb_name
-            """, param, new DataClassRowMapper<>(MbSelectForm.class));
+            ORDER BY id""", param, new DataClassRowMapper<>(MbSelectForm.class));
             return list;
     }
 
@@ -178,7 +183,7 @@ public class ProductsDao implements IProductsDao{
                 price > :lowerLimit
                 AND
                 price < :upperLimit
-                """, param, new DataClassRowMapper<>(SsdSelectForm.class));
+                ORDER BY id""", param, new DataClassRowMapper<>(SsdSelectForm.class));
             return list;
     }
 
@@ -196,6 +201,7 @@ public class ProductsDao implements IProductsDao{
                 price > :lowerLimit
                 AND
                 price < :upperLimit
+                ORDER BY id
                 """, param, new DataClassRowMapper<>(PsuSelectForm.class));
             return list;
     }
@@ -214,7 +220,7 @@ public class ProductsDao implements IProductsDao{
                 price > :lowerLimit
                 AND
                 price < :upperLimit
-                """, param, new DataClassRowMapper<>(OsSelectForm.class));
+                ORDER BY id""", param, new DataClassRowMapper<>(OsSelectForm.class));
             return list;
     }
 

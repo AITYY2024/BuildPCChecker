@@ -10,5 +10,5 @@ public class OsSelectForm {
     private String url;
     private String product_name;
     private Integer price;
-    private Date release_date;
+    private String release_date;
 }
