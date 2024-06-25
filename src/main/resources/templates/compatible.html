@@ -153,41 +153,43 @@
 <script>
     window.addEventListener('load', () => {
 
-      fetch('/api/compatible', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        //  body: JSON.stringify(product),
-        })
-        .then(res => {
-            res.json().then( gen => {
+      getCompatibleData();
 
-
-              fetch('/api/chipset', {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              //  body: JSON.stringify(product),
-              })
-              .then(res => {
-                  res.json().then( chipset => {
-                    console.log(gen);
-                    console.log(chipset);
-
-                    setCompatibleData(gen, chipset);
-
-                  })
-                  console.log(res);
-              })
-
-
+      function getCompatibleData() {
+          fetch('/api/compatible', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            //  body: JSON.stringify(product),
             })
-            console.log(res);
-        })
+            .then(res => {
+                res.json().then( gen => {
 
-      function setCompatibleData(data, chipset) {
+                  fetch('/api/chipset', {
+                    method: 'GET',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  //  body: JSON.stringify(product),
+                  })
+                  .then(res => {
+                      res.json().then( chipset => {
+                        console.log(gen);
+                        console.log(chipset);
+
+                        setCompatibleDataList(gen, chipset);
+
+                      })
+                      console.log(res);
+                  })
+
+                })
+                console.log(res);
+            })
+      }
+
+      function setCompatibleDataList(data, chipset) {
         const groupedData = {};
 
         // CPU世代ごとにグループ化
@@ -267,6 +269,21 @@
                     const cpuGen = document.getElementById('selectModal').getAttribute('data-cpugen-name');
                     const chipset = event.currentTarget.getAttribute('data-chipset-name');
                     console.log(cpuGen + ' / ' + chipset);
+
+                    const addData = { 'compatibleId': 0, 'cpuGen': cpuGen, 'chipset': chipset };
+
+                    fetch('/api/compatible', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(addData),
+                    })
+                    .then(res => {
+                        console.log(res);
+                        getCompatibleData();
+                    })
+
                 });
               } else {
                 chipsetList.querySelectorAll('.name')[index].classList.add('text-secondary');
@@ -292,6 +309,19 @@
       deleteBtn.addEventListener('click', (event) => {
         const deleteId = event.currentTarget.getAttribute('data-id');
         console.log(deleteId);
+
+        fetch('/api/compatible', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(deleteId),
+        })
+        .then(res => {
+            console.log(res);
+            getCompatibleData();
+        })
+
       });
 
     });
