@@ -21,38 +21,25 @@ public class PresetRestController {
     @Autowired
     private HttpSession session;
 
-//    //プリセット一覧表示用（テスト用）
-//    @GetMapping("/api/product")
-//    public ResponseEntity<List<PresetListForm>> PresetList() {
-//        try {
-//            List<PresetListForm> presetList = presetService.findAll(1);
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(presetList, HttpStatus.OK);
-//        } catch (RuntimeException e) {
-//            // ステータスコード400番を返す
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
-//    // sessionの情報を保存できないため、全体で繋げる時に完成させる
-//    // プリセット一覧表示用API
-//    @GetMapping("/api/preset")
-//    public ResponseEntity<List<PresetListForm>> PresetList() {
-//        try {
-//            // session.setAttribute("sessionUser", 1);
-//            //var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-////            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
-//
-//            List<PresetListForm> presetList = presetService.findAll(2);
-//
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(presetList, HttpStatus.OK);
-//        } catch (RuntimeException e) {
-//            // ステータスコード400番を返す
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    // sessionの情報を保存できないため、全体で繋げる時に完成させる
+    // プリセット一覧表示用API
+    @GetMapping("/api/preset")
+    public ResponseEntity<List<PresetListForm>> PresetList() {
+        try {
+//            session.setAttribute("sessionUser", 1);
+//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+//            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
+
+            List<PresetListForm> presetList = presetService.findAll(2);
+
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetList, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 //    //プリセット詳細表示用API
 //    @GetMapping("/api/presetDetail")
@@ -68,7 +55,7 @@ public class PresetRestController {
 //    }
 
 //    //プリセット削除用API
-//    @DeleteMapping("/api/productDelete")
+//    @DeleteMapping("/api/presetDelete")
 //    public ResponseEntity<Integer> deletePreset(@RequestBody Integer preset_id) {
 //        try {
 //            Integer delete = presetService.deletePreset(preset_id);
@@ -81,7 +68,7 @@ public class PresetRestController {
 //    }
 
 //    //プリセット編集用API
-//    @PutMapping("/api/productEdit")
+//    @PutMapping("/api/presetEdit")
 //    public ResponseEntity<Integer> editPreset(@RequestBody PresetListFormJs presetListFormJs) {
 //        try {
 //             Integer edit = presetService.editPreset(presetListFormJs);
@@ -94,7 +81,7 @@ public class PresetRestController {
 //    }
 
 //    //プリセットコピー用API
-//    @PostMapping("/api/productCopy")
+//    @PostMapping("/api/presetCopy")
 //    public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
 //        try {
 //            Integer copy = presetService.copyPreset(presetListFormJs);
@@ -106,8 +93,21 @@ public class PresetRestController {
 //        }
 //    }
 
+//    プリセットコピー用API（改変版）
+    @PostMapping("/api/presetCopy")
+    public ResponseEntity<Integer> copyPreset(@RequestBody Integer preset_id){
+        try {
+            Integer copy = presetService.copyPreset(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(copy, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 //    //プリセット更新用API
-//    @PutMapping("/api/productUpdate")
+//    @PutMapping("/api/presetUpdate")
 //    public ResponseEntity<Integer> updatePreset(@RequestBody PresetListFormJs presetListFormJs){
 //        try {
 //            Integer update = presetService.updatePreset(presetListFormJs.getPresetId());
