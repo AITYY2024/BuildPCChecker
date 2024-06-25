@@ -16,21 +16,22 @@ import java.util.List;
 public class PresetRestController {
 
     @Autowired
-    PresetService presetService;
+    IPresetService IpresetService;
 
     @Autowired
     private HttpSession session;
+
 
     // sessionの情報を保存できないため、全体で繋げる時に完成させる
     // プリセット一覧表示用API
     @GetMapping("/api/presetList")
     public ResponseEntity<List<PresetListForm>> PresetList() {
         try {
-            // session.setAttribute("sessionUser", 1);
-            //var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-//            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
+//            session.setAttribute("sessionUser", 1);
+//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
 
-            List<PresetListForm> presetList = presetService.findAll(2);
+            List<PresetListForm> presetList = IpresetService.findAll(2);
 
             // データとステータスコード200番を返す
             return new ResponseEntity<>(presetList, HttpStatus.OK);
@@ -40,24 +41,25 @@ public class PresetRestController {
         }
     }
 
-    //プリセット詳細表示用API
-    @GetMapping("/api/presetDetail")
-    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
-        try {
-            PresetListForm presetDetails = presetService.findById(preset_id);
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    //使われていない状況
+//    //プリセット詳細表示用API
+//    @GetMapping("/api/presetDetail")
+//    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
+//        try {
+//            PresetListForm presetDetails = IpresetService.findById(preset_id);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     //プリセット削除用API
     @DeleteMapping("/api/presetDelete")
     public ResponseEntity<Integer> deletePreset(@RequestBody Integer preset_id) {
         try {
-            Integer delete = presetService.deletePreset(preset_id);
+            Integer delete = IpresetService.deletePreset(preset_id);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(delete, HttpStatus.OK);
         } catch (RuntimeException e) {
@@ -70,7 +72,7 @@ public class PresetRestController {
     @PutMapping("/api/presetEdit")
     public ResponseEntity<Integer> editPreset(@RequestBody PresetListFormJs presetListFormJs) {
         try {
-             Integer edit = presetService.editPreset(presetListFormJs);
+             Integer edit = IpresetService.editPreset(presetListFormJs);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(edit, HttpStatus.OK);
         } catch (RuntimeException e) {
@@ -79,11 +81,27 @@ public class PresetRestController {
         }
     }
 
+    //新規追加用API
+    @PostMapping("/api/presetInsert")
+    public ResponseEntity<Integer> insertPreset(@RequestBody PresetListFormJs presetListFormJs){
+        try {
+//            session.setAttribute("sessionUser", 1);
+//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
+            Integer insert = IpresetService.insertPreset(presetListFormJs);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(insert, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     //プリセットコピー用API
     @PostMapping("/api/presetCopy")
-    public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
+    public ResponseEntity<Integer> copyPreset(@RequestBody Integer preset_id){
         try {
-            Integer copy = presetService.copyPreset(presetListFormJs);
+            Integer copy = IpresetService.copyPreset(preset_id);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(copy, HttpStatus.OK);
         } catch (RuntimeException e) {
@@ -96,7 +114,7 @@ public class PresetRestController {
     @PutMapping("/api/presetUpdate")
     public ResponseEntity<Integer> updatePreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
-            Integer update = presetService.updatePreset(presetListFormJs.getPresetId());
+            Integer update = IpresetService.updatePreset(presetListFormJs.getPresetId());
             // データとステータスコード200番を返す
             return new ResponseEntity<>(update, HttpStatus.OK);
         } catch (RuntimeException e) {
