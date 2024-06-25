@@ -48,7 +48,6 @@ public class PresetService implements IPresetService {
     //プリセットコピー改変版
     @Override
     public Integer copyPreset(Integer preset_id){
-        var data = findById(preset_id);
         return presetDao.copyPreset(preset_id);
     }
 
