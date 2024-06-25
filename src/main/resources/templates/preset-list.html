@@ -231,7 +231,7 @@
                     </div>
                     <div class="col-4 ps-1 pe-1">
                         <a id="editUrl">
-                            <button type="button" class=" btn w-100 btn-primary">
+                            <button type="button" id="editBtn" class=" btn w-100 btn-primary">
                                 編集
                             </button>
                         </a>
@@ -332,6 +332,7 @@
         const detailModalButtons = document.querySelectorAll('button[data-bs-target="#detailModal"]');
 
         const deleteBtn = document.getElementById('deleteBtn');
+        const editBtn = document.getElementById('editBtn');
 
         detailModalButtons.forEach(button => {
           button.addEventListener('click', (event) => {
@@ -340,6 +341,7 @@
             
             const presetId = event.currentTarget.getAttribute('data-id');
             deleteBtn.setAttribute('data-id', presetId);
+            editBtn.setAttribute('data-id', presetId);
             
             document.getElementById('deletePresetName').textContent = presetName;
             const selectPartsList = data.find(item => item.preset_id === Number(presetId));
@@ -444,7 +446,6 @@
       ////削除////
       deleteBtn.addEventListener('click', async function() {
         const deletePresetId = this.getAttribute('data-id');
-        console.log(deletePresetId);
         //テストする
         await fetch('/api/presetDelete', {
           method: 'POST',
@@ -457,6 +458,15 @@
           console.log(res)
         })
       });
+
+      ////データ更新////
+      //data-idタグをつけて更新APIを呼ぶ。その後、タグ内を書き換え
+      editBtn.addEventListener('click', async function() {
+        const editPresetId = this.getAttribute('data-id');
+        //テストする
+        window.location.href = "/parts-select?presetId="+editPresetId;
+      })
+
     })
 </script>
 
