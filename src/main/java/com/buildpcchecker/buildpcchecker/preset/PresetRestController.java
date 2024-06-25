@@ -24,7 +24,7 @@ public class PresetRestController {
 
     // sessionの情報を保存できないため、全体で繋げる時に完成させる
     // プリセット一覧表示用API
-    @GetMapping("/api/preset")
+    @GetMapping("/api/presetList")
     public ResponseEntity<List<PresetListForm>> PresetList() {
         try {
 //            session.setAttribute("sessionUser", 1);
