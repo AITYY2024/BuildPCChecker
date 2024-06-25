@@ -482,6 +482,13 @@
           //cards更新
           console.log(res)
         })
+
+        //presetデータ取得
+        let res=await fetch('/api/presetList');
+        let dataList=res.json();
+        dataList.then(data=>{
+            setPresetData(data);
+        });
       });
     })
 
