@@ -13,4 +13,8 @@ public class SettingController {
     public String setting(){
         return "setting";
     }
+
+    @GetMapping("/login-redirect")
+    public String delete(){return "login-redirect";}
 }
+
