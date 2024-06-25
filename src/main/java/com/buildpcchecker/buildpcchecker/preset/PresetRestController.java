@@ -29,7 +29,7 @@ public class PresetRestController {
         try {
 //            session.setAttribute("sessionUser", 1);
 //            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-//            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
+//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
 
             List<PresetListForm> presetList = IpresetService.findAll(2);
 
@@ -85,6 +85,9 @@ public class PresetRestController {
     @PostMapping("/api/presetInsert")
     public ResponseEntity<Integer> insertPreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
+//            session.setAttribute("sessionUser", 1);
+//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
             Integer insert = IpresetService.insertPreset(presetListFormJs);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(insert, HttpStatus.OK);

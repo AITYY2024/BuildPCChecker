@@ -165,6 +165,7 @@ public class PresetDao implements IPresetDao {
     public Integer copyPreset(PresetListForm data) {
         var param = new MapSqlParameterSource();
         param.addValue("preset_name", data.getPreset_name());
+        param.addValue("user_id", data.getUser_id());
 
         param.addValue("cpu_id", data.getCpu_id());
         param.addValue("cpu_name", data.getCpu_name());
@@ -196,8 +197,9 @@ public class PresetDao implements IPresetDao {
 
         param.addValue("description", data.getDescription());
         param.addValue("total_amount", data.getTotal_amount());
-        return jdbcTemplate.update("INSERT INTO preset" +
-                        "(preset_name, " +
+        return jdbcTemplate.update("INSERT INTO preset(" +
+                        "preset_name, " +
+                        "user_id, " +
                         "cpu_id, cpu_name, cpu_url, " +
                         "gpu_id, gpu_name, gpu_url, " +
                         "ram_id, ram_name, ram_url, " +
@@ -211,6 +213,7 @@ public class PresetDao implements IPresetDao {
 
                         "VALUES(" +
                         ":preset_name, " +
+                        ":user_id, " +
                         ":cpu_id, :cpu_name, :cpu_url, " +
                         ":gpu_id, :gpu_name, :gpu_url, " +
                         ":ram_id, :ram_name, :ram_url, " +

@@ -59,6 +59,7 @@ window.addEventListener('load', async function(){
           const presetId = event.currentTarget.getAttribute('data-id');
           deleteBtn.setAttribute('data-id', presetId);
           editBtn.setAttribute('data-id', presetId);
+          copyBtn.setAttribute('data-id', presetId);
           
           document.getElementById('deletePresetName').textContent = presetName;
           const selectPartsList = data.find(item => item.preset_id === Number(presetId));
@@ -83,6 +84,7 @@ window.addEventListener('load', async function(){
         });
       });
 
+        //deleteBtnにデータタグ挿入
       const deleteModalButtons = document.querySelectorAll('.delete');
       deleteModalButtons.forEach(button => {
         button.addEventListener('click', (event) => {
