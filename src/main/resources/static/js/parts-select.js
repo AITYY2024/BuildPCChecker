@@ -209,11 +209,15 @@
 
         document.getElementById('presetSaveBtn').addEventListener('click', () => {
             fetch('/api/PresetListFormRegistration', {
-                method: 'POST',
+                method: 'Post',
                 headers: {
                'Content-Type': 'application/json',
                 },
-//             body: JSON.stringify(presetDataList),
+    options:{
+        method:'POST',
+         body: JSON.stringify(presetDataList),
+    }
+
 
             })
 //           .then(res =>

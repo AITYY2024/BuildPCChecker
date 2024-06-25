@@ -238,17 +238,17 @@ public class PartsSelectRestController {
 
 
     //プリセットを登録するAPI
-    @PostMapping(value = "/api/PresetListFormRegistration")
-    public ResponseEntity<Integer> presetRegistration (@RequestBody PresetListForm presetListForm) {
-        try {
-            Integer presetregistration = productsService.catchPresetInsert(presetListForm);
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetregistration, HttpStatus.OK);
-        } catch (PartsNotFoundException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping(value = "/api/PresetListFormRegistration")
+//    public ResponseEntity<Integer> presetRegistration (@RequestBody PresetListForm presetListForm) {
+//        try {
+//            Integer presetregistration = productsService.catchPresetInsert(presetListForm);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetregistration, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
 }
