@@ -28,6 +28,7 @@ public class SettingRestController {
     public ResponseEntity<Integer>userDelete(){
         try {
             var user = (UsersForm)session.getAttribute("sessionUser");
+            session.invalidate();
             var userDelete = isettingService.delete(user.getId());
             return new ResponseEntity<>(userDelete,HttpStatus.OK);
         }catch (NoSuchIdException e){
