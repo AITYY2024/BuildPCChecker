@@ -25,13 +25,52 @@
                             <input type="password" class="form-control" id="password" required>
                         </div>
                         <p id="errorMessage" class="text-danger mt-2"></p>
-                        <button type="submit" class="btn btn-primary w-100" id="loginButton">ログイン</button>
+                        <button type="submit" class="btn btn-primary w-100 mb-2" id="loginButton">ログイン</button>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#signinModal">新規登録</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- モーダル -->
+<div class="modal fade" id="signinModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="signinModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signinModalLabel"></h5>
+            </div>
+            <div class="modal-body">
+                <h2 class="card-title text-center mb-4">
+                    Build PC Checker
+                </h2>
+                <form id="signinForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">ユーザー名</label>
+                        <input type="text" class="form-control" id="newUsername" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">パスワード</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                    <p id="errorMessageSignin" class="text-danger mt-2"></p>
+                    <button type="submit" class="btn btn-primary w-100" id="signinBtn">登録</button>
+                </form>
+            </div>
+            <div class="modal-footer d-block">
+                <div class="row m-0 p-0">
+                    <div class="col ps-0 pe-0">
+                        <button type="button" class=" btn w-100 btn-secondary" data-bs-dismiss="modal">
+                            閉じる
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();

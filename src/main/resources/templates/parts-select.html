@@ -535,7 +535,7 @@
                   presetDataList["description"] = document.getElementById("description").value;
                   presetDataList["totalPrice"] = totalPrice;
                   presetDataList["presetName"] = document.getElementById("presetName").value;
-    //                        console.log(presetDataList);
+                            console.log(presetDataList);
                 });
               });
 
@@ -613,14 +613,8 @@
           partsList.querySelectorAll(".price")[0].textContent = '¥0';
           partsList.querySelectorAll(".spec1")[0].textContent = '';
           partsList.querySelectorAll(".spec2")[0].textContent = '';
-          // if(document.getElementById('selectModalLabel').value==="MB"){
-          //   cpuGenFilter='';
-          // }
           partsList.querySelectorAll(".spec3")[0].textContent = '';
           partsList.querySelectorAll(".spec4")[0].textContent = '';
-          // if(document.getElementById('selectModalLabel').value==="CPU"){
-          //   cpuGenFilter='';
-          // }
           partsList.querySelectorAll(".release")[0].textContent = '';
           for (let i = 1; i < dataList.length; i++) {
             dataObj = Object.values(dataList[i]);
@@ -696,15 +690,16 @@
               presetDataList["description"] = document.getElementById("description").value;
               presetDataList["totalPrice"] = totalPrice;
               presetDataList["presetName"] = document.getElementById("presetName").value;
-//                        console.log(presetDataList);
+              console.log(presetDataList);
             });
           });
         })
       })
 
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
-        fetch('/api/PresetListFormRegistration', {
-          method: 'GET',
+        presetDataList["description"] = document.getElementById("description").value;
+        fetch('/api/presetCopy', {
+          method: 'POST',
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify(presetDataList),
         })

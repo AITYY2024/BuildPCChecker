@@ -83,7 +83,9 @@ public class PresetRestController {
     @PostMapping("/api/presetCopy")
     public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
+            presetListFormJs.setUserId(2);
             Integer copy = presetService.copyPreset(presetListFormJs);
+            System.out.println(presetListFormJs);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(copy, HttpStatus.OK);
         } catch (RuntimeException e) {
