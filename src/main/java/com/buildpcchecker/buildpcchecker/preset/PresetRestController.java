@@ -22,24 +22,24 @@ public class PresetRestController {
     private HttpSession session;
 
 
-    // sessionの情報を保存できないため、全体で繋げる時に完成させる
-    // プリセット一覧表示用API
-    @GetMapping("/api/preset")
-    public ResponseEntity<List<PresetListForm>> PresetList() {
-        try {
-//            session.setAttribute("sessionUser", 1);
-//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-//            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
-
-            List<PresetListForm> presetList = IpresetService.findAll(2);
-
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetList, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    // sessionの情報を保存できないため、全体で繋げる時に完成させる
+//    // プリセット一覧表示用API
+//    @GetMapping("/api/preset")
+//    public ResponseEntity<List<PresetListForm>> PresetList() {
+//        try {
+////            session.setAttribute("sessionUser", 1);
+////            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+////            List<PresetListForm> presetList = presetService.findAll(userInfoSession.getId());
+//
+//            List<PresetListForm> presetList = IpresetService.findAll(2);
+//
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetList, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 //    //プリセット詳細表示用API
 //    @GetMapping("/api/presetDetail")
@@ -93,18 +93,18 @@ public class PresetRestController {
 //        }
 //    }
 
-//    プリセットコピー用API（改変版）
-    @PostMapping("/api/presetCopy")
-    public ResponseEntity<Integer> copyPreset(@RequestBody Integer preset_id){
-        try {
-            Integer copy = IpresetService.copyPreset(preset_id);
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(copy, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+////    プリセットコピー用API
+//    @PostMapping("/api/presetCopy")
+//    public ResponseEntity<Integer> copyPreset(@RequestBody Integer preset_id){
+//        try {
+//            Integer copy = IpresetService.copyPreset(preset_id);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(copy, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 //    //プリセット更新用API
 //    @PutMapping("/api/presetUpdate")
