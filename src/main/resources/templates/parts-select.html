@@ -37,24 +37,25 @@
       <div class="bg-body-tertiary d-flex justify-content-between align-items-center p-2" id="defaultNav">
         <span class="mb-0 me-2 h5">Build PC Checker</span>
         <div class="d-none d-sm-flex">
-          <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" aria-current="page" href="./parts-select.html">構成</a>
-          <a class="nav-link ms-4" href="./preset-list.html">プリセット</a>
+          <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" aria-current="page" href="/parts-select">構成</a>
+          <a class="nav-link ms-4" href="/preset-list">プリセット</a>
         </div>
         <div class="btn-group ms-auto">
-          <button type="button" class="btn btn-outline-primary" onclick="location.href='./login-redirect.html'">ログアウト</button>
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='/login-redirect'">ログアウト</button>
           <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="#" id="themeBtn">カラーモード<i class="fa-regular fa-sun ms-2"></i></a></li>
-            <li><a class="dropdown-item" href="./setting">アカウント</a></li>
+            <li><a class="dropdown-item" href="/setting">アカウント</a></li>
           </ul>
         </div>
       </div>
       <div class="bg-body-tertiary d-sm-none p-2 ps-3" id="mobileNav">
         <div class="d-flex justify-content-start">
-          <a class="nav-link border-bottom border-2 border-primary fw-semibold" href="./parts-select.html">構成</a>
-          <a class="nav-link ms-4" href="./preset-list.html">プリセット</a>
+          <a class="nav-link border-bottom border-2 border-primary fw-semibold" href="/parts-select">構成</a>
+          <a class="nav-link ms-4" href="/preset-list">プリセット</a>
         </div>
       </div>`;
+
 
     // ナビゲーションバーの上部固定切り替え
     function setDefaultNavFixed() {
