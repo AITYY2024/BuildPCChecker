@@ -703,8 +703,8 @@
       })
 
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
-        fetch('/api/PresetListFormRegistration', {
-          method: 'GET',
+        fetch('/api/presetInsert', {
+          method: 'Post',
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify(presetDataList),
         })

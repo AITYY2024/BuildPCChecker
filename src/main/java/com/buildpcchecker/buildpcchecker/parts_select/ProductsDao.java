@@ -21,15 +21,15 @@ public class ProductsDao implements IProductsDao{
     @Override
     public List<CpuSelectForm> tableCpuParts(String chipset_name){
 
-            var param = new MapSqlParameterSource();
-            param.addValue("chipset_name", "%" + chipset_name + "%");
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("chipset_name", "%" + chipset_name + "%");
+        var list = jdbcTemplate.query("""
                 SELECT * FROM cpu
                 WHERE
                 gen IN (SELECT cpu_generation FROM compatible WHERE chipset_name LIKE :chipset_name ORDER BY id)
                 ORDER BY id
                 """, param, new DataClassRowMapper<>(CpuSelectForm.class));
-            return list;
+        return list;
     }
 
     //GPUのテーブルを全て表示する
@@ -50,15 +50,15 @@ public class ProductsDao implements IProductsDao{
     //Mbのテーブルを全て表示する
     @Override
     public List<MbSelectForm> tableMbParts(String cpu_generation){
-            var param = new MapSqlParameterSource();
-            param.addValue("cpu_generation", "%" + cpu_generation + "%");
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("cpu_generation", "%" + cpu_generation + "%");
+        var list = jdbcTemplate.query("""
             SELECT * FROM mb
             WHERE
             chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation ORDER BY id)
             ORDER BY id
             """, param, new DataClassRowMapper<>(MbSelectForm.class));
-            return list;
+        return list;
     }
 
     //SSDのテーブルを全て表示する
@@ -112,11 +112,11 @@ public class ProductsDao implements IProductsDao{
     //GPUのテーブルから検索したものを表示する
     @Override
     public List<GpuSelectForm> searchGpuParts(String gpu_name,int lowerLimit,int upperLimit){
-            var param = new MapSqlParameterSource();
-            param.addValue("gpu_name", "%" + gpu_name + "%");
-            param.addValue("lowerLimit",lowerLimit);
-            param.addValue("upperLimit",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("gpu_name", "%" + gpu_name + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
                 SELECT * FROM gpu
                 WHERE product_name LIKE :gpu_name
                 AND
@@ -124,17 +124,17 @@ public class ProductsDao implements IProductsDao{
                 AND
                 price < :upperLimit
                 ORDER BY id""", param, new DataClassRowMapper<>(GpuSelectForm.class));
-            return list;
+        return list;
     }
 
     //Memoryのテーブルから検索したものを表示する
     @Override
     public List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit){
-            var param = new MapSqlParameterSource();
-            param.addValue("memory_name", "%" + memory_name + "%");
-            param.addValue("lowerLimit",lowerLimit);
-            param.addValue("upperLimit",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("memory_name", "%" + memory_name + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
                 SELECT * FROM memory
                 WHERE product_name LIKE :memory_name
                                 AND
@@ -143,19 +143,19 @@ public class ProductsDao implements IProductsDao{
                 price < :upperLimit
                 ORDER BY id
                 """, param, new DataClassRowMapper<>(MemorySelectForm.class));
-            return list;
+        return list;
     }
 
     //Mbのテーブルから検索したものを表示する
     @Override
     public List<MbSelectForm> searchMbParts(
             String mb_name,String cpu_generation,int lowerLimit,int upperLimit){
-            var param = new MapSqlParameterSource();
-            param.addValue("mb_name", "%" + mb_name + "%");
-            param.addValue("cpu_generation", "%" + cpu_generation + "%");
-            param.addValue("lowerLimit",lowerLimit);
-            param.addValue("upperLimit",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("mb_name", "%" + mb_name + "%");
+        param.addValue("cpu_generation", "%" + cpu_generation + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
             SELECT * FROM mb
             WHERE
             chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation)
@@ -166,17 +166,17 @@ public class ProductsDao implements IProductsDao{
             AND
             product_name LIKE :mb_name
             ORDER BY id""", param, new DataClassRowMapper<>(MbSelectForm.class));
-            return list;
+        return list;
     }
 
     //SSDのテーブルから検索したものを表示する
     @Override
     public List<SsdSelectForm> searchSsdParts(String ssd_name,int lowerLimit,int upperLimit){
-            var param = new MapSqlParameterSource();
-            param.addValue("ssd_name", "%" + ssd_name + "%");
-            param.addValue("lowerLimit",lowerLimit);
-            param.addValue("upperLimit",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("ssd_name", "%" + ssd_name + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
                 SELECT * FROM ssd
                 WHERE product_name LIKE :ssd_name
                 AND
@@ -184,17 +184,17 @@ public class ProductsDao implements IProductsDao{
                 AND
                 price < :upperLimit
                 ORDER BY id""", param, new DataClassRowMapper<>(SsdSelectForm.class));
-            return list;
+        return list;
     }
 
     //PSUのテーブルから検索したものを表示する
     @Override
     public List<PsuSelectForm> searchPsuParts(String psu_name,int lowerLimit,int upperLimit){
-            var param = new MapSqlParameterSource();
-            param.addValue("psu_name", "%" + psu_name + "%");
-            param.addValue("lowerLimit",lowerLimit);
-            param.addValue("upperLimit",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("psu_name", "%" + psu_name + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
                 SELECT * FROM psu
                 WHERE product_name LIKE :psu_name
                 AND
@@ -203,17 +203,17 @@ public class ProductsDao implements IProductsDao{
                 price < :upperLimit
                 ORDER BY id
                 """, param, new DataClassRowMapper<>(PsuSelectForm.class));
-            return list;
+        return list;
     }
 
     //OSのテーブルから検索したものを表示する
     @Override
     public List<OsSelectForm> searchOsParts(String os_name,int lowerLimit,int upperLimit){
-            var param = new MapSqlParameterSource();
-            param.addValue("os_name", "%" + os_name + "%");
-            param.addValue("lowerLimit",lowerLimit);
-            param.addValue("upperLimit",upperLimit);
-            var list = jdbcTemplate.query("""
+        var param = new MapSqlParameterSource();
+        param.addValue("os_name", "%" + os_name + "%");
+        param.addValue("lowerLimit",lowerLimit);
+        param.addValue("upperLimit",upperLimit);
+        var list = jdbcTemplate.query("""
                 SELECT * FROM os
                 WHERE product_name LIKE :os_name
                 AND
@@ -221,7 +221,7 @@ public class ProductsDao implements IProductsDao{
                 AND
                 price < :upperLimit
                 ORDER BY id""", param, new DataClassRowMapper<>(OsSelectForm.class));
-            return list;
+        return list;
     }
 
     //パーツをプリセット登録する
