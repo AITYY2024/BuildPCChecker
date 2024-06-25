@@ -1,10 +1,6 @@
 window.addEventListener('load', async function(){
     //presetデータ取得
-    let res=await fetch('/api/presetList');
-    let dataList=res.json();
-    dataList.then(data=>{
-        setPresetData(data);
-    });
+    presetReload();
 
     //presetデータ一覧表示
     function setPresetData(data) {
@@ -180,6 +176,8 @@ window.addEventListener('load', async function(){
       .then(res => {
         console.log(res)
       })
+      presetReload();
+      
     });
 
     ////データ編集////
@@ -206,10 +204,15 @@ window.addEventListener('load', async function(){
       })
 
       //presetデータ取得
+      presetReload();
+    });
+
+    async function presetReload(){
+      //presetデータ取得
       let res=await fetch('/api/presetList');
       let dataList=res.json();
       dataList.then(data=>{
           setPresetData(data);
       });
-    });
+    }
   })
