@@ -26,7 +26,7 @@ public class CompatibleRestController {
         }
     }
 
-//    //互換性テーブル詳細
+    //互換性テーブル詳細
 //    @GetMapping("/api/compatible")
 //    public ResponseEntity<CompatibleDisplayForm>compatibleDetail(@RequestBody CompatibleDisplayForm compatibleDisplayForm){
 //        try {
@@ -59,7 +59,7 @@ public class CompatibleRestController {
         }
     }
 
-//    //互換性テーブル追加
+    //互換性テーブル追加
     @PostMapping("/api/compatible")
     public ResponseEntity<Integer>compatibleInsert(@RequestBody CompatibleForm compatibleForm){
         try {
@@ -71,15 +71,15 @@ public class CompatibleRestController {
     }
 
     //互換性テーブル更新
-    @PutMapping("/api/compatible")
-    public ResponseEntity<Integer>compatibleUpdate(@RequestBody CompatibleForm compatibleForm){
-        try {
-            var compatibleUpdate = icompatibleService.update(compatibleForm);
-            return new ResponseEntity<>(compatibleUpdate,HttpStatus.OK);
-        }catch (NoSuchException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PutMapping("/api/compatible")
+//    public ResponseEntity<Integer>compatibleUpdate(@RequestBody CompatibleForm compatibleForm){
+//        try {
+//            var compatibleUpdate = icompatibleService.update(compatibleForm);
+//            return new ResponseEntity<>(compatibleUpdate,HttpStatus.OK);
+//        }catch (NoSuchException e){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     //互換性テーブル削除
     @DeleteMapping("/api/compatible")
