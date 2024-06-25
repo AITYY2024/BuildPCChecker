@@ -47,7 +47,7 @@ public class PresetService implements IPresetService {
 
     //プリセット更新
     @Override
-    public  Integer updatePreset(Integer preset_id){ return  presetDao.updatePreset(preset_id);}
-
-
+    public Integer updatePreset(Integer preset_id){
+        return presetDao.updatePreset(preset_id);
+    }
 }

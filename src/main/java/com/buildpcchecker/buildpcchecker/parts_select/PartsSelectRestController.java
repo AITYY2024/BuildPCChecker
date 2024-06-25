@@ -119,8 +119,7 @@ public class PartsSelectRestController {
         try {
             List<CpuSelectForm> testCpuSearch = productsService.searchCpuParts(
                     searchWord,chipset,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
-            System.out.println("searchWord"+searchWord+"minPrice"+minPrice+"maxPrice"+maxPrice+"cpu"+chipset);
-            System.out.println("restapi List"+testCpuSearch);
+            System.out.println("cpu"+chipset);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testCpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -139,7 +138,7 @@ public class PartsSelectRestController {
         try {
             List<GpuSelectForm> testGpuSearch = productsService.searchGpuParts(
                     searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
-            System.out.println("searchWord"+searchWord+"minPrice"+minPrice+"maxPrice"+maxPrice);
+
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testGpuSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -154,8 +153,7 @@ public class PartsSelectRestController {
     public ResponseEntity<List<MemorySelectForm>> memorySearch(
             @RequestParam(defaultValue = "") String searchWord,
             @RequestParam(defaultValue = "0") String minPrice,
-            @RequestParam(defaultValue = "2147483647") String maxPrice
-    ){
+            @RequestParam(defaultValue = "2147483647") String maxPrice){
         try {
             List<MemorySelectForm> testMemorySearch = productsService.searchMemoryParts(
                     searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
@@ -173,13 +171,11 @@ public class PartsSelectRestController {
             @RequestParam(defaultValue = "") String searchWord,
             @RequestParam(defaultValue = "0") String minPrice,
             @RequestParam(defaultValue = "2147483647") String maxPrice,
-            @RequestParam(defaultValue = "") String cpuGen
-    ){
+            @RequestParam(defaultValue = "") String cpuGen){
         try {
             List<MbSelectForm> testMbSearch = productsService.searchMbParts(
                     searchWord,cpuGen,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
-            System.out.println("searchWord"+searchWord+"minPrice"+minPrice+"maxPrice"+maxPrice+"cpu_gen"+cpuGen);
-            System.out.println("restapi List"+testMbSearch);
+            System.out.println("Mb" + cpuGen);
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMbSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {

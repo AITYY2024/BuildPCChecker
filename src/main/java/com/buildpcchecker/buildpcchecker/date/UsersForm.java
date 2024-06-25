@@ -9,8 +9,8 @@ public class UsersForm {
     private int id;//usersテーブルid
 
     @NotBlank(message = "ユーザーIDが空欄です")
-    private String user_name;//ユーザー名
-
+//    private String user_name;//ユーザー名
+    private String userName;
     @NotBlank(message = "パスワードが空欄です")
     private String password;//パスワード
 

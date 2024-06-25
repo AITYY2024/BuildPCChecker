@@ -11,7 +11,7 @@ public class MbSelectForm {
     private String url;
     private String product_name;
     private Integer price;
-    private Date release_date;
+    private String release_date;
     private String formfactor;
     private String chipset;
     private String socket;

@@ -20,7 +20,6 @@ public class CompatibleRestController {
     public ResponseEntity<List<CompatibleDisplayForm>> compatibleList() {
         try {
             var compatibleList = icompatibleService.compatibleAll();
-            System.out.println(compatibleList);
             return new ResponseEntity<>(compatibleList, HttpStatus.OK);
         } catch (NoSuchException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -50,15 +49,15 @@ public class CompatibleRestController {
 //    }
 
     //MB CHIPSET
-//    @GetMapping("/api/compatible")
-//    public ResponseEntity<List<String>> mbChipset(){
-//        try {
-//            var mbChipset = icompatibleService.mbChipset();
-//            return new ResponseEntity<>(mbChipset,HttpStatus.OK);
-//        }catch (NoSuchException e){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @GetMapping("/api/chipset")
+    public ResponseEntity<List<String>> mbChipset(){
+        try {
+            var mbChipset = icompatibleService.mbChipset();
+            return new ResponseEntity<>(mbChipset,HttpStatus.OK);
+        }catch (NoSuchException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 //    //互換性テーブル追加
     @PostMapping("/api/compatible")
@@ -84,9 +83,9 @@ public class CompatibleRestController {
 
     //互換性テーブル削除
     @DeleteMapping("/api/compatible")
-    public ResponseEntity<Integer>compatibleDelete(@RequestBody CompatibleForm compatibleForm){
+    public ResponseEntity<Integer>compatibleDelete(@RequestBody int id){
         try {
-            var compatibleDelete = icompatibleService.delete(compatibleForm.getCompatibleId());
+            var compatibleDelete = icompatibleService.delete(id);
             return new ResponseEntity<>(compatibleDelete,HttpStatus.OK);
         }catch (NoSuchException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

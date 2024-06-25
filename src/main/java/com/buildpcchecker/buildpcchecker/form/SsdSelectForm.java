@@ -10,7 +10,7 @@ public class SsdSelectForm {
     private String url;
     private String product_name;
     private Integer price;
-    private Date release_date;
+    private String release_date;
     private String capacity;
     private String spec_size;
     private String interFace;
