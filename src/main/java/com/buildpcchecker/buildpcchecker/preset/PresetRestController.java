@@ -80,19 +80,6 @@ public class PresetRestController {
 //        }
 //    }
 
-//    //プリセットコピー用API
-//    @PostMapping("/api/presetCopy")
-//    public ResponseEntity<Integer> copyPreset(@RequestBody PresetListFormJs presetListFormJs){
-//        try {
-//            Integer copy = IpresetService.copyPreset(presetListFormJs);
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(copy, HttpStatus.OK);
-//        } catch (RuntimeException e) {
-//            // ステータスコード400番を返す
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
 ////    プリセットコピー用API
 //    @PostMapping("/api/presetCopy")
 //    public ResponseEntity<Integer> copyPreset(@RequestBody Integer preset_id){
