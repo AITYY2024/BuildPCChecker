@@ -21,17 +21,15 @@ public class PresetRestController {
     @Autowired
     private HttpSession session;
 
-
-    // sessionの情報を保存できないため、全体で繋げる時に完成させる
     // プリセット一覧表示用API
     @GetMapping("/api/presetList")
     public ResponseEntity<List<PresetListForm>> PresetList() {
         try {
-//            session.setAttribute("sessionUser", 1);
-//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
+            session.getAttribute("sessionUser");
+            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
 
-            List<PresetListForm> presetList = IpresetService.findAll(2);
+//            List<PresetListForm> presetList = IpresetService.findAll(2);
 
             // データとステータスコード200番を返す
             return new ResponseEntity<>(presetList, HttpStatus.OK);
@@ -69,7 +67,7 @@ public class PresetRestController {
     }
 
     //プリセット編集用API
-    @PutMapping("/api/presetEdit")
+    @PutMapping("/api/presetSave")
     public ResponseEntity<Integer> editPreset(@RequestBody PresetListFormJs presetListFormJs) {
         try {
              Integer edit = IpresetService.editPreset(presetListFormJs);
@@ -82,13 +80,13 @@ public class PresetRestController {
     }
 
     //新規追加用API
-    @PostMapping("/api/presetInsert")
+    @PostMapping("/api/presetSave")
     public ResponseEntity<Integer> insertPreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
-//            session.setAttribute("sessionUser", 1);
-//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
+            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+            presetListFormJs.setUserId(userInfoSession.getId());
             Integer insert = IpresetService.insertPreset(presetListFormJs);
+
             // データとステータスコード200番を返す
             return new ResponseEntity<>(insert, HttpStatus.OK);
         } catch (RuntimeException e) {

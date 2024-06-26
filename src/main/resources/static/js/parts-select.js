@@ -1,4 +1,5 @@
-    'use strict'
+
+'use strict'
     window.addEventListener('load', () => {
       let priceList = {"cpu": 0, "gpu": 0, "memory": 0, "mb": 0, "ssd": 0, "psu": 0, "os": 0};
 
@@ -11,9 +12,9 @@
       let cpuGenFilter = "";
 
       //////新規か編集か判定
-      let methodType="POST";
-      if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData === ""){
-        methodType="PUT";
+      let methodType="Put";
+      if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData[1] === ""){
+        methodType="Post";
       }
 
       //////プリセット保存時に送信するオブジェクト//////
@@ -81,8 +82,6 @@
               break;
           }
 
-          console.log(requestPram);
-
           data=res.json();
           data.then(dataList => {
             dataList = dataList.filter(item => item.product_id !== null);
@@ -110,14 +109,10 @@
             partsList.querySelectorAll(".price")[0].textContent = '¥0';
             partsList.querySelectorAll(".spec1")[0].textContent = "";
             partsList.querySelectorAll(".spec2")[0].textContent = "";
-            // if(document.getElementById('selectModalLabel').value==="MB"){
-            //   mbChipsetFilter = "";
-            // }
             partsList.querySelectorAll(".spec3")[0].textContent = "";
             partsList.querySelectorAll(".spec4")[0].textContent = "";
-            // if(document.getElementById('selectModalLabel').value==="CPU"){
-            //   cpuGenFilter = "";
-            // }
+            
+            
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
@@ -194,10 +189,7 @@
                   presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
                   presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
                   presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
-                  presetDataList["description"] = document.getElementById("description").value;
                   presetDataList["totalPrice"] = totalPrice;
-                  presetDataList["presetName"] = document.getElementById("presetName").value;
-    //                        console.log(presetDataList);
                 });
               });
 
@@ -350,9 +342,8 @@
               presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
               presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
               presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
-              presetDataList["description"] = document.getElementById("description").value;
               presetDataList["totalPrice"] = totalPrice;
-              presetDataList["presetName"] = document.getElementById("presetName").value;
+              
             });
           });
         })
@@ -460,33 +451,21 @@
           })
       }
 
+      //////プリセット保存/////
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
-        fetch('/api/presetInsert', {
-          method: 'Post',
+        presetDataList["presetName"] = document.getElementById("presetName").value;
+        presetDataList["description"] = document.getElementById("description").value;
+        console.log(presetDataList);
+        fetch('/api/presetSave', {
+          method: methodType,
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify(presetDataList),
         })
         .then(res =>
           console.log(res)
         )
+        window.location.href = "/preset-list";
       })
 
     });
 
-  ////////検索メソッドに送るオブジェクトの作成////////
-  function createSearchData(searchWord,minPrice,maxPrice,...compatible){
-    if(compatible.length > 0){
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice,
-        "compatible":compatible[0]
-      };
-    }else{
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice
-      };
-    }
-  }
