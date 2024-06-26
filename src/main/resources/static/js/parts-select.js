@@ -15,8 +15,6 @@
       if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData[1] === ""){
         methodType="Post";
       }
-      console.log('paramData:'+paramData[1]);
-      console.log('methodType:'+methodType);
       //////プリセット保存時に送信するオブジェクト//////
       let presetDataList = {
         "presetId": paramData[1],   //値が入っていなければ新規判定
@@ -195,8 +193,6 @@
                   presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
                   presetDataList["description"] = document.getElementById("description").value;
                   presetDataList["totalPrice"] = totalPrice;
-                  presetDataList["presetName"] = document.getElementById("presetName").value;
-    //                        console.log(presetDataList);
                 });
               });
 
@@ -356,8 +352,7 @@
               presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
               presetDataList["description"] = document.getElementById("description").value;
               presetDataList["totalPrice"] = totalPrice;
-              presetDataList["presetName"] = document.getElementById("presetName").value;
-//                        console.log(presetDataList);
+              
             });
           });
         })
@@ -365,6 +360,8 @@
 
       //////プリセット保存/////
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
+        presetDataList["presetName"] = document.getElementById("presetName").value;
+        console.log(presetDataList);
         fetch('/api/presetSave', {
           method: methodType,
           headers: { 'Content-Type': 'application/json', },
@@ -373,6 +370,7 @@
         .then(res =>
           console.log(res)
         )
+        window.location.href = "/preset-list";
       })
 
     });
