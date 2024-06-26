@@ -47,6 +47,7 @@
           const partsList = document.getElementById('partsList');
           partsList.innerHTML = '';
           let requestPram="searchWord=" + "&minPrice=" + "&maxPrice=";
+          document.getElementById("warning").textContent = null;
           if (document.getElementById('selectModalLabel').value == 'CPU') {
             if (mbChipsetFilter != '') {
               document.getElementById("warning").textContent = '選択したマザーボードのチップセット(' + mbChipsetFilter + ')と互換性があるCPUのみ表示されています。';
@@ -110,7 +111,7 @@
               res = await fetch(`/api/getOsList`);
               break;
           }
-          console.log(requestPram);
+          console.log(priceList);
 
           data=res.json();
           data.then(dataList => {
@@ -204,7 +205,7 @@
 
                   priceList[document.getElementById('selectModalLabel').value.toLowerCase()] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
+                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName].toLocaleString();
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -311,7 +312,7 @@
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
             partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
-            partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4];
+            partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4].toLocaleString();
             if (partsList.querySelectorAll(".spec1")[i] != null) {
               partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[6];
             }
@@ -363,7 +364,7 @@
 
               priceList[document.getElementById('selectModalLabel').value.toLowerCase()] = selectPartsList?.[4];
               let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-              document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
+              document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName].toLocaleString();
               document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
               document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -449,7 +450,7 @@
 
                   priceList[partsCategoryName.toLowerCase()] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-                  document.getElementById(partsCategoryName.toUpperCase() + "Price").textContent = '¥' + priceList[partsCategoryName];
+                  document.getElementById(partsCategoryName.toUpperCase() + "Price").textContent = '¥' + priceList[partsCategoryName].toLocaleString();
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -498,6 +499,7 @@
         presetDataList["presetName"] = document.getElementById("presetName").value;
         presetDataList["description"] = document.getElementById("description").value;
         let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
+        console.log(totalPrice);
         presetDataList["totalPrice"] = totalPrice;
         console.log(presetDataList);
         fetch('/api/presetSave', {
