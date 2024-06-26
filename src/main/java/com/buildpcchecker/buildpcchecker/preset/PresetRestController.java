@@ -39,19 +39,19 @@ public class PresetRestController {
         }
     }
 
-//    //使われていない状況
-//    //プリセット詳細表示用API
-//    @GetMapping("/api/presetDetail")
-//    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
-//        try {
-//            PresetListForm presetDetails = IpresetService.findById(preset_id);
-//            // データとステータスコード200番を返す
-//            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
-//        } catch (RuntimeException e) {
-//            // ステータスコード400番を返す
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    //使われていない状況
+    //プリセット詳細表示用API
+    @GetMapping("/api/presetDetail")
+    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
+        try {
+            PresetListForm presetDetails = IpresetService.findById(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     //プリセット削除用API
     @DeleteMapping("/api/presetDelete")
