@@ -30,17 +30,17 @@ public class PartsSelectRestController {
 //    }
 
     //GPUのテーブルを全て表示する
-    @GetMapping("/api/getGpuList")
-    public ResponseEntity<List<GpuSelectForm>> gpuTable(){
-        try {
-            List<GpuSelectForm> testGpu = productsService.tableGpuParts();
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(testGpu, HttpStatus.OK);
-        } catch (PartsNotFoundException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/api/getGpuList")
+//    public ResponseEntity<List<GpuSelectForm>> gpuTable(){
+//        try {
+//            List<GpuSelectForm> testGpu = productsService.tableGpuParts();
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(testGpu, HttpStatus.OK);
+//        } catch (PartsNotFoundException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     //Memoryのテーブルを全て表示する
     @GetMapping("/api/getRamList")
@@ -153,10 +153,11 @@ public class PartsSelectRestController {
     public ResponseEntity<List<MemorySelectForm>> memorySearch(
             @RequestParam(defaultValue = "") String searchWord,
             @RequestParam(defaultValue = "0") String minPrice,
-            @RequestParam(defaultValue = "2147483647") String maxPrice){
+            @RequestParam(defaultValue = "2147483647") String maxPrice,
+            @RequestParam(defaultValue = "") String ramSpec){
         try {
             List<MemorySelectForm> testMemorySearch = productsService.searchMemoryParts(
-                    searchWord,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
+                    searchWord,ramSpec,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMemorySearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {
@@ -171,11 +172,11 @@ public class PartsSelectRestController {
             @RequestParam(defaultValue = "") String searchWord,
             @RequestParam(defaultValue = "0") String minPrice,
             @RequestParam(defaultValue = "2147483647") String maxPrice,
-            @RequestParam(defaultValue = "") String cpuGen){
+            @RequestParam(defaultValue = "") String cpuGen,
+            @RequestParam(defaultValue = "") String ramSpec){
         try {
             List<MbSelectForm> testMbSearch = productsService.searchMbParts(
-                    searchWord,cpuGen,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
-            System.out.println("Mb" + cpuGen);
+                    searchWord,cpuGen,ramSpec,Integer.parseInt(minPrice),Integer.parseInt(maxPrice));
             // データとステータスコード200番を返す
             return new ResponseEntity<>(testMbSearch, HttpStatus.OK);
         } catch (PartsNotFoundException e) {

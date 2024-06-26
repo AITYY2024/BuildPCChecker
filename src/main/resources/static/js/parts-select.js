@@ -10,6 +10,8 @@
       //////互換性チェック用変数//////
       let mbChipsetFilter = "";
       let cpuGenFilter = "";
+      let mbRamSpecFilter = "";
+      let ramSpecFilter = "";
 
       //////新規か編集か判定
       let methodType="Put";
@@ -45,17 +47,27 @@
           const partsList = document.getElementById('partsList');
           partsList.innerHTML = '';
           let requestPram="searchWord=" + "&minPrice=" + "&maxPrice=";
-
           if (document.getElementById('selectModalLabel').value == 'CPU') {
             if (mbChipsetFilter != '') {
-              document.getElementById("warning").textContent = '選択したマザーボードのチップセット(' + mbChipsetFilter + ')と互換性があるパーツのみ表示されています。';
+              document.getElementById("warning").textContent = '選択したマザーボードのチップセット(' + mbChipsetFilter + ')と互換性があるCPUのみ表示されています。';
             } else {
               document.getElementById("warning").textContent = null;
             }
           }
           if (document.getElementById('selectModalLabel').value == 'MB') {
-            if (cpuGenFilter != '') {
-              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')と互換性があるパーツのみ表示されています。';
+            if (cpuGenFilter != '' && ramSpecFilter != '') {
+              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')、選択したメモリの規格(' + ramSpecFilter + ')と互換性があるマザーボードのみ表示されています。';
+            } else if (cpuGenFilter != '') {
+              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')と互換性があるマザーボードのみ表示されています。';
+            } else if (ramSpecFilter != '') {
+              document.getElementById("warning").textContent = '選択したメモリの規格(' + ramSpecFilter + ')と互換性があるマザーボードのみ表示されています。';
+            } else {
+              document.getElementById("warning").textContent = null;
+            }
+          }
+          if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+            if (mbRamSpecFilter != '') {
+              document.getElementById("warning").textContent = '選択したマザーボードのメモリの規格(' + mbRamSpecFilter + ')と互換性があるメモリのみ表示されています。';
             } else {
               document.getElementById("warning").textContent = null;
             }
@@ -76,11 +88,13 @@
               break;
             case 'MEMORY':
               selectModalTitle = 'メモリ';
-              res = await fetch(`/api/getRamList`);
+              requestPram += "&ramSpec=" + mbRamSpecFilter;
+              res = await fetch(`/api/searchByRamList?` + requestPram);
               break;
             case 'MB':
               selectModalTitle = 'マザーボード';
               requestPram += "&cpuGen=" + cpuGenFilter;
+              requestPram += "&ramSpec=" + ramSpecFilter;
               res = await fetch(`/api/searchByMbList?` + requestPram);
               break;
             case 'SSD':
@@ -96,6 +110,7 @@
               res = await fetch(`/api/getOsList`);
               break;
           }
+          console.log(requestPram);
 
           data=res.json();
           data.then(dataList => {
@@ -198,6 +213,10 @@
                   }
                   if (document.getElementById('selectModalLabel').value == 'MB') {
                     mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                    mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+                  }
+                  if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                    ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
                   }
 
                   ////////////////プリセットデータ格納//////////////
@@ -235,11 +254,13 @@
             break;
           case 'MEMORY':
             selectModalTitle = 'メモリ';
+            requestPram += "&ramSpec=" + mbRamSpecFilter;
             res = await fetch(`/api/searchByRamList?` + requestPram);
             break;
           case 'MB':
             selectModalTitle = 'マザーボード';
             requestPram += "&cpuGen=" + cpuGenFilter;
+            requestPram += "&ramSpec=" + ramSpecFilter;
             res = await fetch(`/api/searchByMbList?` + requestPram);
             break;
           case 'SSD':
@@ -286,7 +307,7 @@
           partsList.querySelectorAll(".spec4")[0].textContent = '';
           partsList.querySelectorAll(".release")[0].textContent = '';
           for (let i = 1; i < dataList.length + 1; i++) {
-            dataObj = Object.values(dataList[i]);
+            dataObj = Object.values(dataList[i-1]);
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
             partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
@@ -351,6 +372,10 @@
               }
               if (document.getElementById('selectModalLabel').value == 'MB') {
                 mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+              }
+              if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
               }
 
               ////////////////プリセットデータ格納//////////////
@@ -433,6 +458,10 @@
                   }
                   if (document.getElementById('selectModalLabel').value == 'MB') {
                     mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                    mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+                  }
+                  if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                    ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
                   }
 
                   ////////////////プリセットデータ格納//////////////
