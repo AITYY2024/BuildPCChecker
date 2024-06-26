@@ -305,4 +305,80 @@ public class ProductsDao implements IProductsDao{
                     """, param, new DataClassRowMapper<>(CpuSelectForm.class));
         return list;
     }
+
+    public List<GpuSelectForm> getPresetGpuInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM gpu 
+                    WHERE product_id = (
+                    SELECT gpu_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(GpuSelectForm.class));
+        return list;
+    }
+
+    public List<MemorySelectForm> getPresetMemoryInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM ram 
+                    WHERE product_id = (
+                    SELECT ram_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(MemorySelectForm.class));
+        return list;
+    }
+
+    public List<MbSelectForm> getPresetMbInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM mb 
+                    WHERE product_id = (
+                    SELECT mb_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(MbSelectForm.class));
+        return list;
+    }
+
+    public List<SsdSelectForm> getPresetSsdInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM ssd 
+                    WHERE product_id = (
+                    SELECT ssd_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(SsdSelectForm.class));
+        return list;
+    }
+
+    public List<PsuSelectForm> getPresetPsuInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM psu
+                    WHERE product_id = (
+                    SELECT psu_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(PsuSelectForm.class));
+        return list;
+    }
+
+    public List<OsSelectForm> getPresetOsInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM os 
+                    WHERE product_id = (
+                    SELECT os_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(OsSelectForm.class));
+        return list;
+    }
+
+    public List<PresetListFormJs> getPresetDescriptionInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT description FROM preset
+                    WHERE preset_id = :preset_id
+                    """, param, new DataClassRowMapper<>(PresetListFormJs.class));
+        return list;
+    }
 }

@@ -263,5 +263,88 @@ public class PartsSelectRestController {
         }
     }
 
+    @GetMapping("/api/getPresetGpuInfo")
+    public ResponseEntity<List<GpuSelectForm>> getPresetGpuInfo(int preset_id){
+        try {
+            List<GpuSelectForm> presetGpuInfo = productsService.getPresetGpuInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetGpuInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getPresetMemoryInfo")
+    public ResponseEntity<List<MemorySelectForm>> getPresetMemoryInfo(int preset_id){
+        try {
+            List<MemorySelectForm> presetMemoryInfo = productsService.getPresetMemoryInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetMemoryInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getPresetMbInfo")
+    public ResponseEntity<List<MbSelectForm>> getPresetMbInfo(int preset_id){
+        try {
+            List<MbSelectForm> presetMbInfo = productsService.getPresetMbInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetMbInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getPresetSsdInfo")
+    public ResponseEntity<List<SsdSelectForm>> getPresetSsdInfo(int preset_id){
+        try {
+            List<SsdSelectForm> presetSsdInfo = productsService.getPresetSsdInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetSsdInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getPresetPsuInfo")
+    public ResponseEntity<List<PsuSelectForm>> getPresetPsuInfo(int preset_id){
+        try {
+            List<PsuSelectForm> presetPsuInfo = productsService.getPresetPsuInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetPsuInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getPresetOsInfo")
+    public ResponseEntity<List<OsSelectForm>> getPresetOsInfo(int preset_id){
+        try {
+            List<OsSelectForm> presetOsInfo = productsService.getPresetOsInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetOsInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getPresetDescriptionInfo")
+    public ResponseEntity<List<PresetListFormJs>> getPresetDescriptionInfo(int preset_id){
+        try {
+            List<PresetListFormJs> presetDescriptionInfo = productsService.getPresetDescriptionInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetDescriptionInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
