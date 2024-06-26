@@ -69,6 +69,7 @@ window.addEventListener('load', async function(){
           document.getElementById('psuName').textContent = selectPartsList.psu_name;
           document.getElementById('osName').textContent = selectPartsList.os_name;
           document.getElementById('totalPrice').textContent = selectPartsList.total_amount.toLocaleString('ja-JP', {style:'currency', currency: 'JPY'}).replace('￥', '¥');
+          document.getElementById('description').textContent = selectPartsList.description;
           document.getElementById("cpuUrl").href = selectPartsList.cpu_url;
           document.getElementById("gpuUrl").href = selectPartsList.gpu_url;
           document.getElementById("memoryUrl").href = selectPartsList.ram_url;
@@ -145,7 +146,6 @@ window.addEventListener('load', async function(){
 
       });
 
-    
       selectPreset2Name.addEventListener('change', function() {
         preset1Price = selectPreset1Name.options[selectPreset1Name.selectedIndex].getAttribute('data-price');
         preset2Price = this.options[this.selectedIndex].getAttribute('data-price');

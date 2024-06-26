@@ -130,7 +130,6 @@
     });
 </script>
 
-
 <div class="container-fluid main">
     <div class="row">
         <div class="col-12 col-xl-10">
@@ -290,13 +289,11 @@
     </div>
 </div>
 
-<div class="">
-    <div class="mx-auto bg-body-tertiary d-flex align-items-center m-2 p-2 border border-1 rounded-2 fixed-bottom" id="bottomBar">
-        <span class="mb-0 me-2 h5 text-nowrap">合計<span class="text-danger ms-2" id="totalPrice">¥0</span></span>
-        <div class="input-group ms-4">
-            <input id="presetName" type="text" class="form-control" placeholder="プリセット名">
-            <button id="presetSaveBtn" class="btn btn-primary" type="button">保存</button>
-        </div>
+<div class="mx-auto bg-body-tertiary d-flex align-items-center m-2 p-2 border border-1 rounded-2 fixed-bottom" id="bottomBar">
+    <span class="mb-0 me-2 h5 text-nowrap">合計<span class="text-danger ms-2" id="totalPrice">¥0</span></span>
+    <div class="input-group ms-4">
+        <input id="presetName" type="text" class="form-control" placeholder="プリセット名">
+        <button id="presetSaveBtn" class="btn btn-primary" type="button">保存</button>
     </div>
 </div>
 
@@ -319,6 +316,7 @@
                     <input id="maxPrice" type="number" class="form-control">
                 </div>
                 <button id="searchBtn" class="btn btn-sm btn-outline-primary w-100 mb-3" type="button">検索</button>
+                <span class="text-danger fw-semibold" id="warning"></span>
                 <div class="list-group" id="partsList">
 
                 </div>

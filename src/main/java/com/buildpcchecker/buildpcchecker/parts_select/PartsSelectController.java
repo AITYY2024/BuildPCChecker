@@ -17,9 +17,9 @@ public class PartsSelectController {
 
     @GetMapping("/parts-select")
     public String testparts(){
-//        if(this.session.getAttribute("sessionUser") == null){
-//            return "redirect:/login";
-//        }
+        if(this.session.getAttribute("sessionUser") == null){
+            return "redirect:/login";
+        }
 
         return "/parts-select";
     }
