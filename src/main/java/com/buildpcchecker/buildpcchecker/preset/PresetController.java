@@ -1,6 +1,7 @@
 package com.buildpcchecker.buildpcchecker.preset;
 
 import com.buildpcchecker.buildpcchecker.form.PresetListForm;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,15 @@ public class PresetController {
     @Autowired
     PresetService presetService;
 
+    @Autowired
+    public HttpSession session;
+
     @GetMapping("/preset-list")
     public String presetList(){
-        return "preset-list";
+        if(this.session.getAttribute("sessionUser") == null){
+            return "redirect:/login";
+        }
+        return "/preset-list";
     }
 
 }
