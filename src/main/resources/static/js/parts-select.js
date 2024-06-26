@@ -177,7 +177,9 @@
 
                   priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + priceList[partsCategoryName];
+                  
+                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + selectPartsList?.[4];
+                  
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
