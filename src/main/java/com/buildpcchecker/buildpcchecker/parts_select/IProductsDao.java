@@ -45,5 +45,11 @@ public interface IProductsDao {
 
     //プリセットIDからそれぞれのパーツの情報を取得
     List<CpuSelectForm> getPresetCpuInfo(int preset_id);
-
+    List<GpuSelectForm> getPresetGpuInfo(int preset_id);
+    List<MemorySelectForm> getPresetMemoryInfo(int preset_id);
+    List<MbSelectForm> getPresetMbInfo(int preset_id);
+    List<SsdSelectForm> getPresetSsdInfo(int preset_id);
+    List<PsuSelectForm> getPresetPsuInfo(int preset_id);
+    List<OsSelectForm> getPresetOsInfo(int preset_id);
+    List<PresetListFormJs> getPresetDescriptionInfo(int preset_id);
 }

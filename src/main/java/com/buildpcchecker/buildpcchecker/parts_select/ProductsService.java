@@ -56,9 +56,6 @@ public class ProductsService implements IProductsService {
     @Override
     public List<CpuSelectForm> searchCpuParts(String cpu_name,String chipset_name,int lowerLimit,int upperLimit) {
             List<CpuSelectForm> cpuList = productsDao.searchCpuParts(cpu_name,chipset_name,lowerLimit,upperLimit);
-//        if(cpuList == null){
-//                throw new PartsNotFoundException();
-//        }
             return cpuList;
     }
 
@@ -66,9 +63,6 @@ public class ProductsService implements IProductsService {
     @Override
     public List<GpuSelectForm> searchGpuParts(String gpu_name,int lowerLimit,int upperLimit) {
             List<GpuSelectForm> gpuList = productsDao.searchGpuParts(gpu_name,lowerLimit,upperLimit);
-//        if(gpuList == null){
-//                throw new PartsNotFoundException();
-//        }
             return gpuList;
     }
 
@@ -76,9 +70,6 @@ public class ProductsService implements IProductsService {
         @Override
     public List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit) {
             List<MemorySelectForm> memoryList = productsDao.searchMemoryParts(memory_name,lowerLimit,upperLimit);
-//        if(memoryList == null){
-//                throw new PartsNotFoundException();
-//        }
             return memoryList;
     }
 
@@ -86,9 +77,6 @@ public class ProductsService implements IProductsService {
         @Override
     public List<MbSelectForm> searchMbParts(String mb_name,String cpu_generation,int lowerLimit,int upperLimit) {
             List<MbSelectForm> mbList = productsDao.searchMbParts(mb_name,cpu_generation,lowerLimit,upperLimit);
-//        if(mbList == null){
-//                throw new PartsNotFoundException();
-//        }
             return mbList;
     }
 
@@ -96,9 +84,6 @@ public class ProductsService implements IProductsService {
         @Override
     public List<SsdSelectForm> searchSsdParts(String ssd_name,int lowerLimit,int upperLimit) {
             List<SsdSelectForm> ssdList = productsDao.searchSsdParts(ssd_name,lowerLimit,upperLimit);
-//        if(ssdList == null){
-//                throw new PartsNotFoundException();
-//        }
             return ssdList;
     }
 
@@ -106,9 +91,6 @@ public class ProductsService implements IProductsService {
         @Override
     public List<PsuSelectForm> searchPsuParts(String psu_name,int lowerLimit,int upperLimit) {
             List<PsuSelectForm> psuList = productsDao.searchPsuParts(psu_name,lowerLimit,upperLimit);
-//        if(psuList == null){
-//                throw new PartsNotFoundException();
-//        }
             return psuList;
     }
 
@@ -116,9 +98,6 @@ public class ProductsService implements IProductsService {
         @Override
     public List<OsSelectForm> searchOsParts(String os_name,int lowerLimit,int upperLimit) {
             List<OsSelectForm> osList = productsDao.searchOsParts(os_name,lowerLimit,upperLimit);
-//        if(osList == null){
-//                throw new PartsNotFoundException();
-//        }
             return osList;
     }
 
@@ -131,11 +110,36 @@ public class ProductsService implements IProductsService {
     //プリセットIDからそれぞれのパーツの情報を取得
     public List<CpuSelectForm> getPresetCpuInfo(int preset_id){
         List<CpuSelectForm> cpuList = productsDao.getPresetCpuInfo(preset_id);
-//        if(osList == null){
-//                throw new PartsNotFoundException();
-//        }
         return cpuList;
     }
 
+    public List<GpuSelectForm> getPresetGpuInfo(int preset_id){
+        List<GpuSelectForm> gpuList = productsDao.getPresetGpuInfo(preset_id);
+        return gpuList;
+    }
+    public List<MemorySelectForm> getPresetMemoryInfo(int preset_id){
+        List<MemorySelectForm> memoryList = productsDao.getPresetMemoryInfo(preset_id);
+        return memoryList;
+    }
+    public List<MbSelectForm> getPresetMbInfo(int preset_id){
+        List<MbSelectForm> mbList = productsDao.getPresetMbInfo(preset_id);
+        return mbList;
+    }
+    public List<SsdSelectForm> getPresetSsdInfo(int preset_id){
+        List<SsdSelectForm> ssdList = productsDao.getPresetSsdInfo(preset_id);
+        return ssdList;
+    }
+    public List<PsuSelectForm> getPresetPsuInfo(int preset_id){
+        List<PsuSelectForm> psuList = productsDao.getPresetPsuInfo(preset_id);
+        return psuList;
+    }
+    public List<OsSelectForm> getPresetOsInfo(int preset_id){
+        List<OsSelectForm> osList = productsDao.getPresetOsInfo(preset_id);
+        return osList;
+    }
+    public List<PresetListFormJs> getPresetDescriptionInfo(int preset_id){
+        List<PresetListFormJs> descriptionList = productsDao.getPresetDescriptionInfo(preset_id);
+        return descriptionList;
+    }
 
 }
