@@ -119,7 +119,7 @@
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
-            for (let i = 1; i < dataList.length; i++) {
+            for (let i = 1; i < dataList.length+1; i++) {
               dataObj = Object.values(dataList[i-1]);
 
               partsList.insertAdjacentHTML('beforeend', partsCard);
@@ -280,8 +280,8 @@
           //   cpuGenFilter='';
           // }
           partsList.querySelectorAll(".release")[0].textContent = '';
-          for (let i = 1; i < dataList.length; i++) {
-            dataObj = Object.values(dataList[i]);
+          for (let i = 1; i < dataList.length+1; i++) {
+            dataObj = Object.values(dataList[i-1]);
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
             partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
@@ -375,21 +375,3 @@
       })
 
     });
-
-  ////////検索メソッドに送るオブジェクトの作成////////
-  function createSearchData(searchWord,minPrice,maxPrice,...compatible){
-    if(compatible.length > 0){
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice,
-        "compatible":compatible[0]
-      };
-    }else{
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice
-      };
-    }
-  }
