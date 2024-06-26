@@ -100,9 +100,15 @@ window.addEventListener('load', async function(){
       const selectPreset2Name = document.getElementById('preset2');
       const presetPriceSum = document.getElementById('sumPrice');
 
+      ////////////////////////////
+      /////////複製・削除時に表示がおかしいのを直す
+      ////////////////////////////
+      console.log('remove前');
       for (let i = 0; i < data.length; i++) {
-        selectPreset1Name.remove(i);
+        console.log(i);
+        selectPreset1Name.remove(0)
       }
+      console.log('remove通過');
       
       for (let i = 0; i < data.length; i++) {
         const option = document.createElement('option');

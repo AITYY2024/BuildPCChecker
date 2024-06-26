@@ -13,7 +13,7 @@ import java.util.List;
 public class CompatibleRestController {
 
     @Autowired
-    private IcompatibleService icompatibleService;
+    private CompatibleService icompatibleService;
 
     //互換性テーブル一覧
     @GetMapping("/api/compatible")
