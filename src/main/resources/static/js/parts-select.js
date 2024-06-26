@@ -46,6 +46,21 @@
           partsList.innerHTML = '';
           let requestPram="searchWord=" + "&minPrice=" + "&maxPrice=";
 
+          if (document.getElementById('selectModalLabel').value == 'CPU') {
+            if (mbChipsetFilter != '') {
+              document.getElementById("warning").textContent = '選択したマザーボードのチップセット(' + mbChipsetFilter + ')と互換性があるパーツのみ表示されています。';
+            } else {
+              document.getElementById("warning").textContent = null;
+            }
+          }
+          if (document.getElementById('selectModalLabel').value == 'MB') {
+            if (cpuGenFilter != '') {
+              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')と互換性があるパーツのみ表示されています。';
+            } else {
+              document.getElementById("warning").textContent = null;
+            }
+          }
+
           let res; //JSONデータ
           let data; //JSONデータ内の内容を入れる
           let selectModalTitle;
@@ -116,7 +131,7 @@
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
-            for (let i = 1; i < dataList.length; i++) {
+            for (let i = 1; i < dataList.length + 1; i++) {
               dataObj = Object.values(dataList[i-1]);
 
               partsList.insertAdjacentHTML('beforeend', partsCard);
@@ -174,7 +189,7 @@
 
                   priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + priceList[partsCategoryName];
+                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -270,7 +285,7 @@
           partsList.querySelectorAll(".spec3")[0].textContent = '';
           partsList.querySelectorAll(".spec4")[0].textContent = '';
           partsList.querySelectorAll(".release")[0].textContent = '';
-          for (let i = 1; i < dataList.length; i++) {
+          for (let i = 1; i < dataList.length + 1; i++) {
             dataObj = Object.values(dataList[i]);
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
@@ -388,47 +403,45 @@
               res = await fetch(`/api/getPresetOsInfo?preset_id=` + paramData[1]);
               break;
           }
+          let data=res.json();
+              data.then(selectPartsList => {
+                if (selectPartsList[0] != null) {
+                  selectPartsList = Object.values(selectPartsList[0]);
+                  partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[4].toLocaleString();
+                  partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[3];
+                  if (partsCategoryCard.querySelector(".spec1") != null) {
+                    partsCategoryCard.querySelector(".spec1").textContent = selectPartsList?.[6];
+                  }
+                  if (partsCategoryCard.querySelector(".spec2") != null) {
+                    partsCategoryCard.querySelector(".spec2").textContent = selectPartsList?.[7];
+                  }
+                  if (partsCategoryCard.querySelector(".spec3") != null) {
+                    partsCategoryCard.querySelector(".spec3").textContent = selectPartsList?.[8];
+                  }
+                  if (partsCategoryCard.querySelector(".spec4") != null) {
+                    partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
+                  }
+
+                  priceList[partsCategoryName] = selectPartsList?.[4];
+                  let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
+                  document.getElementById(partsCategoryName.toUpperCase() + "Price").textContent = '¥' + priceList[partsCategoryName];
+                  document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
+                  document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
+
+                  if (document.getElementById('selectModalLabel').value == 'CPU') {
+                    cpuGenFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+                  }
+                  if (document.getElementById('selectModalLabel').value == 'MB') {
+                    mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                  }
+
+                  ////////////////プリセットデータ格納//////////////
+                  presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
+                  presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
+                  presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
+                }
+              })
         }
-
-        let data=res.json();
-        data.then(selectPartsList => {
-          if (selectPartsList[0] != null) {
-            selectPartsList = Object.values(selectPartsList[0]);
-            partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[4].toLocaleString();
-            partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[3];
-            if (partsCategoryCard.querySelector(".spec1") != null) {
-              partsCategoryCard.querySelector(".spec1").textContent = selectPartsList?.[6];
-            }
-            if (partsCategoryCard.querySelector(".spec2") != null) {
-              partsCategoryCard.querySelector(".spec2").textContent = selectPartsList?.[7];
-            }
-            if (partsCategoryCard.querySelector(".spec3") != null) {
-              partsCategoryCard.querySelector(".spec3").textContent = selectPartsList?.[8];
-            }
-            if (partsCategoryCard.querySelector(".spec4") != null) {
-              partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
-            }
-
-            priceList[partsCategoryName] = selectPartsList?.[4];
-            let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-            // console.log(document.getElementById('selectModalLabel').value);
-            //document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
-            document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
-            document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
-
-            if (partsCategoryName.toUpperCase() == 'CPU') {
-              cpuGenFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
-            }
-            if (partsCategoryName.toUpperCase() == 'MB') {
-              mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
-            }
-
-            ////////////////プリセットデータ格納//////////////
-            presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
-            presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
-            presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
-          }
-        })
       })
 
 
@@ -455,6 +468,8 @@
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
         presetDataList["presetName"] = document.getElementById("presetName").value;
         presetDataList["description"] = document.getElementById("description").value;
+        let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
+        presetDataList["totalPrice"] = totalPrice;
         console.log(presetDataList);
         fetch('/api/presetSave', {
           method: methodType,
@@ -468,4 +483,3 @@
       })
 
     });
-
