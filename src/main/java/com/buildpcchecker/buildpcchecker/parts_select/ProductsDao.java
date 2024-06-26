@@ -100,9 +100,9 @@ public class ProductsDao implements IProductsDao{
                 WHERE
                 gen IN (SELECT cpu_generation FROM compatible WHERE chipset_name LIKE :chipset_name)
                 AND
-                price > :lowerLimit
+                price >= :lowerLimit
                 AND
-                price < :upperLimit
+                price <= :upperLimit
                 AND
                 product_name LIKE :cpu_name
                 ORDER BY id""", param, new DataClassRowMapper<>(CpuSelectForm.class));
@@ -120,9 +120,9 @@ public class ProductsDao implements IProductsDao{
                 SELECT * FROM gpu
                 WHERE product_name LIKE :gpu_name
                 AND
-                price > :lowerLimit
+                price >= :lowerLimit
                 AND
-                price < :upperLimit
+                price <= :upperLimit
                 ORDER BY id""", param, new DataClassRowMapper<>(GpuSelectForm.class));
         return list;
     }
@@ -138,9 +138,9 @@ public class ProductsDao implements IProductsDao{
                 SELECT * FROM memory
                 WHERE product_name LIKE :memory_name
                                 AND
-                price > :lowerLimit
+                price >= :lowerLimit
                 AND
-                price < :upperLimit
+                price <= :upperLimit
                 ORDER BY id
                 """, param, new DataClassRowMapper<>(MemorySelectForm.class));
         return list;
@@ -160,9 +160,9 @@ public class ProductsDao implements IProductsDao{
             WHERE
             chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation)
             AND
-            price > :lowerLimit
+            price >= :lowerLimit
             AND
-            price < :upperLimit
+            price <= :upperLimit
             AND
             product_name LIKE :mb_name
             ORDER BY id""", param, new DataClassRowMapper<>(MbSelectForm.class));
@@ -180,9 +180,9 @@ public class ProductsDao implements IProductsDao{
                 SELECT * FROM ssd
                 WHERE product_name LIKE :ssd_name
                 AND
-                price > :lowerLimit
+                price >= :lowerLimit
                 AND
-                price < :upperLimit
+                price <= :upperLimit
                 ORDER BY id""", param, new DataClassRowMapper<>(SsdSelectForm.class));
         return list;
     }
@@ -198,9 +198,9 @@ public class ProductsDao implements IProductsDao{
                 SELECT * FROM psu
                 WHERE product_name LIKE :psu_name
                 AND
-                price > :lowerLimit
+                price >= :lowerLimit
                 AND
-                price < :upperLimit
+                price <= :upperLimit
                 ORDER BY id
                 """, param, new DataClassRowMapper<>(PsuSelectForm.class));
         return list;
@@ -217,9 +217,9 @@ public class ProductsDao implements IProductsDao{
                 SELECT * FROM os
                 WHERE product_name LIKE :os_name
                 AND
-                price > :lowerLimit
+                price >= :lowerLimit
                 AND
-                price < :upperLimit
+                price <= :upperLimit
                 ORDER BY id""", param, new DataClassRowMapper<>(OsSelectForm.class));
         return list;
     }
@@ -321,7 +321,7 @@ public class ProductsDao implements IProductsDao{
         var param = new MapSqlParameterSource();
         param.addValue("preset_id", preset_id);
         var list = jdbcTemplate.query("""
-                    SELECT * FROM ram 
+                    SELECT * FROM memory
                     WHERE product_id = (
                     SELECT ram_id FROM preset WHERE preset_id = :preset_id)
                     """, param, new DataClassRowMapper<>(MemorySelectForm.class));
@@ -376,7 +376,7 @@ public class ProductsDao implements IProductsDao{
         var param = new MapSqlParameterSource();
         param.addValue("preset_id", preset_id);
         var list = jdbcTemplate.query("""
-                    SELECT description FROM preset
+                    SELECT preset_name, description FROM preset
                     WHERE preset_id = :preset_id
                     """, param, new DataClassRowMapper<>(PresetListFormJs.class));
         return list;

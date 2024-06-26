@@ -252,7 +252,7 @@ public class PartsSelectRestController {
 
     //プリセットIDからそれぞれのパーツの情報を取得
     @GetMapping("/api/getPresetCpuInfo")
-    public ResponseEntity<List<CpuSelectForm>> getPresetCpuInfo(int preset_id){
+    public ResponseEntity<List<CpuSelectForm>> getPresetCpuInfo(@RequestParam int preset_id){
         try {
             List<CpuSelectForm> presetCpuInfo = productsService.getPresetCpuInfo(preset_id);
             // データとステータスコード200番を返す
@@ -264,7 +264,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetGpuInfo")
-    public ResponseEntity<List<GpuSelectForm>> getPresetGpuInfo(int preset_id){
+    public ResponseEntity<List<GpuSelectForm>> getPresetGpuInfo(@RequestParam int preset_id){
         try {
             List<GpuSelectForm> presetGpuInfo = productsService.getPresetGpuInfo(preset_id);
             // データとステータスコード200番を返す
@@ -276,7 +276,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetMemoryInfo")
-    public ResponseEntity<List<MemorySelectForm>> getPresetMemoryInfo(int preset_id){
+    public ResponseEntity<List<MemorySelectForm>> getPresetMemoryInfo(@RequestParam int preset_id){
         try {
             List<MemorySelectForm> presetMemoryInfo = productsService.getPresetMemoryInfo(preset_id);
             // データとステータスコード200番を返す
@@ -288,7 +288,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetMbInfo")
-    public ResponseEntity<List<MbSelectForm>> getPresetMbInfo(int preset_id){
+    public ResponseEntity<List<MbSelectForm>> getPresetMbInfo(@RequestParam int preset_id){
         try {
             List<MbSelectForm> presetMbInfo = productsService.getPresetMbInfo(preset_id);
             // データとステータスコード200番を返す
@@ -300,7 +300,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetSsdInfo")
-    public ResponseEntity<List<SsdSelectForm>> getPresetSsdInfo(int preset_id){
+    public ResponseEntity<List<SsdSelectForm>> getPresetSsdInfo(@RequestParam int preset_id){
         try {
             List<SsdSelectForm> presetSsdInfo = productsService.getPresetSsdInfo(preset_id);
             // データとステータスコード200番を返す
@@ -312,7 +312,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetPsuInfo")
-    public ResponseEntity<List<PsuSelectForm>> getPresetPsuInfo(int preset_id){
+    public ResponseEntity<List<PsuSelectForm>> getPresetPsuInfo(@RequestParam int preset_id){
         try {
             List<PsuSelectForm> presetPsuInfo = productsService.getPresetPsuInfo(preset_id);
             // データとステータスコード200番を返す
@@ -324,7 +324,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetOsInfo")
-    public ResponseEntity<List<OsSelectForm>> getPresetOsInfo(int preset_id){
+    public ResponseEntity<List<OsSelectForm>> getPresetOsInfo(@RequestParam int preset_id){
         try {
             List<OsSelectForm> presetOsInfo = productsService.getPresetOsInfo(preset_id);
             // データとステータスコード200番を返す
@@ -336,7 +336,7 @@ public class PartsSelectRestController {
     }
 
     @GetMapping("/api/getPresetDescriptionInfo")
-    public ResponseEntity<List<PresetListFormJs>> getPresetDescriptionInfo(int preset_id){
+    public ResponseEntity<List<PresetListFormJs>> getPresetDescriptionInfo(@RequestParam int preset_id){
         try {
             List<PresetListFormJs> presetDescriptionInfo = productsService.getPresetDescriptionInfo(preset_id);
             // データとステータスコード200番を返す

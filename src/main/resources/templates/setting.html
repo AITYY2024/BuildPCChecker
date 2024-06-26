@@ -29,100 +29,100 @@
 
 <script>
     const header = document.getElementById('header');
-    header.innerHTML = `
-      <div class="bg-body-tertiary d-flex justify-content-between align-items-center p-2" id="defaultNav">
-        <span class="mb-0 me-2 h5">Build PC Checker</span>
-        <div class="d-none d-sm-flex">
-          <a class="nav-link ms-4" href="/parts-select">構成</a>
-          <a class="nav-link ms-4" href="/preset-list">プリセット</a>
-        </div>
-        <div class="btn-group ms-auto">
-          <button type="button" class="btn btn-outline-primary" onclick="location.href='/login-redirect'">ログアウト</button>
-          <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="javascript:void(0);" id="themeBtn">カラーモード<i class="fa-regular fa-sun ms-2"></i></a></li>
-            <li><a class="dropdown-item" href="/setting">アカウント</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="bg-body-tertiary d-sm-none p-2 ps-3" id="mobileNav">
-        <div class="d-flex justify-content-start">
-          <a class="nav-link" href="/parts-select">構成</a>
-          <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" href="/preset-list">プリセット</a>
-        </div>
-      </div>`;
+header.innerHTML = `
+  <div class="bg-body-tertiary d-flex justify-content-between align-items-center p-2" id="defaultNav">
+    <span class="mb-0 me-2 h5">Build PC Checker</span>
+    <div class="d-none d-sm-flex">
+      <a class="nav-link ms-4" href="/parts-select">構成</a>
+      <a class="nav-link ms-4" href="/preset-list">プリセット</a>
+    </div>
+    <div class="btn-group ms-auto">
+      <button type="button" class="btn btn-outline-primary" onclick="location.href='/login-redirect'">ログアウト</button>
+      <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="javascript:void(0);" id="themeBtn">カラーモード<i class="fa-regular fa-sun ms-2"></i></a></li>
+        <li><a class="dropdown-item" href="/setting">アカウント</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bg-body-tertiary d-sm-none p-2 ps-3" id="mobileNav">
+    <div class="d-flex justify-content-start">
+      <a class="nav-link" href="/parts-select">構成</a>
+      <a class="nav-link ms-4 border-bottom border-2 border-primary fw-semibold" href="/preset-list">プリセット</a>
+    </div>
+  </div>`;
 
-    // ナビゲーションバーの上部固定切り替え
-    function setDefaultNavFixed() {
-      let defaultNav = document.getElementById('defaultNav');
-      if (window.innerWidth <= 576) {
-        defaultNav.classList.remove('fixed-top');
-      } else {
-        defaultNav.classList.add('fixed-top');
-      }
+// ナビゲーションバーの上部固定切り替え
+function setDefaultNavFixed() {
+  let defaultNav = document.getElementById('defaultNav');
+  if (window.innerWidth <= 576) {
+    defaultNav.classList.remove('fixed-top');
+  } else {
+    defaultNav.classList.add('fixed-top');
+  }
+}
+
+// 小さい画面用ナビゲーションバーの上部固定切り替え
+function setMobileNavFixed() {
+  let mobileNav = document.getElementById('mobileNav');
+  if (window.scrollY >= 53.6) {
+    mobileNav.classList.add('fixed-top');
+  } else {
+    mobileNav.classList.remove('fixed-top');
+  }
+}
+
+// コンテンツがナビゲーションバーに被らないようにマージン調整
+function setMainMargin() {
+  let defaultNav = document.getElementById('defaultNav');
+  let mobileNav = document.getElementById('mobileNav');
+  let main = document.querySelector('.main');
+  let navHeight = 0;
+  if (window.innerWidth <= 576) {
+    if (window.scrollY >= 53.6) {
+      navHeight = mobileNav.offsetHeight;
+    } else {
+      navHeight = 0;
     }
+  } else {
+    navHeight = defaultNav.offsetHeight;
+  }
+  main.style.marginTop = navHeight + 10 + 'px';
+}
 
-    // 小さい画面用ナビゲーションバーの上部固定切り替え
-    function setMobileNavFixed() {
-      let mobileNav = document.getElementById('mobileNav');
-      if (window.scrollY >= 53.6) {
-        mobileNav.classList.add('fixed-top');
-      } else {
-        mobileNav.classList.remove('fixed-top');
-      }
-    }
+// ウィンドウリサイズ時に実行
+window.addEventListener('resize', () => {
+  setDefaultNavFixed();
+  setMainMargin();
+});
 
-    // コンテンツがナビゲーションバーに被らないようにマージン調整
-    function setMainMargin() {
-      let defaultNav = document.getElementById('defaultNav');
-      let mobileNav = document.getElementById('mobileNav');
-      let main = document.querySelector('.main');
-      let navHeight = 0;
-      if (window.innerWidth <= 576) {
-        if (window.scrollY >= 53.6) {
-          navHeight = mobileNav.offsetHeight;
-        } else {
-          navHeight = 0;
-        }
-      } else {
-        navHeight = defaultNav.offsetHeight;
-      }
-      main.style.marginTop = navHeight + 10 + 'px';
-    }
+// スクロール時に実行
+document.addEventListener('scroll', () => {
+  setMobileNavFixed();
+  setMainMargin();
+});
 
-    // ウィンドウリサイズ時に実行
-    window.addEventListener('resize', () => {
-      setDefaultNavFixed();
-      setMainMargin();
-    });
+// ロード時に実行
+window.addEventListener('load', () => {
+  setDefaultNavFixed();
+  setMobileNavFixed();
+  setMainMargin();
+});
 
-    // スクロール時に実行
-    document.addEventListener('scroll', () => {
-      setMobileNavFixed();
-      setMainMargin();
-    });
+// テーマ切り替え
+function toggleTheme() {
+  const currentTheme = document.documentElement.dataset.bsTheme;
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.dataset.bsTheme = newTheme;
+  const themeBtnIcon = document.getElementById("themeBtn").querySelector('i');
+  themeBtnIcon.classList.remove(currentTheme === 'light' ? 'fa-sun' : 'fa-moon');
+  themeBtnIcon.classList.add(newTheme === 'light' ? 'fa-sun' : 'fa-moon');
+}
 
-    // ロード時に実行
-    window.addEventListener('load', () => {
-      setDefaultNavFixed();
-      setMobileNavFixed();
-      setMainMargin();
-    });
-
-    // テーマ切り替え
-    function toggleTheme() {
-      const currentTheme = document.documentElement.dataset.bsTheme;
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      document.documentElement.dataset.bsTheme = newTheme;
-      const themeBtnIcon = document.getElementById("themeBtn").querySelector('i');
-      themeBtnIcon.classList.remove(currentTheme === 'light' ? 'fa-sun' : 'fa-moon');
-      themeBtnIcon.classList.add(newTheme === 'light' ? 'fa-sun' : 'fa-moon');
-    }
-
-    // ボタン押下時に実行
-    document.getElementById("themeBtn").addEventListener('click', () => {
-      toggleTheme();
-    });
+// ボタン押下時に実行
+document.getElementById("themeBtn").addEventListener('click', () => {
+  toggleTheme();
+});
 </script>
 
 <div class="container-sm main">
@@ -181,31 +181,7 @@
     </div>
 </div>
 
-<script>
-    window.addEventListener('load', () => {
-      let deleteBtn = document.getElementById('deleteBtn');
-      deleteBtn.addEventListener('click', function() {
-        const deletePresetId = this.getAttribute('data-id');
-        console.log(deletePresetId);
-        // deletePresetIdをもとにuserを削除するfetchを追加
-      });
-    });
-
-
-    const body = {};
-    document.getElementById('deleteBtn').addEventListener('click', () => {
-    fetch('/api/userDelete', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-             body: JSON.stringify(body)
-      });
-      window.location.href = '/login-redirect';
-    })
-
-</script>
-
+<script src="js/setting.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
