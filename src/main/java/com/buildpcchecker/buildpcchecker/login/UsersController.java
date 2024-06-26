@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UsersController {
     @Autowired
-    IusersService iusersService;
+    UsersService iusersService;
 
     @Autowired
     public HttpSession session;

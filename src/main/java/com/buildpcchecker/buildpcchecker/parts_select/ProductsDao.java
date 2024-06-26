@@ -321,7 +321,7 @@ public class ProductsDao implements IProductsDao{
         var param = new MapSqlParameterSource();
         param.addValue("preset_id", preset_id);
         var list = jdbcTemplate.query("""
-                    SELECT * FROM ram 
+                    SELECT * FROM memory
                     WHERE product_id = (
                     SELECT ram_id FROM preset WHERE preset_id = :preset_id)
                     """, param, new DataClassRowMapper<>(MemorySelectForm.class));

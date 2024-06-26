@@ -1,6 +1,18 @@
 package com.buildpcchecker.buildpcchecker.setting;
 
-public interface SettingService {
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    int delete(int id);//アカウント削除
+@Service
+@AllArgsConstructor
+public class SettingService implements ISettingService {
+    @Autowired
+    SettingDao isettingDao;
+
+    //アカウント削除
+    @Override
+    public int delete (int id){
+        return isettingDao.delete(id);
+    }
 }
