@@ -225,72 +225,160 @@ public class ProductsDao implements IProductsDao{
     }
 
     //パーツをプリセット登録する
-    @Override
-    public Integer catchPresetInsert(PresetListForm presetListForm){
+//    @Override
+//    public Integer catchPresetInsert(PresetListForm presetListForm){
+//        var param = new MapSqlParameterSource();
+//        //プリセット名,ユーザー名を取得
+//        param.addValue("preset_name", presetListForm.getPreset_name());
+//        param.addValue("user_id", presetListForm.getUser_id());
+//
+//        //CPUを取得
+//        param.addValue("cpu_id", presetListForm.getCpu_id());
+//        param.addValue("cpu_name", presetListForm.getCpu_name());
+//        param.addValue("cpu_url", presetListForm.getCpu_url());
+//
+//        //GPUを取得
+//        param.addValue("gpu_id", presetListForm.getGpu_id());
+//        param.addValue("gpu_name", presetListForm.getGpu_name());
+//        param.addValue("gpu_url", presetListForm.getGpu_url());
+//
+//        //MemoryつまりRAMを取得
+//        param.addValue("ram_id", presetListForm.getRam_id());
+//        param.addValue("ram_name", presetListForm.getRam_name());
+//        param.addValue("ram_url", presetListForm.getRam_url());
+//
+//        //MBを取得
+//        param.addValue("mb_id", presetListForm.getMb_id());
+//        param.addValue("mb_name", presetListForm.getMb_name());
+//        param.addValue("mb_url", presetListForm.getMb_url());
+//
+//        //SSDを取得
+//        param.addValue("ssd_id", presetListForm.getSsd_id());
+//        param.addValue("ssd_name", presetListForm.getSsd_name());
+//        param.addValue("ssd_url", presetListForm.getSsd_url());
+//
+//        //PSUを取得
+//        param.addValue("psu_id", presetListForm.getPsu_id());
+//        param.addValue("psu_name", presetListForm.getPsu_name());
+//        param.addValue("psu_url", presetListForm.getPsu_url());
+//
+//        //OSを取得
+//        param.addValue("os_id", presetListForm.getOs_id());
+//        param.addValue("os_name", presetListForm.getOs_name());
+//        param.addValue("os_url", presetListForm.getOs_url());
+//
+//        //メモ・合計を取得
+//        param.addValue("description", presetListForm.getDescription());
+//        param.addValue("total_amount", presetListForm.getTotal_amount());
+//
+//        return jdbcTemplate.update("""
+//               INSERT INTO preset (
+//               preset_name,user_id,
+//               cpu_id,cpu_name,cpu_url,
+//               gpu_id,gpu_name,gpu_url,
+//               ram_id,ram_name,ram_url,
+//               mb_id,mb_name,mb_url,
+//               ssd_id,ssd_name,ssd_url,
+//               psu_id,psu_name,psu_url,
+//               os_id,os_name,os_url,
+//               description,total_amount)
+//               VALUES (
+//               :preset_name,:user_id,
+//               :cpu_id,:cpu_name,:cpu_url,
+//               :gpu_id,:gpu_name,:gpu_url,
+//               :ram_id,:ram_name,:ram_url,
+//               :mb_id,:mb_name,:mb_url,
+//               :ssd_id,:ssd_name,:ssd_url,
+//               :psu_id,:psu_name,:psu_url,
+//               :os_id,:os_name,:os_url,
+//               :description,:total_amount)""", param);
+//    }
+
+    //プリセットIDからそれぞれのパーツの情報を取得
+    public List<CpuSelectForm> getPresetCpuInfo(int preset_id){
         var param = new MapSqlParameterSource();
-        //プリセット名,ユーザー名を取得
-        param.addValue("preset_name", presetListForm.getPreset_name());
-        param.addValue("user_id", presetListForm.getUser_id());
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM cpu 
+                    WHERE product_id = (
+                    SELECT cpu_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(CpuSelectForm.class));
+        return list;
+    }
 
-        //CPUを取得
-        param.addValue("cpu_id", presetListForm.getCpu_id());
-        param.addValue("cpu_name", presetListForm.getCpu_name());
-        param.addValue("cpu_url", presetListForm.getCpu_url());
+    public List<GpuSelectForm> getPresetGpuInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM gpu 
+                    WHERE product_id = (
+                    SELECT gpu_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(GpuSelectForm.class));
+        return list;
+    }
 
-        //GPUを取得
-        param.addValue("gpu_id", presetListForm.getGpu_id());
-        param.addValue("gpu_name", presetListForm.getGpu_name());
-        param.addValue("gpu_url", presetListForm.getGpu_url());
+    public List<MemorySelectForm> getPresetMemoryInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM ram 
+                    WHERE product_id = (
+                    SELECT ram_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(MemorySelectForm.class));
+        return list;
+    }
 
-        //MemoryつまりRAMを取得
-        param.addValue("ram_id", presetListForm.getRam_id());
-        param.addValue("ram_name", presetListForm.getRam_name());
-        param.addValue("ram_url", presetListForm.getRam_url());
+    public List<MbSelectForm> getPresetMbInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM mb 
+                    WHERE product_id = (
+                    SELECT mb_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(MbSelectForm.class));
+        return list;
+    }
 
-        //MBを取得
-        param.addValue("mb_id", presetListForm.getMb_id());
-        param.addValue("mb_name", presetListForm.getMb_name());
-        param.addValue("mb_url", presetListForm.getMb_url());
+    public List<SsdSelectForm> getPresetSsdInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM ssd 
+                    WHERE product_id = (
+                    SELECT ssd_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(SsdSelectForm.class));
+        return list;
+    }
 
-        //SSDを取得
-        param.addValue("ssd_id", presetListForm.getSsd_id());
-        param.addValue("ssd_name", presetListForm.getSsd_name());
-        param.addValue("ssd_url", presetListForm.getSsd_url());
+    public List<PsuSelectForm> getPresetPsuInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM psu
+                    WHERE product_id = (
+                    SELECT psu_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(PsuSelectForm.class));
+        return list;
+    }
 
-        //PSUを取得
-        param.addValue("psu_id", presetListForm.getPsu_id());
-        param.addValue("psu_name", presetListForm.getPsu_name());
-        param.addValue("psu_url", presetListForm.getPsu_url());
+    public List<OsSelectForm> getPresetOsInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT * FROM os 
+                    WHERE product_id = (
+                    SELECT os_id FROM preset WHERE preset_id = :preset_id)
+                    """, param, new DataClassRowMapper<>(OsSelectForm.class));
+        return list;
+    }
 
-        //OSを取得
-        param.addValue("os_id", presetListForm.getOs_id());
-        param.addValue("os_name", presetListForm.getOs_name());
-        param.addValue("os_url", presetListForm.getOs_url());
-
-        //メモ・合計を取得
-        param.addValue("description", presetListForm.getDescription());
-        param.addValue("total_amount", presetListForm.getTotal_amount());
-
-        return jdbcTemplate.update("""
-               INSERT INTO preset (
-               preset_name,user_id,
-               cpu_id,cpu_name,cpu_url,
-               gpu_id,gpu_name,gpu_url,
-               ram_id,ram_name,ram_url,
-               mb_id,mb_name,mb_url,
-               ssd_id,ssd_name,ssd_url,
-               psu_id,psu_name,psu_url,
-               os_id,os_name,os_url,
-               description,total_amount)
-               VALUES (
-               :preset_name,:user_id,
-               :cpu_id,:cpu_name,:cpu_url,
-               :gpu_id,:gpu_name,:gpu_url,
-               :ram_id,:ram_name,:ram_url,
-               :mb_id,:mb_name,:mb_url,
-               :ssd_id,:ssd_name,:ssd_url,
-               :psu_id,:psu_name,:psu_url,
-               :os_id,:os_name,:os_url,
-               :description,:total_amount)""", param);
+    public List<PresetListFormJs> getPresetDescriptionInfo(int preset_id){
+        var param = new MapSqlParameterSource();
+        param.addValue("preset_id", preset_id);
+        var list = jdbcTemplate.query("""
+                    SELECT description FROM preset
+                    WHERE preset_id = :preset_id
+                    """, param, new DataClassRowMapper<>(PresetListFormJs.class));
+        return list;
     }
 }

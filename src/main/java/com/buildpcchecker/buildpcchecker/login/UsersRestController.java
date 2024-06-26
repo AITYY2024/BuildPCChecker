@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UsersRestController {
     @Autowired
-    private IusersService iusersService;
+    private UsersService iusersService;
 
     @Autowired
     public HttpSession session;
