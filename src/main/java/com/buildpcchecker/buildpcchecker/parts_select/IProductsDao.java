@@ -28,9 +28,9 @@ public interface IProductsDao {
     //GPUのテーブルから検索したものを表示する
     List<GpuSelectForm> searchGpuParts(String gpu_name,int lowerLimit,int upperLimit);
     //Memoryのテーブルから検索したものを表示する
-    List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit);
+    List<MemorySelectForm> searchMemoryParts(String memory_name, String ramSpec, int lowerLimit,int upperLimit);
     //Mbのテーブルから検索したものを表示する
-    List<MbSelectForm> searchMbParts(String mb_name,String cpu_generation,int lowerLimit,int upperLimit);
+    List<MbSelectForm> searchMbParts(String mb_name,String cpu_generation, String ramSpec, int lowerLimit,int upperLimit);
     //SSDのテーブルから検索したものを表示する
     List<SsdSelectForm> searchSsdParts(String ssd_name,int lowerLimit,int upperLimit);
     //PSUのテーブルから検索したものを表示する
