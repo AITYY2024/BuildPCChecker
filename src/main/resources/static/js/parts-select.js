@@ -191,7 +191,6 @@
                   presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
                   presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
                   presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
-                  presetDataList["description"] = document.getElementById("description").value;
                   presetDataList["totalPrice"] = totalPrice;
                 });
               });
@@ -350,7 +349,6 @@
               presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
               presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
               presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
-              presetDataList["description"] = document.getElementById("description").value;
               presetDataList["totalPrice"] = totalPrice;
               
             });
@@ -361,6 +359,7 @@
       //////プリセット保存/////
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
         presetDataList["presetName"] = document.getElementById("presetName").value;
+        presetDataList["description"] = document.getElementById("description").value;
         console.log(presetDataList);
         fetch('/api/presetSave', {
           method: methodType,
