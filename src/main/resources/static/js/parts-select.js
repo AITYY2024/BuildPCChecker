@@ -202,7 +202,7 @@
                     partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
                   }
 
-                  priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
+                  priceList[document.getElementById('selectModalLabel').value.toLowerCase()] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
                   document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
@@ -361,7 +361,7 @@
                 partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
               }
 
-              priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
+              priceList[document.getElementById('selectModalLabel').value.toLowerCase()] = selectPartsList?.[4];
               let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
               document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
               document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
@@ -447,7 +447,7 @@
                     partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
                   }
 
-                  priceList[partsCategoryName] = selectPartsList?.[4];
+                  priceList[partsCategoryName.toLowerCase()] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
                   document.getElementById(partsCategoryName.toUpperCase() + "Price").textContent = '¥' + priceList[partsCategoryName];
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
