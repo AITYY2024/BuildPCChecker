@@ -25,12 +25,8 @@ public class PresetRestController {
     @GetMapping("/api/presetList")
     public ResponseEntity<List<PresetListForm>> PresetList() {
         try {
-            session.getAttribute("sessionUser");
             var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
             List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
-
-//            List<PresetListForm> presetList = IpresetService.findAll(2);
-
             // データとステータスコード200番を返す
             return new ResponseEntity<>(presetList, HttpStatus.OK);
         } catch (RuntimeException e) {
@@ -39,19 +35,18 @@ public class PresetRestController {
         }
     }
 
-    //使われていない状況
-    //プリセット詳細表示用API
-    @GetMapping("/api/presetDetail")
-    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
-        try {
-            PresetListForm presetDetails = IpresetService.findById(preset_id);
-            // データとステータスコード200番を返す
-            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            // ステータスコード400番を返す
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    //プリセット詳細表示用API
+//    @GetMapping("/api/presetDetail")
+//    public ResponseEntity<PresetListForm> presetDetail(@RequestParam("presetid") Integer preset_id) {
+//        try {
+//            PresetListForm presetDetails = IpresetService.findById(preset_id);
+//            // データとステータスコード200番を返す
+//            return new ResponseEntity<>(presetDetails, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            // ステータスコード400番を返す
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     //プリセット削除用API
     @DeleteMapping("/api/presetDelete")
@@ -86,7 +81,6 @@ public class PresetRestController {
             var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
             presetListFormJs.setUserId(userInfoSession.getId());
             Integer insert = IpresetService.insertPreset(presetListFormJs);
-
             // データとステータスコード200番を返す
             return new ResponseEntity<>(insert, HttpStatus.OK);
         } catch (RuntimeException e) {
