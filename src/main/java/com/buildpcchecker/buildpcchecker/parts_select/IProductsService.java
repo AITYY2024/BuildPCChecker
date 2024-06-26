@@ -39,6 +39,8 @@ public interface IProductsService {
     public List<OsSelectForm> searchOsParts(String os_name,int lowerLimit,int upperLimit);
 
     //パーツをプリセット登録する
-    public Integer catchPresetInsert(PresetListForm presetListForm);
+  //  public Integer catchPresetInsert(PresetListForm presetListForm);
 
+    //プリセットIDからそれぞれのパーツの情報を取得
+    public List<CpuSelectForm> getPresetCpuInfo(int preset_id);
 }

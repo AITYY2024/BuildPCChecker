@@ -123,9 +123,19 @@ public class ProductsService implements IProductsService {
     }
 
     //パーツをプリセット登録する
-    public Integer catchPresetInsert(PresetListForm presetListForm){
-        Integer insertNumber = productsDao.catchPresetInsert(presetListForm);
-        return insertNumber;
+//    public Integer catchPresetInsert(PresetListForm presetListForm){
+//        Integer insertNumber = productsDao.catchPresetInsert(presetListForm);
+//        return insertNumber;
+//    }
+
+    //プリセットIDからそれぞれのパーツの情報を取得
+    public List<CpuSelectForm> getPresetCpuInfo(int preset_id){
+        List<CpuSelectForm> cpuList = productsDao.getPresetCpuInfo(preset_id);
+//        if(osList == null){
+//                throw new PartsNotFoundException();
+//        }
+        return cpuList;
     }
+
 
 }

@@ -41,6 +41,9 @@ public interface IProductsDao {
 
 
     //パーツをプリセット登録する
-    Integer catchPresetInsert(PresetListForm presetListForm);
+  //  Integer catchPresetInsert(PresetListForm presetListForm);
+
+    //プリセットIDからそれぞれのパーツの情報を取得
+    List<CpuSelectForm> getPresetCpuInfo(int preset_id);
 
 }
