@@ -365,7 +365,7 @@
 
       //////プリセット保存/////
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
-        fetch('/api/presetInsert', {
+        fetch('/api/presetSave', {
           method: methodType,
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify(presetDataList),
