@@ -1,3 +1,4 @@
+
 'use strict'
     window.addEventListener('load', () => {
       let priceList = {"cpu": 0, "gpu": 0, "memory": 0, "mb": 0, "ssd": 0, "psu": 0, "os": 0};
@@ -15,6 +16,7 @@
       if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData[1] === ""){
         methodType="Post";
       }
+
       //////プリセット保存時に送信するオブジェクト//////
       let presetDataList = {
         "presetId": paramData[1],   //値が入っていなければ新規判定
@@ -79,7 +81,6 @@
               res = await fetch(`/api/getOsList`);
               break;
           }
-          console.log(requestPram);
 
           data=res.json();
           data.then(dataList => {
@@ -108,14 +109,10 @@
             partsList.querySelectorAll(".price")[0].textContent = '¥0';
             partsList.querySelectorAll(".spec1")[0].textContent = "";
             partsList.querySelectorAll(".spec2")[0].textContent = "";
-            if(document.getElementById('selectModalLabel').value==="MB"){
-              mbChipsetFilter="";
-            }
             partsList.querySelectorAll(".spec3")[0].textContent = "";
             partsList.querySelectorAll(".spec4")[0].textContent = "";
-            if(document.getElementById('selectModalLabel').value==="CPU"){
-              cpuGenFilter="";
-            }
+            
+            
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
@@ -183,7 +180,8 @@
 
                   if (document.getElementById('selectModalLabel').value == 'CPU') {
                     cpuGenFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
-                  } else if (document.getElementById('selectModalLabel').value == 'MB') {
+                  }
+                  if (document.getElementById('selectModalLabel').value == 'MB') {
                     mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
                   }
 
@@ -269,14 +267,8 @@
           partsList.querySelectorAll(".price")[0].textContent = '¥0';
           partsList.querySelectorAll(".spec1")[0].textContent = '';
           partsList.querySelectorAll(".spec2")[0].textContent = '';
-          // if(document.getElementById('selectModalLabel').value==="MB"){
-          //   cpuGenFilter='';
-          // }
           partsList.querySelectorAll(".spec3")[0].textContent = '';
           partsList.querySelectorAll(".spec4")[0].textContent = '';
-          // if(document.getElementById('selectModalLabel').value==="CPU"){
-          //   cpuGenFilter='';
-          // }
           partsList.querySelectorAll(".release")[0].textContent = '';
           for (let i = 1; i < dataList.length; i++) {
             dataObj = Object.values(dataList[i]);
@@ -335,13 +327,14 @@
 
               priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
               let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-              document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + priceList[partsCategoryName];
+              document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
               document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
               document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
               if (document.getElementById('selectModalLabel').value == 'CPU') {
                 cpuGenFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
-              } else if (document.getElementById('selectModalLabel').value == 'MB') {
+              }
+              if (document.getElementById('selectModalLabel').value == 'MB') {
                 mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
               }
 
@@ -355,6 +348,108 @@
           });
         })
       })
+
+      const cards = document.querySelectorAll('.parts-select-card');
+      cards.forEach( async function(card) {
+        const partsCategoryName = card.id.toLowerCase();
+        const partsCategoryCard = document.getElementById(partsCategoryName);
+        let selectPartsList;
+        let res;
+        if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData === "") {
+          selectPartsList = Object.values({
+            "id": "",
+            "product_id": "",
+            "url": "",
+            "product_name": "未選択",
+            "price": 0,
+            "release_date": ""
+          });
+        }else{
+          switch(partsCategoryName.toUpperCase()){
+            case 'CPU':
+              res = await fetch(`/api/getPresetCpuInfo?preset_id=` + paramData[1]);
+              break;
+            case 'GPU':
+              res = await fetch(`/api/getPresetGpuInfo?preset_id=` + paramData[1]);
+              break;
+            case 'MEMORY':
+              res = await fetch(`/api/getPresetMemoryInfo?preset_id=` + paramData[1]);
+              break;
+            case 'MB':
+              res = await fetch(`/api/getPresetMbInfo?preset_id=` + paramData[1]);
+              break;
+            case 'SSD':
+              res = await fetch(`/api/getPresetSsdInfo?preset_id=` + paramData[1]);
+              break;
+            case 'PSU':
+              res = await fetch(`/api/getPresetPsuInfo?preset_id=` + paramData[1]);
+              break;
+            case 'OS':
+              res = await fetch(`/api/getPresetOsInfo?preset_id=` + paramData[1]);
+              break;
+          }
+        }
+
+        let data=res.json();
+        data.then(selectPartsList => {
+          if (selectPartsList[0] != null) {
+            selectPartsList = Object.values(selectPartsList[0]);
+            partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[4].toLocaleString();
+            partsCategoryCard.querySelector(".name").textContent = selectPartsList?.[3];
+            if (partsCategoryCard.querySelector(".spec1") != null) {
+              partsCategoryCard.querySelector(".spec1").textContent = selectPartsList?.[6];
+            }
+            if (partsCategoryCard.querySelector(".spec2") != null) {
+              partsCategoryCard.querySelector(".spec2").textContent = selectPartsList?.[7];
+            }
+            if (partsCategoryCard.querySelector(".spec3") != null) {
+              partsCategoryCard.querySelector(".spec3").textContent = selectPartsList?.[8];
+            }
+            if (partsCategoryCard.querySelector(".spec4") != null) {
+              partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
+            }
+
+            priceList[partsCategoryName] = selectPartsList?.[4];
+            let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
+            // console.log(document.getElementById('selectModalLabel').value);
+            //document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
+            document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
+            document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
+
+            if (partsCategoryName.toUpperCase() == 'CPU') {
+              cpuGenFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+            }
+            if (partsCategoryName.toUpperCase() == 'MB') {
+              mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+            }
+
+            ////////////////プリセットデータ格納//////////////
+            presetDataList[partsCategoryName + "Id"] = selectPartsList[1];
+            presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
+            presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
+          }
+        })
+      })
+
+
+      if ( !(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData === "") ) {
+          fetch('/api/getPresetDescriptionInfo?preset_id=' + paramData[1], {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', },
+          })
+          .then(res => {
+            res.json()
+            .then(presetData => {
+              if (presetData.length != 0) {
+                document.getElementById("description").value = presetData[0].description;
+                presetDataList["description"] = presetData[0].description;
+                document.getElementById("presetName").value = presetData[0].presetName;
+                presetDataList["presetName"] = presetData[0].presetName;
+              }
+            })
+            console.log(res);
+          })
+      }
 
       //////プリセット保存/////
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
@@ -374,20 +469,3 @@
 
     });
 
-  ////////検索メソッドに送るオブジェクトの作成////////
-  function createSearchData(searchWord,minPrice,maxPrice,...compatible){
-    if(compatible.length > 0){
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice,
-        "compatible":compatible[0]
-      };
-    }else{
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice
-      };
-    }
-  }
