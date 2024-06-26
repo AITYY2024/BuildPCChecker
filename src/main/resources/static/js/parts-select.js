@@ -12,9 +12,10 @@
 
     //////新規か編集か判定
           let methodType="POST";
-            if(paramData[1]===null || paramData[1]==0 || paramData[1]===undefined || paramData===""){
-              methodType="PUT";
-            }
+          if(paramData[1]===null || paramData[1]==0 || paramData[1]===undefined || paramData===""){
+            methodType="PUT";
+          }
+          console.log('methodType:'+methodType);
     //////プリセット保存時に送信するオブジェクト//////
           let presetDataList = {
             "presetId": paramData[1],   //値が入っていなければ新規判定
@@ -343,21 +344,3 @@
       })
 
     });
-
-  ////////検索メソッドに送るオブジェクトの作成////////
-  function createSearchData(searchWord,minPrice,maxPrice,...compatible){
-    if(compatible.length > 0){
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice,
-        "compatible":compatible[0]
-      };
-    }else{
-      return {
-        "searchWord":searchWord,
-        "minPrice":minPrice,
-        "maxPrice":maxPrice
-      };
-    }
-  }

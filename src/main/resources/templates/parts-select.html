@@ -345,18 +345,19 @@
 
       //////URLのパラメータ受け取り//////
       let param = location.search.substring(1).split('&');
-      let paramData = Number(param[0].split('='));
+      let paramData = param[0].split('=');
 
       //////互換性チェック用変数//////
       let mbChipsetFilter = "";
       let cpuGenFilter = "";
 
       //////新規か編集か判定
-      let methodType="POST";
-      if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData === ""){
-        methodType="PUT";
+      let methodType="Put";
+      if(paramData[1] === null || paramData[1] == 0 || paramData[1] === undefined || paramData[1] === ""){
+        methodType="Post";
       }
-
+      console.log('paramData:'+paramData[1]);
+      console.log('methodType:'+methodType);
       //////プリセット保存時に送信するオブジェクト//////
       let presetDataList = {
         "presetId": paramData[1],   //値が入っていなければ新規判定
@@ -703,9 +704,10 @@
         })
       })
 
+      //////プリセット保存/////
       document.getElementById('presetSaveBtn').addEventListener('click', () => {
         fetch('/api/presetInsert', {
-          method: 'Post',
+          method: methodType,
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify(presetDataList),
         })
