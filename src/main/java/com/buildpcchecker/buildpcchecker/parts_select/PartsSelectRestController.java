@@ -250,5 +250,18 @@ public class PartsSelectRestController {
 //        }
 //    }
 
+    //プリセットIDからそれぞれのパーツの情報を取得
+    @GetMapping("/api/getPresetCpuInfo")
+    public ResponseEntity<List<CpuSelectForm>> getPresetCpuInfo(int preset_id){
+        try {
+            List<CpuSelectForm> presetCpuInfo = productsService.getPresetCpuInfo(preset_id);
+            // データとステータスコード200番を返す
+            return new ResponseEntity<>(presetCpuInfo, HttpStatus.OK);
+        } catch (PartsNotFoundException e) {
+            // ステータスコード400番を返す
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
