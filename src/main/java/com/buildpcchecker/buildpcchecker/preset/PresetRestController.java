@@ -83,10 +83,10 @@ public class PresetRestController {
     @PostMapping("/api/presetSave")
     public ResponseEntity<Integer> insertPreset(@RequestBody PresetListFormJs presetListFormJs){
         try {
-//            session.setAttribute("sessionUser", 1);
-//            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
-//            List<PresetListForm> presetList = IpresetService.findAll(userInfoSession.getId());
+            var userInfoSession = (UsersForm)session.getAttribute("sessionUser");
+            presetListFormJs.setUserId(userInfoSession.getId());
             Integer insert = IpresetService.insertPreset(presetListFormJs);
+
             // データとステータスコード200番を返す
             return new ResponseEntity<>(insert, HttpStatus.OK);
         } catch (RuntimeException e) {
