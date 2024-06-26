@@ -2,6 +2,8 @@ package com.buildpcchecker.buildpcchecker.form;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class PresetListForm {
 
@@ -71,5 +73,7 @@ public class PresetListForm {
     private String description;//メモ
 
     private Integer total_amount;//合計金額
+
+    private Date update_at;//日付更新
 
 }

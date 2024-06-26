@@ -119,7 +119,7 @@
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
-            for (let i = 1; i < dataList.length+1; i++) {
+            for (let i = 1; i < dataList.length; i++) {
               dataObj = Object.values(dataList[i-1]);
 
               partsList.insertAdjacentHTML('beforeend', partsCard);
@@ -177,9 +177,7 @@
 
                   priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-
-                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + selectPartsList?.[4];
-
+                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '￥' + priceList[partsCategoryName];
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -280,8 +278,8 @@
           //   cpuGenFilter='';
           // }
           partsList.querySelectorAll(".release")[0].textContent = '';
-          for (let i = 1; i < dataList.length+1; i++) {
-            dataObj = Object.values(dataList[i-1]);
+          for (let i = 1; i < dataList.length; i++) {
+            dataObj = Object.values(dataList[i]);
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
             partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
@@ -352,7 +350,7 @@
               presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
               presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
               presetDataList["totalPrice"] = totalPrice;
-
+              
             });
           });
         })
@@ -375,3 +373,21 @@
       })
 
     });
+
+  ////////検索メソッドに送るオブジェクトの作成////////
+  function createSearchData(searchWord,minPrice,maxPrice,...compatible){
+    if(compatible.length > 0){
+      return {
+        "searchWord":searchWord,
+        "minPrice":minPrice,
+        "maxPrice":maxPrice,
+        "compatible":compatible[0]
+      };
+    }else{
+      return {
+        "searchWord":searchWord,
+        "minPrice":minPrice,
+        "maxPrice":maxPrice
+      };
+    }
+  }
