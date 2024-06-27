@@ -151,7 +151,7 @@
 </div>
 
 <!-- モーダル -->
-<div class="modal fade" id="detailModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -226,24 +226,24 @@
             <div class="modal-footer d-block">
                 <div class="row m-0 p-0 mb-2">
                     <div class="col-4 ps-0 pe-1">
-                        <button type="button" id="copyBtn" class=" btn w-100 btn-primary">
-                            複製する
+                        <button type="button" id="copyBtn" class="btn w-100 btn-primary" data-bs-dismiss="modal">
+                            複製
                         </button>
                     </div>
                     <div class="col-4 ps-1 pe-1">
-                        <button type="button" id="editBtn" class=" btn w-100 btn-primary">
+                        <button type="button" id="editBtn" class="btn w-100 btn-primary">
                             編集
                         </button>
                     </div>
                     <div class="col-4 ps-1 pe-0">
-                        <button type="button" class=" btn w-100 btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <button type="button" class="btn w-100 btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
                             削除
                         </button>
                     </div>
                 </div>
                 <div class="row m-0 p-0">
                     <div class="col ps-0 pe-0">
-                        <button type="button" class=" btn w-100 btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn w-100 btn-secondary" data-bs-dismiss="modal">
                             閉じる
                         </button>
                     </div>

@@ -32,8 +32,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   });
 });
 
-document.getElementById('signinForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+document.getElementById('signinBtn').addEventListener('click', function() {
   const userName = document.getElementById('newUsername').value;
   const password = document.getElementById('newPassword').value;
   const data = {

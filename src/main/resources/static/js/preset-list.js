@@ -51,16 +51,16 @@ window.addEventListener('load', async function(){
         button.addEventListener('click', (event) => {
           const presetName = event.currentTarget.getAttribute('data-name');
           document.getElementById('selectModalLabel').textContent = presetName;
-          
+
           const presetId = event.currentTarget.getAttribute('data-id');
           deleteBtn.setAttribute('data-id', presetId);
           editBtn.setAttribute('data-id', presetId);
           copyBtn.setAttribute('data-id', presetId);
-          
+
           document.getElementById('deletePresetName').textContent = presetName;
           const selectPartsList = data.find(item => item.preset_id === Number(presetId));
           const presetDataList = document.getElementById('presetDataList');
-          
+
           document.getElementById('cpuName').textContent = selectPartsList.cpu_name;
           document.getElementById('gpuName').textContent = selectPartsList.gpu_name;
           document.getElementById('memoryName').textContent = selectPartsList.ram_name;
@@ -101,10 +101,13 @@ window.addEventListener('load', async function(){
       const selectPreset2Name = document.getElementById('preset2');
       const presetPriceSum = document.getElementById('sumPrice');
 
-      for (let i = 0; i < data.length; i++) {
-        selectPreset1Name.remove(0)
-      }
-      
+      selectPreset1Name.innerHTML = '';
+
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = '選択';
+      selectPreset1Name.appendChild(option);
+
       for (let i = 0; i < data.length; i++) {
         const option = document.createElement('option');
         option.value = data[i].preset_id;
@@ -113,9 +116,12 @@ window.addEventListener('load', async function(){
         selectPreset1Name.appendChild(option);
       }
 
+
       selectPreset1Name.addEventListener('change', function() {
         selectPreset2Name.innerHTML = '';
         if (this.value === '') {
+
+
           selectPreset2Name.disabled = true;
           presetPriceSum.classList.add('text-primary');
           presetPriceSum.classList.remove('text-danger');
@@ -177,7 +183,7 @@ window.addEventListener('load', async function(){
         console.log(res)
       })
       presetReload();
-      
+
     });
 
     ////データ編集////
