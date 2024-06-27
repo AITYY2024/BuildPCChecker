@@ -129,15 +129,18 @@ public class ProductsDao implements IProductsDao{
 
     //Memoryのテーブルから検索したものを表示する
     @Override
-    public List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit){
+    public List<MemorySelectForm> searchMemoryParts(String memory_name, String ramSpec, int lowerLimit,int upperLimit){
         var param = new MapSqlParameterSource();
         param.addValue("memory_name", "%" + memory_name + "%");
+        param.addValue("ramSpec", "%" + ramSpec + "%");
         param.addValue("lowerLimit",lowerLimit);
         param.addValue("upperLimit",upperLimit);
         var list = jdbcTemplate.query("""
                 SELECT * FROM memory
                 WHERE product_name LIKE :memory_name
-                                AND
+                AND
+                spec LIKE :ramSpec
+                AND
                 price >= :lowerLimit
                 AND
                 price <= :upperLimit
@@ -149,16 +152,19 @@ public class ProductsDao implements IProductsDao{
     //Mbのテーブルから検索したものを表示する
     @Override
     public List<MbSelectForm> searchMbParts(
-            String mb_name,String cpu_generation,int lowerLimit,int upperLimit){
+            String mb_name, String cpu_generation, String ramSpec, int lowerLimit,int upperLimit){
         var param = new MapSqlParameterSource();
         param.addValue("mb_name", "%" + mb_name + "%");
         param.addValue("cpu_generation", "%" + cpu_generation + "%");
+        param.addValue("ramSpec", "%" + ramSpec + "%");
         param.addValue("lowerLimit",lowerLimit);
         param.addValue("upperLimit",upperLimit);
         var list = jdbcTemplate.query("""
             SELECT * FROM mb
             WHERE
             chipset IN (SELECT chipset_name FROM compatible WHERE cpu_generation LIKE :cpu_generation)
+            AND
+            ram_spec LIKE :ramSpec
             AND
             price >= :lowerLimit
             AND

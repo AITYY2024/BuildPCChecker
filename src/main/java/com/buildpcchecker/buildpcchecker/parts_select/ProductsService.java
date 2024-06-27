@@ -67,16 +67,16 @@ public class ProductsService implements IProductsService {
     }
 
     //    //Memoryのテーブルから検索したものを表示する
-        @Override
-    public List<MemorySelectForm> searchMemoryParts(String memory_name,int lowerLimit,int upperLimit) {
-            List<MemorySelectForm> memoryList = productsDao.searchMemoryParts(memory_name,lowerLimit,upperLimit);
+    @Override
+    public List<MemorySelectForm> searchMemoryParts(String memory_name,  String ramSpec, int lowerLimit,int upperLimit) {
+            List<MemorySelectForm> memoryList = productsDao.searchMemoryParts(memory_name, ramSpec, lowerLimit, upperLimit);
             return memoryList;
     }
 
-       //Mbのテーブルから検索したものを表示する
-        @Override
-    public List<MbSelectForm> searchMbParts(String mb_name,String cpu_generation,int lowerLimit,int upperLimit) {
-            List<MbSelectForm> mbList = productsDao.searchMbParts(mb_name,cpu_generation,lowerLimit,upperLimit);
+    //Mbのテーブルから検索したものを表示する
+    @Override
+    public List<MbSelectForm> searchMbParts(String mb_name,String cpu_generation, String ramSpec, int lowerLimit,int upperLimit) {
+            List<MbSelectForm> mbList = productsDao.searchMbParts(mb_name,cpu_generation, ramSpec, lowerLimit, upperLimit);
             return mbList;
     }
 

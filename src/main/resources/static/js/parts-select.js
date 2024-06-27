@@ -10,6 +10,8 @@
       //////互換性チェック用変数//////
       let mbChipsetFilter = "";
       let cpuGenFilter = "";
+      let mbRamSpecFilter = "";
+      let ramSpecFilter = "";
 
       //////新規か編集か判定
       let methodType="Put";
@@ -45,17 +47,28 @@
           const partsList = document.getElementById('partsList');
           partsList.innerHTML = '';
           let requestPram="searchWord=" + "&minPrice=" + "&maxPrice=";
-
+          document.getElementById("warning").textContent = null;
           if (document.getElementById('selectModalLabel').value == 'CPU') {
             if (mbChipsetFilter != '') {
-              document.getElementById("warning").textContent = '選択したマザーボードのチップセット(' + mbChipsetFilter + ')と互換性があるパーツのみ表示されています。';
+              document.getElementById("warning").textContent = '選択したマザーボードのチップセット(' + mbChipsetFilter + ')と互換性があるCPUのみ表示されています。';
             } else {
               document.getElementById("warning").textContent = null;
             }
           }
           if (document.getElementById('selectModalLabel').value == 'MB') {
-            if (cpuGenFilter != '') {
-              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')と互換性があるパーツのみ表示されています。';
+            if (cpuGenFilter != '' && ramSpecFilter != '') {
+              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')、選択したメモリの規格(' + ramSpecFilter + ')と互換性があるマザーボードのみ表示されています。';
+            } else if (cpuGenFilter != '') {
+              document.getElementById("warning").textContent = '選択したCPUの世代(' + cpuGenFilter + ')と互換性があるマザーボードのみ表示されています。';
+            } else if (ramSpecFilter != '') {
+              document.getElementById("warning").textContent = '選択したメモリの規格(' + ramSpecFilter + ')と互換性があるマザーボードのみ表示されています。';
+            } else {
+              document.getElementById("warning").textContent = null;
+            }
+          }
+          if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+            if (mbRamSpecFilter != '') {
+              document.getElementById("warning").textContent = '選択したマザーボードのメモリの規格(' + mbRamSpecFilter + ')と互換性があるメモリのみ表示されています。';
             } else {
               document.getElementById("warning").textContent = null;
             }
@@ -76,11 +89,13 @@
               break;
             case 'MEMORY':
               selectModalTitle = 'メモリ';
-              res = await fetch(`/api/getRamList`);
+              requestPram += "&ramSpec=" + mbRamSpecFilter;
+              res = await fetch(`/api/searchByRamList?` + requestPram);
               break;
             case 'MB':
               selectModalTitle = 'マザーボード';
               requestPram += "&cpuGen=" + cpuGenFilter;
+              requestPram += "&ramSpec=" + ramSpecFilter;
               res = await fetch(`/api/searchByMbList?` + requestPram);
               break;
             case 'SSD':
@@ -96,6 +111,7 @@
               res = await fetch(`/api/getOsList`);
               break;
           }
+          console.log(priceList);
 
           data=res.json();
           data.then(dataList => {
@@ -187,9 +203,9 @@
                     partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
                   }
 
-                  priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
+                  priceList[document.getElementById('selectModalLabel').value.toLowerCase()] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
+                  document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName].toLocaleString();
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -198,6 +214,10 @@
                   }
                   if (document.getElementById('selectModalLabel').value == 'MB') {
                     mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                    mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+                  }
+                  if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                    ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
                   }
 
                   ////////////////プリセットデータ格納//////////////
@@ -235,11 +255,13 @@
             break;
           case 'MEMORY':
             selectModalTitle = 'メモリ';
+            requestPram += "&ramSpec=" + mbRamSpecFilter;
             res = await fetch(`/api/searchByRamList?` + requestPram);
             break;
           case 'MB':
             selectModalTitle = 'マザーボード';
             requestPram += "&cpuGen=" + cpuGenFilter;
+            requestPram += "&ramSpec=" + ramSpecFilter;
             res = await fetch(`/api/searchByMbList?` + requestPram);
             break;
           case 'SSD':
@@ -290,7 +312,7 @@
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
             partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
-            partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4];
+            partsList.querySelectorAll(".price")[i].textContent = '¥' + dataObj?.[4].toLocaleString();
             if (partsList.querySelectorAll(".spec1")[i] != null) {
               partsList.querySelectorAll(".spec1")[i].textContent = dataObj?.[6];
             }
@@ -340,9 +362,9 @@
                 partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
               }
 
-              priceList[document.getElementById('selectModalLabel').value] = selectPartsList?.[4];
+              priceList[document.getElementById('selectModalLabel').value.toLowerCase()] = selectPartsList?.[4];
               let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-              document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName];
+              document.getElementById(document.getElementById('selectModalLabel').value+"Price").textContent = '¥' + priceList[partsCategoryName].toLocaleString();
               document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
               document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -351,6 +373,10 @@
               }
               if (document.getElementById('selectModalLabel').value == 'MB') {
                 mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+              }
+              if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
               }
 
               ////////////////プリセットデータ格納//////////////
@@ -422,9 +448,9 @@
                     partsCategoryCard.querySelector(".spec4").textContent = selectPartsList?.[9];
                   }
 
-                  priceList[partsCategoryName] = selectPartsList?.[4];
+                  priceList[partsCategoryName.toLowerCase()] = selectPartsList?.[4];
                   let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
-                  document.getElementById(partsCategoryName.toUpperCase() + "Price").textContent = '¥' + priceList[partsCategoryName];
+                  document.getElementById(partsCategoryName.toUpperCase() + "Price").textContent = '¥' + priceList[partsCategoryName].toLocaleString();
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
@@ -433,6 +459,10 @@
                   }
                   if (document.getElementById('selectModalLabel').value == 'MB') {
                     mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
+                    mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
+                  }
+                  if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                    ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
                   }
 
                   ////////////////プリセットデータ格納//////////////
@@ -469,6 +499,7 @@
         presetDataList["presetName"] = document.getElementById("presetName").value;
         presetDataList["description"] = document.getElementById("description").value;
         let totalPrice = Object.values(priceList).reduce((acc, curr) => acc + curr, 0);
+        console.log(totalPrice);
         presetDataList["totalPrice"] = totalPrice;
         console.log(presetDataList);
         fetch('/api/presetSave', {
