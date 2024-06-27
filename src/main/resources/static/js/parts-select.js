@@ -142,8 +142,8 @@
             partsList.querySelectorAll(".spec2")[0].textContent = "";
             partsList.querySelectorAll(".spec3")[0].textContent = "";
             partsList.querySelectorAll(".spec4")[0].textContent = "";
-            
-            
+
+
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
@@ -384,7 +384,7 @@
               presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
               presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
               presetDataList["totalPrice"] = totalPrice;
-              
+
             });
           });
         })
