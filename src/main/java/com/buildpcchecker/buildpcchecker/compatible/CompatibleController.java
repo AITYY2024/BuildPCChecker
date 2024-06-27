@@ -20,6 +20,11 @@ public class CompatibleController {
         if (session == null){
             return "redirect:/login";
         }
+
+        if (session.getRole() == 2){
+            return "redirect:/login-redirect";
+        }
+
         return "compatible";}
 
 }
