@@ -21,7 +21,7 @@ public class CompatibleController {
             return "redirect:/login";
         }
 
-        if (session.getRole() == 2){
+        if (session.getRole() != 1){
             return "redirect:/login-redirect";
         }
 
