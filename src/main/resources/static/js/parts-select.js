@@ -126,8 +126,8 @@
             partsList.querySelectorAll(".spec2")[0].textContent = "";
             partsList.querySelectorAll(".spec3")[0].textContent = "";
             partsList.querySelectorAll(".spec4")[0].textContent = "";
-            
-            
+
+
             partsList.querySelectorAll(".release")[0].textContent = "";
 
             //JSONデータをモーダルに表示
@@ -286,7 +286,7 @@
           partsList.querySelectorAll(".spec4")[0].textContent = '';
           partsList.querySelectorAll(".release")[0].textContent = '';
           for (let i = 1; i < dataList.length + 1; i++) {
-            dataObj = Object.values(dataList[i]);
+            dataObj = Object.values(dataList[i-1]);
             partsList.insertAdjacentHTML('beforeend', partsCard);
             partsList.querySelectorAll('.parts-card')[i].setAttribute('data-id', dataObj?.[1]);
             partsList.querySelectorAll(".name")[i].textContent = dataObj?.[3];
@@ -358,7 +358,7 @@
               presetDataList[partsCategoryName + "Name"] = selectPartsList?.[3];
               presetDataList[partsCategoryName + "Url"] = selectPartsList?.[2];
               presetDataList["totalPrice"] = totalPrice;
-              
+
             });
           });
         })
