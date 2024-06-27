@@ -1,5 +1,3 @@
-
-'use strict'
     window.addEventListener('load', () => {
       let priceList = {"cpu": 0, "gpu": 0, "memory": 0, "mb": 0, "ssd": 0, "psu": 0, "os": 0};
 
@@ -34,7 +32,7 @@
         "totalPrice": 0
       };
 
-      //////////モーダル表示///////////
+      //////////モーダル表示時の処理///////////
       const selectButtons = document.querySelectorAll('button[data-bs-toggle="modal"]');
       selectButtons.forEach(button => {
         button.addEventListener('click', async function(event){
@@ -168,7 +166,7 @@
               }
               partsList.querySelectorAll(".release")[i].textContent = dataObj?.[5];
 
-              ////////////選択パーツのデータをlistや各タグに格納////////////
+              ////////////選択したパーツのデータをパーツのカードに反映////////////
               const cards = document.querySelectorAll('.parts-card');
               cards.forEach(function(card) {
                 card.addEventListener('click', function() {
@@ -327,7 +325,7 @@
             }
             partsList.querySelectorAll(".release")[i].textContent = dataObj?.[5];
           };
-          ////////////選択パーツのデータをlistや各タグに格納////////////
+          ////////////選択したパーツのデータをパーツのカードに反映////////////
           const cards = document.querySelectorAll('.parts-card');
           cards.forEach(function(card) {
             card.addEventListener('click', function() {
@@ -431,6 +429,7 @@
           }
           let data=res.json();
               data.then(selectPartsList => {
+              　////////////選択したパーツのデータをパーツのカードに反映////////////
                 if (selectPartsList[0] != null) {
                   selectPartsList = Object.values(selectPartsList[0]);
                   partsCategoryCard.querySelector(".price").textContent = '¥' + selectPartsList?.[4].toLocaleString();
@@ -454,14 +453,14 @@
                   document.getElementById("totalPrice").textContent = '¥' + totalPrice.toLocaleString();
                   document.getElementById("sideTotalPrice").textContent='¥' + totalPrice.toLocaleString();
 
-                  if (document.getElementById('selectModalLabel').value == 'CPU') {
+                  if (partsCategoryName.toUpperCase() == 'CPU') {
                     cpuGenFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
                   }
-                  if (document.getElementById('selectModalLabel').value == 'MB') {
+                  if (partsCategoryName.toUpperCase() == 'MB') {
                     mbChipsetFilter = selectPartsList?.[7] != undefined ? selectPartsList?.[7] : '';
                     mbRamSpecFilter = selectPartsList?.[9] != undefined ? selectPartsList?.[9] : '';
                   }
-                  if (document.getElementById('selectModalLabel').value == 'MEMORY') {
+                  if (partsCategoryName.toUpperCase() == 'MEMORY') {
                     ramSpecFilter = selectPartsList?.[8] != undefined ? selectPartsList?.[8] : '';
                   }
 

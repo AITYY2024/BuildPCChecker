@@ -21,7 +21,7 @@ public class PresetDao implements IPresetDao {
     public List<PresetListForm> findAll(Integer user_id) {
         var param = new MapSqlParameterSource();
         param.addValue("user_id", user_id);
-        return jdbcTemplate.query("SELECT * FROM preset WHERE user_id = :user_id;", param,
+        return jdbcTemplate.query("SELECT * FROM preset WHERE user_id = :user_id ORDER BY preset_id", param,
                 new DataClassRowMapper<>(PresetListForm.class));
     }
 
@@ -30,7 +30,7 @@ public class PresetDao implements IPresetDao {
     public PresetListForm findById(Integer preset_id) {
         var param = new MapSqlParameterSource();
         param.addValue("preset_id", preset_id);
-        var list = jdbcTemplate.query("SELECT * FROM preset WHERE preset_id = :preset_id;", param,
+        var list = jdbcTemplate.query("SELECT * FROM preset WHERE preset_id = :preset_id ORDER BY preset_id", param,
                 new DataClassRowMapper<>(PresetListForm.class));
         return list.isEmpty() ? null : list.get(0);
     }
