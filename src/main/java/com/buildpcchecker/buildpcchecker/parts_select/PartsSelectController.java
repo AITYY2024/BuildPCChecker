@@ -1,6 +1,7 @@
 package com.buildpcchecker.buildpcchecker.parts_select;
 
 
+import com.buildpcchecker.buildpcchecker.date.UsersForm;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,26 +18,16 @@ public class PartsSelectController {
 
     @GetMapping("/parts-select")
     public String testparts(){
-//        if(this.session.getAttribute("sessionUser") == null){
-//            return "redirect:/login";
-//        }
+
+        var session = (UsersForm)this.session.getAttribute("sessionUser");
+        if (session == null){
+            return "redirect:/login";
+        }
+
+        if (session.getRole() != 2){
+            return "redirect:/login-redirect";
+        }
 
         return "/parts-select";
     }
-//    @PostMapping("/testPartsCategory")
-//    public String testcheck(){
-//        return "/testPartsCategory";
-//    }
-//
-//    @GetMapping("/test-parts-select")
-//    public String testpartsSelect(){
-//        return "/test-parts-select";
-//    }
-//    @PostMapping("/test-parts-select")
-//    public String testpartSelect(){
-//        return "/testPartsCategory";
-//    }
-
-
-
 }
