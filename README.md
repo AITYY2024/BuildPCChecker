@@ -26,22 +26,22 @@ IntelliJ IDEA (Open JDK 22)
 
 # Author
 
-#### AniyaIo
+### AniyaIo
 
 https://github.com/AniyaIo
 
-#### hoshitotaira
+### hoshitotaira
 
 https://github.com/hoshitotaira
 
-#### kotaisa
+### kotaisa
 
 https://github.com/kotaisa
 
-#### Shion102
+### Shion102
 
-https://github.com/orgs/AITYY2024/people/Shion102
+https://github.com/Shion102
 
-#### yabikuryoga
+### yabikuryoga
 
 https://github.com/yabikuryoga
