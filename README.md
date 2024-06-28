@@ -15,3 +15,33 @@ PCを自作するユーザーに情報を提供する
 プリセット登録したものは、商品ページへすぐ飛べる
 
 レスポンシブデザインに対応
+
+# Requirement
+
+Python3
+
+PostgreSQL
+
+IntelliJ IDEA (Open JDK 22)
+
+# Author
+
+#### AniyaIo
+
+https://github.com/AniyaIo
+
+#### hoshitotaira
+
+https://github.com/hoshitotaira
+
+#### kotaisa
+
+https://github.com/kotaisa
+
+#### Shion102
+
+https://github.com/orgs/AITYY2024/people/Shion102
+
+#### yabikuryoga
+
+https://github.com/yabikuryoga
