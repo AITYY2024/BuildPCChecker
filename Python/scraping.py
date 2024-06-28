@@ -6,12 +6,6 @@ import scraping_ssd
 import scraping_psu
 import scraping_os
 
-# 取得するページ数
-MAX_PAGE = 5
-
-# スクレイピング実行間隔
-REQUEST_INTERVAL = 5
-
 def main():
   print("-- CPU Scraping Start --")
   scraping_cpu.main()
